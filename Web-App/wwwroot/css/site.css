@@ -12,6 +12,13 @@ a, .btn-link {
     color: #0071c1;
 }
 
+.pagelogin-background {
+    /*background*/
+    background-color: #26b050;
+}
+
+/*can create more backgrounds here:*/
+
 .btn-primary {
     color: #fff;
     background-color: #1b6ec2;

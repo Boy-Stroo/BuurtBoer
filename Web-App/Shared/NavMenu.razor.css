@@ -1,37 +1,40 @@
-.navbar-toggler {
+/*Dit hele menu gaat over de linkerkant van het menu*/
+
+
+.navbar-toggler { /*Geen idee wat deze doet*/
     background-color: rgba(255, 255, 255, 0.1);
 }
 
-.top-row {
+.top-row { /*bar linksbovenin webpagina*/
     height: 3.5rem;
     background-color: rgba(0,0,0,0.4);
 }
 
-.navbar-brand {
+.navbar-brand { /*woord linksbovenin webpagina*/
     font-size: 1.1rem;
 }
 
-.oi {
+.oi { /*logo's links in beeld*/
     width: 2rem;
-    font-size: 1.1rem;
+    font-size: 1rem;
     vertical-align: text-top;
     top: -2px;
 }
 
-.nav-item {
+.nav-item { /*Namen links in beeld (menuutje)*/
     font-size: 0.9rem;
     padding-bottom: 0.5rem;
 }
 
-    .nav-item:first-of-type {
+    .nav-item:first-of-type { /*hoogte van knoppen links in menuutje*/
         padding-top: 1rem;
     }
 
-    .nav-item:last-of-type {
+    .nav-item:last-of-type { /*Doet niet heel veel maar wss als je meer knoppen hebt het tegenovergestelde van first-of-type*/
         padding-bottom: 1rem;
     }
 
-    .nav-item ::deep a {
+    .nav-item ::deep a { /*grootte, kleur en nog meer dingen voor de knopjes aan de linkerkant in menu*/
         color: #d7d7d7;
         border-radius: 4px;
         height: 3rem;
@@ -40,17 +43,17 @@
         line-height: 3rem;
     }
 
-.nav-item ::deep a.active {
+.nav-item ::deep a.active { /*kleur van knopje die actief is links in menu*/
     background-color: rgba(255,255,255,0.25);
     color: white;
 }
 
-.nav-item ::deep a:hover {
+.nav-item ::deep a:hover { /*kleur van knop waar je met je muis op staat links in menu*/
     background-color: rgba(255,255,255,0.1);
     color: white;
 }
 
-@media (min-width: 641px) {
+@media (min-width: 641px) { /*geen idee wat dit doet*/
     .navbar-toggler {
         display: none;
     }
