@@ -1,0 +1,32 @@
+/Users/martinpiet/Projects/De buurtboer/De buurtboer/bin/Debug/net7.0/De buurtboer.staticwebassets.runtime.json
+/Users/martinpiet/Projects/De buurtboer/De buurtboer/bin/Debug/net7.0/De buurtboer.dll
+/Users/martinpiet/Projects/De buurtboer/De buurtboer/bin/Debug/net7.0/De buurtboer.pdb
+/Users/martinpiet/Projects/De buurtboer/De buurtboer/obj/Debug/net7.0/De buurtboer.csproj.AssemblyReference.cache
+/Users/martinpiet/Projects/De buurtboer/De buurtboer/obj/Debug/net7.0/De buurtboer.GeneratedMSBuildEditorConfig.editorconfig
+/Users/martinpiet/Projects/De buurtboer/De buurtboer/obj/Debug/net7.0/De buurtboer.AssemblyInfoInputs.cache
+/Users/martinpiet/Projects/De buurtboer/De buurtboer/obj/Debug/net7.0/De buurtboer.AssemblyInfo.cs
+/Users/martinpiet/Projects/De buurtboer/De buurtboer/obj/Debug/net7.0/De buurtboer.csproj.CoreCompileInputs.cache
+/Users/martinpiet/Projects/De buurtboer/De buurtboer/obj/Debug/net7.0/De buurtboer.MvcApplicationPartsAssemblyInfo.cache
+/Users/martinpiet/Projects/De buurtboer/De buurtboer/obj/Debug/net7.0/staticwebassets/msbuild.De buurtboer.Microsoft.AspNetCore.StaticWebAssets.props
+/Users/martinpiet/Projects/De buurtboer/De buurtboer/obj/Debug/net7.0/staticwebassets/msbuild.build.De buurtboer.props
+/Users/martinpiet/Projects/De buurtboer/De buurtboer/obj/Debug/net7.0/staticwebassets/msbuild.buildMultiTargeting.De buurtboer.props
+/Users/martinpiet/Projects/De buurtboer/De buurtboer/obj/Debug/net7.0/staticwebassets/msbuild.buildTransitive.De buurtboer.props
+/Users/martinpiet/Projects/De buurtboer/De buurtboer/obj/Debug/net7.0/staticwebassets.pack.json
+/Users/martinpiet/Projects/De buurtboer/De buurtboer/obj/Debug/net7.0/staticwebassets.build.json
+/Users/martinpiet/Projects/De buurtboer/De buurtboer/obj/Debug/net7.0/staticwebassets.development.json
+/Users/martinpiet/Projects/De buurtboer/De buurtboer/obj/Debug/net7.0/scopedcss/Shared/MainLayout.razor.rz.scp.css
+/Users/martinpiet/Projects/De buurtboer/De buurtboer/obj/Debug/net7.0/scopedcss/Shared/NavMenu.razor.rz.scp.css
+/Users/martinpiet/Projects/De buurtboer/De buurtboer/obj/Debug/net7.0/scopedcss/bundle/De buurtboer.styles.css
+/Users/martinpiet/Projects/De buurtboer/De buurtboer/obj/Debug/net7.0/scopedcss/projectbundle/De buurtboer.bundle.scp.css
+/Users/martinpiet/Projects/De buurtboer/De buurtboer/obj/Debug/net7.0/De buurtboer.dll
+/Users/martinpiet/Projects/De buurtboer/De buurtboer/obj/Debug/net7.0/refint/De buurtboer.dll
+/Users/martinpiet/Projects/De buurtboer/De buurtboer/obj/Debug/net7.0/De buurtboer.pdb
+/Users/martinpiet/Projects/De buurtboer/De buurtboer/obj/Debug/net7.0/ref/De buurtboer.dll
+/Users/martinpiet/Projects/De buurtboer/De buurtboer/bin/Debug/net7.0/appsettings.Development.json
+/Users/martinpiet/Projects/De buurtboer/De buurtboer/bin/Debug/net7.0/appsettings.json
+/Users/martinpiet/Projects/De buurtboer/De buurtboer/bin/Debug/net7.0/De buurtboer
+/Users/martinpiet/Projects/De buurtboer/De buurtboer/bin/Debug/net7.0/De buurtboer.deps.json
+/Users/martinpiet/Projects/De buurtboer/De buurtboer/bin/Debug/net7.0/De buurtboer.runtimeconfig.json
+/Users/martinpiet/Projects/De buurtboer/De buurtboer/obj/Debug/net7.0/De buurtboer.RazorAssemblyInfo.cache
+/Users/martinpiet/Projects/De buurtboer/De buurtboer/obj/Debug/net7.0/De buurtboer.RazorAssemblyInfo.cs
+/Users/martinpiet/Projects/De buurtboer/De buurtboer/obj/Debug/net7.0/De buurtboer.genruntimeconfig.cache
