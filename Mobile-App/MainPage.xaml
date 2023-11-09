@@ -29,7 +29,6 @@
             <Image Source="buurtboer_met_tekst.svg"/>
         </Border>
 
-        <!-- I want a box where users can enter details -->
         <Border
             WidthRequest="300"
             HeightRequest="50"
@@ -67,10 +66,17 @@
 
         </Border>
 
-        <Button>
-
-        </Button>
-
+        <Button Text="Login"
+                    WidthRequest="300"
+                    HeightRequest="50"
+                    BackgroundColor="{StaticResource Tertiary}"
+                    TextColor="{StaticResource Secondary}"
+                    FontSize="20"
+                    BorderColor="{StaticResource Secondary}"
+                    BorderWidth="1"
+                    CornerRadius="5"
+                    AbsoluteLayout.LayoutBounds="100, 520, 200, 200"
+                    Clicked="OnButtonClicked"/>
 
     </AbsoluteLayout>
 
