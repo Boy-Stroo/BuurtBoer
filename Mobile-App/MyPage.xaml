@@ -4,19 +4,61 @@
              x:Class="Mobile_App.MyPage"
              Title="MyPage">
 
-    <VerticalStackLayout
-        VerticalOptions="Center">
+    <Grid>
+        <!-- Green rounded square -->
+        <BoxView
+            Color="{StaticResource Primary}"
+            CornerRadius="0,0,10,10"
+            VerticalOptions="Start"
+            HorizontalOptions="Center"
+            HeightRequest="150"
+            WidthRequest="150"
+            Margin="0,0,0,0" />
 
-        <Label 
+        <!-- Logo in the middle of the square -->
+        <Image
+            Source="buurtboer_met_tekst.svg"
+            VerticalOptions="Start"
+            HorizontalOptions="Center"
+            Margin="0,15,0,0"
+            HeightRequest="60"
+            WidthRequest="60" />
+
+        <!-- Orange rectangle with week and month -->
+        <Grid VerticalOptions="Start" HorizontalOptions="Center" Margin="0,90,0,0">
+            <BoxView
+        Color="{StaticResource Tertiary}"
+        CornerRadius="10"
+        HeightRequest="50"
+        WidthRequest="130"/>
+
+            <!-- Grid for week and month inside the orange BoxView -->
+            <Grid VerticalOptions="Center">
+                <!-- Two rows for labels -->
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Add your labels for week and month here -->
+                <Label Text="Week 45" HorizontalOptions="Center" VerticalOptions="Center" TextColor="White" Grid.Row="0" />
+                <Label Text="November" HorizontalOptions="Center" VerticalOptions="Center" TextColor="White" Grid.Row="1" />
+            </Grid>
+        </Grid>
+
+
+        <StackLayout VerticalOptions="Center">
+            <!-- Other content (welcome label and back button) -->
+            <Label 
                 Text="Welcome to .NET MAUI!"
                 VerticalOptions="Center" 
                 HorizontalOptions="Center" />
 
-        <Button
+            <Button
                 Clicked="Button_OnClicked"
                 BackgroundColor="{StaticResource Tertiary}"
                 Text="Go back to Main Menu"
                 HorizontalOptions="Center"/>
-
-    </VerticalStackLayout>
+        </StackLayout>
+    </Grid>
 </ContentPage>
