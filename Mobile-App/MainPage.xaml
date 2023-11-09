@@ -10,20 +10,68 @@
     </ContentPage.Behaviors>
 
 
-  <AbsoluteLayout>
-      
-      <Image Source="food_stuff.png" 
+    <AbsoluteLayout>
+
+        <Image Source="food_stuff.png" 
              AbsoluteLayout.LayoutBounds="-50,-100,500,400" 
              AbsoluteLayout.LayoutFlags="None"
-             ZIndex="0"
-      />
+             ZIndex="0" />
 
-      <Image Source="buurtboer_met_tekst.svg" 
-             AbsoluteLayout.LayoutBounds="50,75,300,300" 
-             AbsoluteLayout.LayoutFlags="None"
-             ZIndex="1"
-             />
+        <Border 
+          WidthRequest="300"
+          HeightRequest="300"
+          ZIndex="1"
+          AbsoluteLayout.LayoutBounds="-50,50,500,350"
+          BackgroundColor="{StaticResource Primary}">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="20" />
+            </Border.StrokeShape>
+            <Image Source="buurtboer_met_tekst.svg"/>
+        </Border>
 
-  </AbsoluteLayout>
+        <!-- I want a box where users can enter details -->
+        <Border
+            WidthRequest="300"
+            HeightRequest="50"
+            AbsoluteLayout.LayoutBounds="100, 400, 200, 200"
+            >
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="5" />
+            </Border.StrokeShape>
+
+            <Entry Placeholder="Username"
+             WidthRequest="300"
+             Text=""
+             FontSize="20"
+             TextColor="{StaticResource Secondary}"
+             BackgroundColor="{StaticResource Primary}"/>
+
+        </Border>
+
+        <Border
+            WidthRequest="300"
+            HeightRequest="50"
+            AbsoluteLayout.LayoutBounds="100, 460, 200, 200"
+        >
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="5" />
+            </Border.StrokeShape>
+
+            <Entry Placeholder="Password"
+                   WidthRequest="300"
+                   Text=""
+                   FontSize="20"
+                   IsPassword="True"
+                   TextColor="{StaticResource Secondary}"
+                   BackgroundColor="{StaticResource Primary}"/>
+
+        </Border>
+
+        <Button>
+
+        </Button>
+
+
+    </AbsoluteLayout>
 
 </ContentPage>
