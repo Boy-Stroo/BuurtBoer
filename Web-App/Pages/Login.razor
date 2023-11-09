@@ -1,0 +1,24 @@
+@page "/login"
+
+<h1>Login</h1>
+
+<PageTitle>Counter</PageTitle>
+
+<form>
+   <label for="username">Username:</label>
+   <input type="text" id="username" />
+
+   <label for="password">Password:</label>
+   <input type="password" id="password" />
+
+   <button type="button" @onclick="HandleLogin">Login</button>
+</form>
+
+@code {
+    private void HandleLogin()
+    {
+        // Add login logic here
+        // Check username and password against database
+        // Redirect user if login is successful
+    }
+}
