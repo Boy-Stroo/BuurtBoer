@@ -12,71 +12,161 @@
 
     <AbsoluteLayout>
 
+        <!-- Background image -->
         <Image Source="food_stuff.png" 
-             AbsoluteLayout.LayoutBounds="-50,-100,500,400" 
-             AbsoluteLayout.LayoutFlags="None"
+             AbsoluteLayout.LayoutBounds=".5,-.2,500,400" 
+             AbsoluteLayout.LayoutFlags="PositionProportional"
              ZIndex="0" />
 
-        <Border 
-          WidthRequest="300"
-          HeightRequest="300"
-          ZIndex="1"
-          AbsoluteLayout.LayoutBounds="-50,50,500,350"
-          BackgroundColor="{StaticResource Primary}">
-            <Border.StrokeShape>
-                <RoundRectangle CornerRadius="20" />
-            </Border.StrokeShape>
-            <Image Source="buurtboer_met_tekst.svg"/>
-        </Border>
+        <VerticalStackLayout
+            Margin="0"
+            Spacing="5"
+            HorizontalOptions="Center"
+            AbsoluteLayout.LayoutBounds=".5,.1,500,400" 
+            AbsoluteLayout.LayoutFlags="PositionProportional">
+            <!-- Buurtboer Logo -->
+            <Border 
+                WidthRequest="300"
+                HeightRequest="300"
+                ZIndex="1"
+                BackgroundColor="{StaticResource Primary}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="20" />
+                </Border.StrokeShape>
+                <Image Source="buurtboer_met_tekst.svg"/>
+            </Border>
 
-        <Border
-            WidthRequest="300"
-            HeightRequest="50"
-            AbsoluteLayout.LayoutBounds="100, 400, 200, 200"
+            <!-- NL or EN -->
+            <HorizontalStackLayout 
+                Spacing="4"
+                ZIndex="1"
             >
-            <Border.StrokeShape>
-                <RoundRectangle CornerRadius="5" />
-            </Border.StrokeShape>
 
-            <Entry Placeholder="Username"
-             WidthRequest="300"
-             Text=""
-             FontSize="20"
-             TextColor="{StaticResource Secondary}"
-             BackgroundColor="{StaticResource Primary}"/>
-
-        </Border>
-
-        <Border
-            WidthRequest="300"
-            HeightRequest="50"
-            AbsoluteLayout.LayoutBounds="100, 460, 200, 200"
-        >
-            <Border.StrokeShape>
-                <RoundRectangle CornerRadius="5" />
-            </Border.StrokeShape>
-
-            <Entry Placeholder="Password"
-                   WidthRequest="300"
-                   Text=""
-                   FontSize="20"
-                   IsPassword="True"
-                   TextColor="{StaticResource Secondary}"
-                   BackgroundColor="{StaticResource Primary}"/>
-
-        </Border>
-
-        <Button Text="Login"
-                    WidthRequest="300"
-                    HeightRequest="50"
-                    BackgroundColor="{StaticResource Tertiary}"
+                <Button 
+                    Text="NL"
+                    WidthRequest="50"
+                    HeightRequest="35"
+                    BackgroundColor="{StaticResource Primary}"
                     TextColor="{StaticResource Secondary}"
-                    FontSize="20"
+                    FontSize="12"
                     BorderColor="{StaticResource Secondary}"
                     BorderWidth="1"
                     CornerRadius="5"
-                    AbsoluteLayout.LayoutBounds="100, 520, 200, 200"
-                    Clicked="OnButtonClicked"/>
+                    Clicked="ChangeLanguage"/>
+
+                <Button 
+                    Text="EN"
+                    WidthRequest="50"
+                    HeightRequest="35"
+                    BackgroundColor="{StaticResource Primary}"
+                    TextColor="{StaticResource Secondary}"
+                    FontSize="12"
+                    BorderColor="{StaticResource Secondary}"
+                    BorderWidth="1"
+                    CornerRadius="5"
+                    Clicked="ChangeLanguage"/>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+
+        <VerticalStackLayout
+            HorizontalOptions="Center"
+            AbsoluteLayout.LayoutBounds=".5,1,500,400" 
+            AbsoluteLayout.LayoutFlags="PositionProportional"
+            Spacing="5">
+
+            <!-- TextBox Username -->
+            <Border
+                WidthRequest="300"
+                HeightRequest="50"
+            >
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="5" />
+                </Border.StrokeShape>
+
+                <Entry 
+                    Placeholder="Username"
+                    WidthRequest="300"
+                    Text=""
+                    FontSize="20"
+                    PlaceholderColor="{StaticResource Secondary}"
+                    TextColor="{StaticResource Secondary}"
+                    BackgroundColor="{StaticResource Primary}"/>
+
+            </Border>
+
+            <!-- TextBox Password -->
+            <Border
+            WidthRequest="300"
+            HeightRequest="50"
+        >
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="5" />
+                </Border.StrokeShape>
+
+                <Entry 
+                Placeholder="Password"
+                WidthRequest="300"
+                Text=""
+                FontSize="20"
+                IsPassword="True"
+                PlaceholderColor="{StaticResource Secondary}"
+                TextColor="{StaticResource Secondary}"
+                BackgroundColor="{StaticResource Primary}"/>
+
+            </Border>
+
+            <!-- Forgot Password -->
+            <Button 
+                Text="Forgot Password?"
+                WidthRequest="300"
+                HeightRequest="40"
+                BackgroundColor="{StaticResource Secondary}"
+                TextColor="{StaticResource Primary}"
+                FontSize="12"
+                BorderColor="{StaticResource Secondary}"
+                BorderWidth="1"
+                CornerRadius="5"
+                Clicked="OnButtonClicked"/>
+        </VerticalStackLayout>
+
+        <Grid
+            AbsoluteLayout.LayoutBounds=".5,.95, 300, 200"
+            AbsoluteLayout.LayoutFlags="PositionProportional"
+            Margin="-10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Button 
+            Text="Login"
+            WidthRequest="300"
+            HeightRequest="50"
+            BackgroundColor="{StaticResource Tertiary}"
+            TextColor="{StaticResource Secondary}"
+            FontSize="20"
+            BorderColor="{StaticResource Secondary}"
+            BorderWidth="1"
+            CornerRadius="5"
+            Clicked="OnButtonClicked"/>
+
+            <Label Grid.Row="1" Text="---- Or Sign in with ----"
+                   HorizontalOptions="Center"
+                   FontSize="16"
+                   FontAttributes="Bold"
+                   TextColor="{StaticResource Primary}"/>
+            <ImageButton Grid.Row="2" Source="microsoftbuttona.svg"
+                         WidthRequest="300"/>
+            <ImageButton Grid.Row="3"  Source="googlebutton.svg"
+                         WidthRequest="300"
+                         />
+
+        </Grid>
+
+
+        <!-- Login Button -->
 
     </AbsoluteLayout>
 

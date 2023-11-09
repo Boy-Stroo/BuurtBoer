@@ -2,7 +2,7 @@
 {
     public partial class MainPage : ContentPage
     {
-        int count = 0;
+        private bool _english = false;
 
         public MainPage()
         {
@@ -14,5 +14,9 @@
             Navigation.PushAsync(new MyPage());
         }
 
+        private void ChangeLanguage(object sender, EventArgs e)
+        {
+            _english = !_english;
+        }
     }
 }
