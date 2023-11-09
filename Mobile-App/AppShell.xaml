@@ -7,9 +7,10 @@
     Shell.FlyoutBehavior="Disabled">
     <!-- Define a new page here. Follow  -->
     <ShellContent
-        Title="Home"
         ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage"/>
+        Route="MainPage"
+        Shell.NavBarIsVisible="False"
+        Shell.TabBarIsVisible="False"/>
 
     <ShellContent
         Title="Testing"
