@@ -35,7 +35,7 @@
 		<MauiIcon Include="Resources\AppIcon\buurtboerlogo.svg" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\buurtboersplash.svg" Color="#00A89B" BaseSize="150,150" />
+		<MauiSplashScreen Include="Resources\Splash\buurtboersplash2.svg" Color="#00A89B" BaseSize="150,150" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
