@@ -9,165 +9,146 @@
         <toolkit:StatusBarBehavior StatusBarColor="{StaticResource Primary}"/>
     </ContentPage.Behaviors>
 
-
+    <!-- Absolute Layout contains the background image and the Grid with all elements Layered on top of eachother-->
     <AbsoluteLayout>
+        <Image AbsoluteLayout.LayoutBounds="0,0,1,.3"
+           AbsoluteLayout.LayoutFlags="All"
+           ZIndex="0"
+           Aspect="AspectFill"
+           Source="food_stuff.png"/>
 
-        <!-- Background image -->
-        <Image Source="food_stuff.png" 
-             AbsoluteLayout.LayoutBounds=".5,-.2,500,400" 
-             AbsoluteLayout.LayoutFlags="PositionProportional"
-             ZIndex="0" />
+        <Grid AbsoluteLayout.LayoutBounds="0,0,1,1"
+          AbsoluteLayout.LayoutFlags="All"
+          ZIndex="1"
+          Margin="0,30,0,30"
+          RowSpacing="30">
 
-        <VerticalStackLayout
-            Margin="0"
-            Spacing="5"
-            HorizontalOptions="Center"
-            AbsoluteLayout.LayoutBounds=".5,.1,500,400" 
-            AbsoluteLayout.LayoutFlags="PositionProportional">
-            <!-- Buurtboer Logo -->
-            <Border 
-                WidthRequest="300"
-                HeightRequest="300"
-                ZIndex="1"
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="6*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- The logo and language buttons -->
+            <VerticalStackLayout Grid.Row="0" Grid.Column="1"
+                             Spacing="3">
+
+                <Border
                 BackgroundColor="{StaticResource Primary}">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="20" />
-                </Border.StrokeShape>
-                <Image Source="buurtboer_met_tekst.svg"/>
-            </Border>
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="20" />
+                    </Border.StrokeShape>
+                    <Image Source="buurtboer_met_tekst.svg"/>
+                </Border>
 
-            <!-- NL or EN -->
-            <HorizontalStackLayout 
-                Spacing="4"
-                ZIndex="1"
-            >
+                <HorizontalStackLayout Spacing="2">
 
-                <Button 
+                    <Button 
                     Text="NL"
-                    WidthRequest="50"
-                    HeightRequest="35"
                     BackgroundColor="{StaticResource Primary}"
                     TextColor="{StaticResource Secondary}"
                     FontSize="12"
                     BorderColor="{StaticResource Secondary}"
                     BorderWidth="1"
-                    CornerRadius="5"
-                    Clicked="ChangeLanguage"/>
+                    CornerRadius="8"/>
 
-                <Button 
+                    <Button 
                     Text="EN"
-                    WidthRequest="50"
-                    HeightRequest="35"
                     BackgroundColor="{StaticResource Primary}"
                     TextColor="{StaticResource Secondary}"
                     FontSize="12"
                     BorderColor="{StaticResource Secondary}"
                     BorderWidth="1"
-                    CornerRadius="5"
-                    Clicked="ChangeLanguage"/>
-            </HorizontalStackLayout>
-        </VerticalStackLayout>
+                    CornerRadius="8"/>
 
-        <VerticalStackLayout
-            HorizontalOptions="Center"
-            AbsoluteLayout.LayoutBounds=".5,1,500,400" 
-            AbsoluteLayout.LayoutFlags="PositionProportional"
-            Spacing="5">
+                </HorizontalStackLayout>
 
-            <!-- TextBox Username -->
-            <Border
+            </VerticalStackLayout>
+
+
+            <!-- The login form -->
+            <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="5">
+
+                <Border
                 WidthRequest="300"
                 HeightRequest="50"
             >
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="5" />
-                </Border.StrokeShape>
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="5" />
+                    </Border.StrokeShape>
 
-                <Entry 
+                    <Entry 
                     Placeholder="Username"
-                    WidthRequest="300"
-                    Text=""
+                    HorizontalTextAlignment="Center"
                     FontSize="20"
                     PlaceholderColor="{StaticResource Secondary}"
                     TextColor="{StaticResource Secondary}"
                     BackgroundColor="{StaticResource Primary}"/>
 
-            </Border>
+                </Border>
 
-            <!-- TextBox Password -->
-            <Border
-            WidthRequest="300"
-            HeightRequest="50"
-        >
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="5" />
-                </Border.StrokeShape>
-
-                <Entry 
-                Placeholder="Password"
+                <Border
                 WidthRequest="300"
-                Text=""
-                FontSize="20"
-                IsPassword="True"
-                PlaceholderColor="{StaticResource Secondary}"
-                TextColor="{StaticResource Secondary}"
-                BackgroundColor="{StaticResource Primary}"/>
+                HeightRequest="50"
+            >
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="5" />
+                    </Border.StrokeShape>
 
-            </Border>
+                    <Entry 
+                    Placeholder="Password"
+                    HorizontalTextAlignment="Center"
+                    FontSize="20"
+                    IsPassword="True"
+                    PlaceholderColor="{StaticResource Secondary}"
+                    TextColor="{StaticResource Secondary}"
+                    BackgroundColor="{StaticResource Primary}"
+                    />
 
-            <!-- Forgot Password -->
-            <Button 
-                Text="Forgot Password?"
-                WidthRequest="300"
-                HeightRequest="40"
-                BackgroundColor="{StaticResource Secondary}"
-                TextColor="{StaticResource Primary}"
-                FontSize="12"
-                BorderColor="{StaticResource Secondary}"
-                BorderWidth="1"
-                CornerRadius="5"
-                Clicked="OnButtonClicked"/>
-        </VerticalStackLayout>
+                </Border>
 
-        <Grid
-            AbsoluteLayout.LayoutBounds=".5,.95, 300, 200"
-            AbsoluteLayout.LayoutFlags="PositionProportional"
-            Margin="-10">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+                <Label Text="Forgot Password?"
+                       TextColor="Black"
+                       Margin="5,0,0,0">
 
-            <Button 
-            Text="Login"
-            WidthRequest="300"
-            HeightRequest="50"
-            BackgroundColor="{StaticResource Tertiary}"
-            TextColor="{StaticResource Secondary}"
-            FontSize="20"
-            BorderColor="{StaticResource Secondary}"
-            BorderWidth="1"
-            CornerRadius="5"
-            Clicked="OnButtonClicked"/>
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnLabelClicked" />
+                    </Label.GestureRecognizers>
+                </Label>
 
-            <Label Grid.Row="1" Text="---- Or Sign in with ----"
+                <Button Text="Login" 
+                    BackgroundColor="{StaticResource Tertiary}"
+                    Margin="0,10"
+                    TextColor="{StaticResource Secondary}"
+                    Clicked="OnLoginClicked"/>
+
+            </VerticalStackLayout>
+
+            <!-- The social login buttons -->
+
+            <VerticalStackLayout Grid.Row="2" Grid.Column="1">
+
+                <Label Text="-----Or login with-----"
                    HorizontalOptions="Center"
-                   FontSize="16"
-                   FontAttributes="Bold"
-                   TextColor="{StaticResource Primary}"/>
-            <ImageButton Grid.Row="2" Source="microsoftbuttona.svg"
-                         WidthRequest="300"/>
-            <ImageButton Grid.Row="3"  Source="googlebutton.svg"
-                         WidthRequest="300"
-                         />
+                   TextColor="Black"
+                   />
 
+                <ImageButton Source="googlebutton.svg"
+                         VerticalOptions="Start"
+                         Margin="0,-50"/>
+
+                <ImageButton Source="microsoftbuttona.svg"
+                         VerticalOptions="Start"
+                         Margin="0,-80"/>
+
+            </VerticalStackLayout>
         </Grid>
-
-
-        <!-- Login Button -->
-
     </AbsoluteLayout>
 
 </ContentPage>

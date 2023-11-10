@@ -54,7 +54,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="TestPage.xaml.cs">
+	    <DependentUpon>TestPage.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
 	  <MauiXaml Update="MyPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="TestPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
