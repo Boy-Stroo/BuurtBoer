@@ -19,11 +19,10 @@
         <Grid AbsoluteLayout.LayoutBounds="0,0,1,1"
           AbsoluteLayout.LayoutFlags="All"
           ZIndex="1"
-          Margin="0,30,0,30"
-          RowSpacing="30">
+          Margin="0,20,0,30"
+          RowSpacing="10">
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
@@ -73,7 +72,7 @@
 
 
             <!-- The login form -->
-            <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="0">
+            <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="5">
 
                 <Border>
                     <Border.StrokeShape>
@@ -109,7 +108,7 @@
 
                 <Label Text="Forgot Password?"
                        TextColor="{StaticResource Tertiary}"
-                       Margin="5,5,0,0">
+                       Margin="5,10,0,10">
 
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnLabelClicked" />
@@ -118,35 +117,37 @@
 
                 <Button Text="Login" 
                     BackgroundColor="{StaticResource Tertiary}"
-                    Margin="0,10"
+                    Margin="0,5"
                     TextColor="{StaticResource Secondary}"
                     Clicked="OnLoginClicked"/>
 
 
 
                 <!-- The social login buttons -->
+            </VerticalStackLayout>
 
+            <VerticalStackLayout Grid.Row="2" Grid.Column="1">
 
 
                 <Label Text="-----Or login with-----"
                    HorizontalOptions="Center"
-                   Margin="0,5"
+                   Margin="0,-5,0,10"
                    TextColor="Black"
                    />
 
                 <ImageButton Source="googlebutton.svg"
                          VerticalOptions="Start"
-                         Margin="0,5"
+                         Margin="0,0,0,0"
                          HeightRequest="50"
                          Clicked="OnGoogleClicked"/>
 
                 <ImageButton Source="microsoftbuttona.svg"
                          VerticalOptions="Start"
                          HeightRequest="50"
-                         Margin="0,5"
+                         Margin="0,0,0,10"
                          Clicked="OnMicrosoftClicked"/>
-
             </VerticalStackLayout>
+
 
 
 

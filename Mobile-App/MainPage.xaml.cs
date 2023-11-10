@@ -9,9 +9,12 @@
             InitializeComponent();
         }
 
-        private void OnLoginClicked(object sender, EventArgs e)
+        private async void OnLoginClicked(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new MyPage());
+            var button = (Button)sender;
+            button.IsEnabled = false;
+            await Navigation.PushAsync(new MyPage());
+            button.IsEnabled = true;
         }
 
         private void ChangeLanguage(object sender, EventArgs e)
@@ -19,9 +22,12 @@
             _english = !_english;
         }
 
-        private void OnLabelClicked(object sender, TappedEventArgs e)
+        private async void OnLabelClicked(object sender, TappedEventArgs e)
         {
-            Navigation.PushAsync(new ForgotPasswordPage());
+            Label label = (Label)sender;
+            label.IsEnabled = false;
+            await Navigation.PushAsync(new ForgotPasswordPage());
+            label.IsEnabled = true;
         }
 
         private void OnGoogleClicked(object sender, EventArgs e)
