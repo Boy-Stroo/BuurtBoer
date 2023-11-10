@@ -2,9 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             x:Class="Mobile_App.MainPage"
+             x:Class="Mobile_App.LogInPage"
              BackgroundColor="{StaticResource Secondary}">
-
     <ContentPage.Behaviors>
         <toolkit:StatusBarBehavior StatusBarColor="{StaticResource Primary}"/>
     </ContentPage.Behaviors>
@@ -25,7 +24,8 @@
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
@@ -37,7 +37,7 @@
 
             <!-- The logo and language buttons -->
             <VerticalStackLayout Grid.Row="0" Grid.Column="1"
-                             Spacing="3">
+                             Spacing="10">
 
                 <Border
                 BackgroundColor="{StaticResource Primary}">
@@ -47,7 +47,7 @@
                     <Image Source="buurtboer_met_tekst.svg"/>
                 </Border>
 
-                <HorizontalStackLayout Spacing="2">
+                <HorizontalStackLayout Spacing="5">
 
                     <Button 
                     Text="NL"
@@ -73,12 +73,9 @@
 
 
             <!-- The login form -->
-            <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="5">
+            <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="0">
 
-                <Border
-                WidthRequest="300"
-                HeightRequest="50"
-            >
+                <Border>
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="5" />
                     </Border.StrokeShape>
@@ -93,10 +90,7 @@
 
                 </Border>
 
-                <Border
-                WidthRequest="300"
-                HeightRequest="50"
-            >
+                <Border>
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="5" />
                     </Border.StrokeShape>
@@ -114,8 +108,8 @@
                 </Border>
 
                 <Label Text="Forgot Password?"
-                       TextColor="Black"
-                       Margin="5,0,0,0">
+                       TextColor="{StaticResource Tertiary}"
+                       Margin="5,5,0,0">
 
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnLabelClicked" />
@@ -128,27 +122,36 @@
                     TextColor="{StaticResource Secondary}"
                     Clicked="OnLoginClicked"/>
 
-            </VerticalStackLayout>
 
-            <!-- The social login buttons -->
 
-            <VerticalStackLayout Grid.Row="2" Grid.Column="1">
+                <!-- The social login buttons -->
+
+
 
                 <Label Text="-----Or login with-----"
                    HorizontalOptions="Center"
+                   Margin="0,5"
                    TextColor="Black"
                    />
 
                 <ImageButton Source="googlebutton.svg"
                          VerticalOptions="Start"
-                         Margin="0,-50"/>
+                         Margin="0,5"
+                         HeightRequest="50"
+                         Clicked="OnGoogleClicked"/>
 
                 <ImageButton Source="microsoftbuttona.svg"
                          VerticalOptions="Start"
-                         Margin="0,-80"/>
+                         HeightRequest="50"
+                         Margin="0,5"
+                         Clicked="OnMicrosoftClicked"/>
 
             </VerticalStackLayout>
+
+
+
         </Grid>
     </AbsoluteLayout>
+
 
 </ContentPage>

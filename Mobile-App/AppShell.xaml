@@ -5,24 +5,26 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:Mobile_App"
     Shell.FlyoutBehavior="Disabled"
-    TabBarIsVisible="False"
-    NavBarIsVisible="False">
+    NavBarIsVisible="False"
+    TabBarIsVisible="False">
 
     <!-- Define a new page here. Follow  -->
     <ShellContent
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage"
+        ContentTemplate="{DataTemplate local:LogInPage}"
+        Route="LogInPage"
         Shell.NavBarIsVisible="False"
         Shell.TabBarIsVisible="False"/>
 
     <ShellContent
         Title="Testing"
         ContentTemplate="{DataTemplate local:MyPage}"
-        Route="MyPage"/>
+        Route="MyPage"
+        Shell.NavBarIsVisible="False"
+        Shell.TabBarIsVisible="False"/>
 
     <ShellContent
-        ContentTemplate="{DataTemplate local:TestPage}"
-        Route="TestPage"
+        ContentTemplate="{DataTemplate local:ForgotPasswordPage}"
+        Route="ForgotPasswordPage"
         Shell.NavBarIsVisible="False"
         Shell.TabBarIsVisible="False"/>
 

@@ -1,20 +1,17 @@
 ﻿namespace Mobile_App
 {
-    public partial class MainPage : ContentPage
+    public partial class LogInPage : ContentPage
     {
         private bool _english = false;
 
-        public MainPage()
+        public LogInPage()
         {
             InitializeComponent();
         }
 
         private void OnLoginClicked(object sender, EventArgs e)
         {
-            Button button = (Button) sender;
-            button.IsEnabled = false;
             Navigation.PushAsync(new MyPage());
-            button.IsEnabled = true;
         }
 
         private void ChangeLanguage(object sender, EventArgs e)
@@ -24,7 +21,17 @@
 
         private void OnLabelClicked(object sender, TappedEventArgs e)
         {
-            throw new NotImplementedException();
+            Navigation.PushAsync(new ForgotPasswordPage());
+        }
+
+        private void OnGoogleClicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new LogInPage());
+        }
+
+        private void OnMicrosoftClicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new ForgotPasswordPage());
         }
     }
 }

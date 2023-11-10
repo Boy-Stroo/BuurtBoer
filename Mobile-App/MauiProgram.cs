@@ -16,13 +16,6 @@ namespace Mobile_App
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
-            Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping(nameof(Entry), (handler, view) =>
-            {
-#if ANDROID
-                handler.PlatformView.SetBackgroundColor(Android.Graphics.Color.Transparent);
-#endif
-            });
-
 #if DEBUG
             builder.Logging.AddDebug();
 #endif

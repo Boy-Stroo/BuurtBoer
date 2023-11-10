@@ -54,6 +54,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="ForgotPasswordPage.xaml.cs">
+	    <DependentUpon>ForgotPasswordPage.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="TestPage.xaml.cs">
 	    <DependentUpon>TestPage.xaml</DependentUpon>
 	  </Compile>
@@ -63,9 +66,14 @@
 	  <MauiXaml Update="MyPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="ForgotPasswordPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="TestPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
+
+	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadDebuggerTimeoutExceptionMobileAppHideInfoBar="True" /></VisualStudio></ProjectExtensions>
 
 </Project>
