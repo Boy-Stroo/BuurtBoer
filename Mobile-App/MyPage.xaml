@@ -5,6 +5,98 @@
              Title="MyPage">
 
     <Grid>
+        <!-- Navigation Arrows -->
+        <StackLayout Orientation="Horizontal" HorizontalOptions="Start">
+            <ImageButton
+                Clicked="PreviousWeekButton_Clicked"
+                Source="left_arrow.png"
+                HeightRequest="30"
+                WidthRequest="30"
+                Margin="70,20,0,600"
+                BackgroundColor="Transparent"/>
+            <ImageButton
+                Clicked="NextWeekButton_Clicked"
+                Source="right_arrow.pn"
+                HeightRequest="30"
+                WidthRequest="30"
+                Margin="190,20,0,600"
+                BackgroundColor="Transparent"/>
+        </StackLayout>
+
+        <!-- Weekly Schedule -->
+        <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto" Margin="0,170,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Monday - Friday Rectangles -->
+            <Frame Grid.Row="0" Grid.Column="0" BackgroundColor="{StaticResource Primary}" Margin="55,10,110,0" CornerRadius="10">
+                <ContentView>
+                    <StackLayout>
+                        <Label Text="Monday" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    </StackLayout>
+                </ContentView>
+            </Frame>
+
+            <Frame Grid.Row="1" Grid.Column="0" BackgroundColor="{StaticResource Primary}" Margin="55,10,110,0" CornerRadius="10">
+                <ContentView>
+                    <StackLayout>
+                        <Label Text="Tuesday" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    </StackLayout>
+                </ContentView>
+            </Frame>
+
+            <Frame Grid.Row="2" Grid.Column="0" BackgroundColor="{StaticResource Primary}" Margin="55,10,110,0" CornerRadius="10">
+                <ContentView>
+                    <StackLayout>
+                        <Label Text="Wednesday" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    </StackLayout>
+                </ContentView>
+            </Frame>
+
+            <Frame Grid.Row="3" Grid.Column="0" BackgroundColor="{StaticResource Primary}" Margin="55,10,110,0" CornerRadius="10">
+                <ContentView>
+                    <StackLayout>
+                        <Label Text="Thursday" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    </StackLayout>
+                </ContentView>
+            </Frame>
+
+            <Frame Grid.Row="4" Grid.Column="0" BackgroundColor="{StaticResource Primary}" Margin="55,10,110,0" CornerRadius="10">
+                <ContentView>
+                    <StackLayout>
+                        <Label Text="Friday" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    </StackLayout>
+                </ContentView>
+            </Frame>
+
+            <!-- Check/Uncheck Boxes -->
+            <CheckBox Grid.Row="0" Grid.Column="1" Margin="-110,10,10,0" Color="{StaticResource Tertiary}" Scale="2.5" WidthRequest="20" HeightRequest="20"/>
+            <CheckBox Grid.Row="1" Grid.Column="1" Margin="-110,10,10,0" Color="{StaticResource Tertiary}" Scale="2.5" WidthRequest="20" HeightRequest="20"/>
+            <CheckBox Grid.Row="2" Grid.Column="1" Margin="-110,10,10,0" Color="{StaticResource Tertiary}" Scale="2.5" WidthRequest="20" HeightRequest="20"/>
+            <CheckBox Grid.Row="3" Grid.Column="1" Margin="-110,10,10,0" Color="{StaticResource Tertiary}" Scale="2.5" WidthRequest="20" HeightRequest="20"/>
+            <CheckBox Grid.Row="4" Grid.Column="1" Margin="-110,10,10,0" Color="{StaticResource Tertiary}" Scale="2.5" WidthRequest="20" HeightRequest="20"/>
+
+
+            <!-- Save Selection Rectangle -->
+            <Frame Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="{StaticResource Tertiary}" Margin="10,10,10,0" CornerRadius="10">
+                <StackLayout>
+                    <Label Text="Save Selection" HorizontalOptions="Center" VerticalOptions="Center"/>
+                </StackLayout>
+            </Frame>
+        </Grid>
+        
+        <!-- Gear icon button in the top left corner -->
+        <ImageButton
+            Clicked="Button_OnClicked"
+            VerticalOptions="Start"
+            HorizontalOptions="Start"
+            Margin="0,0,0,0"
+            Source="gearicon.svg"
+            HeightRequest="45"
+            WidthRequest="45"/>
+
         <!-- Green rounded square -->
         <BoxView
             Color="{StaticResource Primary}"
@@ -15,14 +107,13 @@
             WidthRequest="150"
             Margin="0,0,0,0" />
 
-        <!-- Logo in the middle of the square -->
         <Image
             Source="buurtboer_met_tekst.svg"
             VerticalOptions="Start"
             HorizontalOptions="Center"
             Margin="0,15,0,0"
-            HeightRequest="60"
-            WidthRequest="60" />
+            HeightRequest="75"
+            WidthRequest="75" />
 
         <!-- Orange rectangle with week and month -->
         <Grid VerticalOptions="Start" HorizontalOptions="Center" Margin="0,90,0,0">
@@ -45,20 +136,6 @@
                 <Label Text="November" HorizontalOptions="Center" VerticalOptions="Center" TextColor="White" Grid.Row="1" />
             </Grid>
         </Grid>
-
-
-        <StackLayout VerticalOptions="Center">
-            <!-- Other content (welcome label and back button) -->
-            <Label 
-                Text="Welcome to .NET MAUI!"
-                VerticalOptions="Center" 
-                HorizontalOptions="Center" />
-
-            <Button
-                Clicked="Button_OnClicked"
-                BackgroundColor="{StaticResource Tertiary}"
-                Text="Go back to Main Menu"
-                HorizontalOptions="Center"/>
-        </StackLayout>
+        
     </Grid>
 </ContentPage>
