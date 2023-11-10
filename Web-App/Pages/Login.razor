@@ -1,23 +1,140 @@
 @page "/login"
 
+<style>
+    body {
+        background: linear-gradient(to left, #C4A484 50%, transparent 50%),
+            url('https://cdn.discordapp.com/attachments/1166308177084690536/1172495520258867201/project_C_achtergrond_v2.png?ex=6560868b&is=654e118b&hm=1b7b95641b719409c313830000739d2f81f9a23aa5539b7fd94814d5906a3bc3&') repeat-x;
+        background-color: #E9E9E9;
+        background-size: 3850px 300px;
+        background-position: 0px 0px;
+        display: flex;
+        flex-direction: column;
+    }
 
-<style> 
-    body { /*achtergrond:*/
-        background-color: #C4A484;
+    .squareone {
+        width: 1200px;
+        height: 250px;
+        background-color: #099F91;
+        border-radius: 10px;
+        position: relative;
+        top: 100px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .smallersquareone {
+        width: 300px;
+        height: 250px;
+        background-color: #00A89B;
+        border-radius: 10px;
+        position: relative;
+        top: 0px;
+        left: 0%;
+    }
+
+    .squaretwo {
+        width: 1200px;
+        height: 500px;
+        background-color: #099F91;
+        border-radius: 10px;
+        position: relative;
+        top: 150px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .smallersquaretwo {
+        width: 300px;
+        height: 500px;
+        background-color: #00A89B;
+        border-radius: 10px;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        z-index: -1;
+    }
+
+    .text-container {
+        display: flex;
+        flex-direction: column;
+        align-items: left;
+        justify-content: center;
+        color: white;
+        font-family: monospace; /* Set font-family to monospace */
+        font-size: 24px; /* Adjust the font size as needed */
+        margin-top: 120px;
+    }
+
+    input {
+        margin-bottom: 30px;
+        border: 2px solid white;
+        border-radius: 8px; /* Set border-radius for rounded corners */
+        padding: 8px; /* Add padding for better visual appearance */
+        width: 500px;
+    }
+
+    .login-text {
+        position: absolute;
+        top: 35px;
+        left: 350px;
+        color: white;
+        font-family: monospace;
+        font-size: 40px;
+    }
+
+    .button-container {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        display: flex;
+        flex-direction: row;
+    }
+
+    .language-button {
+        background-color: #F9834C;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        padding: 10px 15px;
+        font-size: 16px;
+        margin-right: 10px;
+        cursor: pointer;
+    }
+
+    button {
+        background-color: #F9834C;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 15px 30px;
+        font-size: 24px;
+        cursor: pointer;
     }
 </style>
 
-<h1>Login</h1>
+<div class="squareone">
+    <div class="smallersquareone"></div>
+</div>
 
-<form>
-   <label for="username">Username:</label>
-   <input type="text" id="username" />
-    
-   <label for="password">Password:</label>
-   <input type="password" id="password" />
+<div class="squaretwo">
+    <div class="smallersquaretwo"></div>
+    <div class="button-container">
+        <button class="language-button">NL</button>
+        <button class="language-button">EN</button>
+    </div>
+    <div class="login-text">LOGIN</div>
+    <div class="text-container">
+        <label for="email adress">Email address:</label>
+        <input type="text" id="email adress" />
 
-   <button type="button" @onclick="HandleLogin">Login</button>
-</form>
+        <label for="password">Password:</label>
+        <input type="password" id="password" />
+        <button type="button" @onclick="HandleLogin">Continue</button>
+    </div>
+</div>
 
 @code {
     private void HandleLogin()
