@@ -4,7 +4,7 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>Server_Stuff</RootNamespace>
+    <RootNamespace>Server_Things</RootNamespace>
   </PropertyGroup>
 
 </Project>

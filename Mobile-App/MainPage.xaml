@@ -8,7 +8,7 @@
         <toolkit:StatusBarBehavior StatusBarColor="{StaticResource Primary}"/>
     </ContentPage.Behaviors>
 
-    <!-- Absolute Layout contains the background image and the Grid with all elements Layered on top of eachother-->
+    <!-- Absolute Layout contains the background image and the Grid with both elements layered on top of each other -->
     <AbsoluteLayout>
         <Image AbsoluteLayout.LayoutBounds="0,0,1,.3"
            AbsoluteLayout.LayoutFlags="All"
@@ -146,6 +146,7 @@
                          HeightRequest="50"
                          Margin="0,0,0,10"
                          Clicked="OnMicrosoftClicked"/>
+
             </VerticalStackLayout>
 
 
