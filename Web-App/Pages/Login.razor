@@ -93,7 +93,7 @@
         flex-direction: row;
     }
 
-    .language-button {
+    .language-buttonenglish {
         background-color: #F9834C;
         color: white;
         border: none;
@@ -104,6 +104,18 @@
         cursor: pointer;
     }
 
+    .language-buttondutch {
+        background-color: #099F91;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        padding: 10px 15px;
+        font-size: 16px;
+        margin-right: 10px;
+        cursor: pointer;
+    }
+
+
     button {
         background-color: #F9834C;
         color: white;
@@ -112,6 +124,10 @@
         padding: 15px 30px;
         font-size: 24px;
         cursor: pointer;
+    }
+
+    .button-clicked {
+    background-color: #F9834C; /* Add your desired color here */
     }
 </style>
 
@@ -125,6 +141,7 @@
         <button class="language-button">NL</button>
         <button class="language-button">EN</button>
     </div>
+
     <div class="login-text">LOGIN</div>
     <div class="text-container">
         <label for="email adress">Email address:</label>
@@ -137,6 +154,7 @@
 </div>
 
 @code {
+
     private void HandleLogin()
     {
         // Add login logic here
