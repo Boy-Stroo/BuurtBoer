@@ -1,3 +1,14 @@
+using Renci.SshNet;
+using Server_Things;
+
+
+var client = new SshClient("145.24.222.23", 22, "ubuntu-1059195", "44dPA7k");
+client.Connect();
+
+var forwardedPort = new ForwardedPortLocal("localhost", 12345, "145.24.222.23", 5432);
+client.AddForwardedPort(forwardedPort);
+forwardedPort.Start();
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -24,4 +35,8 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.Run();
+using (var context = new BuurtboerContext())
+{
+    Console.WriteLine($"Context is configured: {context.Database.CanConnect()}");
+    app.Run();
+}
