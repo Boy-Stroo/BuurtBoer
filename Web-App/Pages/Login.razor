@@ -1,4 +1,5 @@
 @page "/login"
+@inject NavigationManager NavigationManager
 
 <style>
     body { /*achtergrond*/
@@ -180,9 +181,22 @@
 </div>
 
 @code {
-    private void HandleLogin() //Code voor wanneer een gebruiker op "Continue"/ "Ga door" klikt.
+    private bool isLoggedIn = false;    
+
+    private void HandleLogin() // code voor wanneer een gebruiker op "Continue"/ "Ga door" klikt.
     {
-        // Logic
+        // logic om te testen of de persoon een account heeft en of het wachtwoord klopt.
+        // als de gegevens goed zijn zet je isLoggedIn op true en roep je OnInitialized().
+
+        isLoggedIn = true;
+        OnInitialized();
+    }
+
+    protected override void OnInitialized() // code om van inlogscherm naar homescreen te gaan.
+    {
+        if(isLoggedIn) {
+            NavigationManager.NavigateTo("/home");
+        }
     }
 
     private bool isDutchSelected = true;
@@ -191,7 +205,8 @@
     {
         if (isDutch == isDutchSelected) {
             return "language-button-clicked"; 
-        } else {
+        } 
+        else {
             return "language-button-notclicked";
         }
     }
