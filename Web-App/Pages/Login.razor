@@ -3,7 +3,7 @@
 <style>
     body {
         background: linear-gradient(to left, #C4A484 50%, transparent 50%),
-            url('https://cdn.discordapp.com/attachments/1166308177084690536/1172495520258867201/project_C_achtergrond_v2.png?ex=6560868b&is=654e118b&hm=1b7b95641b719409c313830000739d2f81f9a23aa5539b7fd94814d5906a3bc3&') repeat-x;
+            url('https://i.imgur.com/GZVw5gT.png') repeat-x;
         background-color: #E9E9E9;
         background-size: 3850px 300px;
         background-position: 0px 0px;
@@ -20,18 +20,38 @@
         top: 100px;
         left: 50%;
         transform: translateX(-50%);
+        flex-direction: column;
+        align-items: center;
     }
 
-    .smallersquareone {
+    .buurtboer-logo {
         width: 300px;
         height: 250px;
-        background-color: #00A89B;
-        border-radius: 10px;
-        position: relative;
         top: 0px;
         left: 0%;
+        position: absolute;
     }
 
+    .text-contactsquareone {
+        position: absolute;
+        top: 10px;
+        left: 355px; 
+        color: white;
+        font-family: monospace;
+        font-size: 20px;
+        margin-top: 60px;        
+    }
+
+    .text-containersquareone {
+        position: absolute;
+        top: 10px;
+        left: 355px; 
+        color: white;
+        font-family: monospace;
+        font-size: 18px;
+        margin-top: 120px;
+    }
+    
     .squaretwo {
         width: 1200px;
         height: 500px;
@@ -57,22 +77,22 @@
         z-index: -1;
     }
 
-    .text-container {
+    .text-containersquaretwo {
         display: flex;
         flex-direction: column;
         align-items: left;
         justify-content: center;
         color: white;
-        font-family: monospace; /* Set font-family to monospace */
-        font-size: 24px; /* Adjust the font size as needed */
+        font-family: monospace;
+        font-size: 24px;
         margin-top: 120px;
     }
 
     input {
         margin-bottom: 30px;
         border: 2px solid white;
-        border-radius: 8px; /* Set border-radius for rounded corners */
-        padding: 8px; /* Add padding for better visual appearance */
+        border-radius: 8px;
+        padding: 8px;
         width: 500px;
     }
 
@@ -115,8 +135,29 @@
         cursor: pointer;
     }
 
+    .language-button-clicked {
+        background-color: #F9834C;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        padding: 10px 15px;
+        font-size: 16px;
+        margin-right: 10px;
+        cursor: pointer;
+    }
 
-    button {
+    .language-button-notclicked {
+        background-color: #099F91;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        padding: 10px 15px;
+        font-size: 16px;
+        margin-right: 10px;
+        cursor: pointer;
+    }
+
+    .continue-button {
         background-color: #F9834C;
         color: white;
         border: none;
@@ -127,38 +168,67 @@
     }
 
     .button-clicked {
-    background-color: #F9834C; /* Add your desired color here */
+    background-color: #F9834C;
     }
 </style>
 
 <div class="squareone">
-    <div class="smallersquareone"></div>
+    <div class="text-contactsquareone">
+        <p>CONTACT</p>
+    </div>
+    <div class="text-containersquareone">
+        <p>service@debuurtboer.nl</p>
+        <p>088-730 2200</p>
+    </div>
+    <img src="https://i.imgur.com/MF5gfZC.png" class="buurtboer-logo" />
 </div>
 
 <div class="squaretwo">
     <div class="smallersquaretwo"></div>
     <div class="button-container">
-        <button class="language-button">NL</button>
-        <button class="language-button">EN</button>
+      <button class="@GetLanguageButtonClass(true)" 
+              @onclick="() => SelectLanguage(true)">NL</button>
+
+      <button class="@GetLanguageButtonClass(false)"
+              @onclick="() => SelectLanguage(false)">EN</button>
     </div>
 
     <div class="login-text">LOGIN</div>
-    <div class="text-container">
+    <div class="text-containersquaretwo">
         <label for="email adress">Email address:</label>
         <input type="text" id="email adress" />
 
         <label for="password">Password:</label>
         <input type="password" id="password" />
-        <button type="button" @onclick="HandleLogin">Continue</button>
+        <button class="continue-button" @onclick="HandleLogin">Continue</button>
     </div>
 </div>
 
 @code {
-
     private void HandleLogin()
     {
         // Add login logic here
         // Check username and password against database
         // Redirect user if login is successful
+    }
+
+    private bool isDutchSelected = true;
+
+    private string GetLanguageButtonClass(bool isDutch) 
+    {
+        if (isDutch == isDutchSelected) {
+            return "language-button-clicked"; 
+        } else {
+            return "language-button-notclicked";
+        }
+    }
+
+    private void SelectLanguage(bool isDutch)
+    {
+        // Toggle selected language
+        isDutchSelected = isDutch;
+  
+        // Refresh UI
+        StateHasChanged();
     }
 }
