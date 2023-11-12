@@ -194,7 +194,8 @@
 
     protected override void OnInitialized() // code om van inlogscherm naar homescreen te gaan.
     {
-        if(isLoggedIn) {
+        if(isLoggedIn) 
+        {
             NavigationManager.NavigateTo("/home");
         }
     }
@@ -203,10 +204,12 @@
 
     private string GetLanguageButtonClass(bool isDutch) // hiermee kijk je welke taal er geselecteerd is en of hij dus moet veranderen of niet.
     {
-        if (isDutch == isDutchSelected) {
+        if (isDutch == isDutchSelected) 
+        {
             return "language-button-clicked"; 
         } 
-        else {
+        else 
+        {
             return "language-button-notclicked";
         }
     }
