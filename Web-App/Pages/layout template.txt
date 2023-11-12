@@ -1,4 +1,4 @@
-@page "/home"
+@page "/layout"
 @inject NavigationManager NavigationManager
 
 <style>
@@ -48,6 +48,7 @@
     .text-containersquare { /*positie en grootte tekst*/
         display: flex;
         flex-direction: column;
+        align-items: left;
         justify-content: center;
         color: white;
         font-family: monospace;
@@ -61,6 +62,6 @@
         <img src="https://i.imgur.com/MF5gfZC.png" class="buurtboer-logo" />
     </div>
     <div class="text-containersquare">
-        <p>dit is het tekst gedeelte voor het homescreen</p>
+        <p>dit is het tekst gedeelte voor het template</p>
     </div>
 </div>
