@@ -8,7 +8,7 @@
     NavBarIsVisible="False"
     TabBarIsVisible="False">
 
-    <!-- Define a new page here. Follow  -->
+    <!-- Define a new page here. Follow the pattern of previous pages -->
     <ShellContent
         ContentTemplate="{DataTemplate local:LogInPage}"
         Route="LogInPage"
