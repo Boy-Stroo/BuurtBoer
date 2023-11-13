@@ -28,4 +28,11 @@
         Shell.NavBarIsVisible="False"
         Shell.TabBarIsVisible="False"/>
 
+    <ShellContent
+    ContentTemplate="{DataTemplate local:SettingsPage}"
+    Route="SettingsPage"
+    Shell.NavBarIsVisible="False"
+    Shell.TabBarIsVisible="False"/>
+
+
 </Shell>

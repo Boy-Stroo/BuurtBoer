@@ -89,7 +89,7 @@
         
         <!-- Gear icon button in the top left corner -->
         <ImageButton
-            Clicked="Button_OnClicked"
+            Clicked="OnSettingsClicked"
             VerticalOptions="Start"
             HorizontalOptions="Start"
             Margin="0,0,0,0"

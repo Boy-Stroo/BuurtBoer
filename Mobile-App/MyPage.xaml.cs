@@ -21,5 +21,13 @@ public partial class MyPage : ContentPage
         await Shell.Current.GoToAsync("..");
     }
 
+    private async void OnSettingsClicked(object sender, EventArgs e)
+    {
+        var button = (ImageButton)sender;
+        button.IsEnabled = false;
+        await Navigation.PushAsync(new SettingsPage());
+        button.IsEnabled = true;
+    }
+
 
 }

@@ -8,6 +8,7 @@
     <Color x:Key="PrimaryAccent">#099F91</Color>
     <Color x:Key="Secondary">#F5F5F5</Color>
     <Color x:Key="Tertiary">#F9834C</Color>
+    <Color x:Key="Gray">#E9E9E9</Color>
     <Color x:Key="White">White</Color>
     <Color x:Key="Black">Black</Color>
     <Color x:Key="Gray100">#E1E1E1</Color>
