@@ -61,25 +61,45 @@
         <img src="https://i.imgur.com/MF5gfZC.png" class="buurtboer-logo" />
     </div>
     <div class="text-containersquare">
-        <p>dit is het tekst gedeelte voor het homescreen</p>
+        <p>@greeting()</p>
+        <p>Gebruikersnaam</p>
     </div>
 </div>
 
 @code {
+    public int currentHour;
 
     protected override void OnInitialized() // Functie om van een page naar een andere te gaan.
     {
+        currentHour = DateTime.Now.Hour;
         if(!IsUserLoggedIn()) 
         {
             NavigationManager.NavigateTo("login");
         }
-    //andere if statements kunnen hier nog bij om ervoor te kunnen zorgen dat gebruikers naar andere pages kunnen.
+        //andere if statements kunnen hier nog bij om ervoor te kunnen zorgen dat gebruikers naar andere pages kunnen.
     }
 
     private bool IsUserLoggedIn() // kijken of gebruiker ingelogd is.
     {
-    // Hier checken of gebruiker ingelogd is.
-    
+        // Hier checken of gebruiker ingelogd is.
+
         return true;// deze op false zetten zorgt ervoor dat gebruiker direct naar login scherm wordt gestuurd als hij niet ingelogd is.
+    }
+
+
+    private string greeting() // kijken hoe laat het is en daarop baseren welke message er komt.
+    {
+        if(currentHour < 12 && currentHour > 3) 
+        {
+            return "Good morning";
+        } 
+        else if(currentHour < 18 && currentHour > 11)
+        {
+            return "Good afternoon";
+        } 
+        else
+        {
+            return "Good evening";
+        }
     }
 }
