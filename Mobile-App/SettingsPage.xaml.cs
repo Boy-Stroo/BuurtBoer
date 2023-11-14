@@ -11,7 +11,7 @@ public partial class SettingsPage : ContentPage
     {
         var button = (ImageButton)sender;
         button.IsEnabled = false;
-        await Navigation.PushAsync(new MyPage());
+        await Navigation.PopAsync();
         button.IsEnabled = true;
     }
 }

@@ -148,8 +148,7 @@
                     CornerRadius="10"
                     Padding="8"
                     FontSize="17"
-                    FontAttributes="Bold"
-                    Clicked=""/>
+                    FontAttributes="Bold"/>
 
             <!-- Change password -->
             <Button Text="CHANGE PASSWORD"
@@ -160,8 +159,7 @@
                         BackgroundColor="{StaticResource Tertiary}"
                         TextColor="{StaticResource Secondary}"
                         FontAttributes="Bold"
-                        FontSize="17"
-                        Clicked=""/>
+                        FontSize="17"/>
 
             <!-- Log out -->
             <Button Text="LOG OUT"
@@ -172,8 +170,7 @@
                     BackgroundColor="{StaticResource Tertiary}"
                     TextColor="{StaticResource Secondary}"
                     FontAttributes="Bold"
-                    FontSize="17"
-                    Clicked=""/>
+                    FontSize="17"/>
 
         </Grid>
 

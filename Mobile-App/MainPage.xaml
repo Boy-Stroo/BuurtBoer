@@ -80,7 +80,7 @@
                     </Border.StrokeShape>
 
                     <Entry 
-                    Placeholder="Username"
+                    Placeholder="Email"
                     HorizontalTextAlignment="Center"
                     FontSize="20"
                     PlaceholderColor="{StaticResource Secondary}"
