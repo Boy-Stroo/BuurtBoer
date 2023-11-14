@@ -1,0 +1,225 @@
+@page "/login"
+@inject NavigationManager NavigationManager
+
+<style>
+    body { /*achtergrond*/
+        background: linear-gradient(to left, #C4A484 50%, transparent 50%),
+            url('https://i.imgur.com/GZVw5gT.png') repeat-x;
+        background-color: #E9E9E9;
+        background-size: 15500px 300px;
+        background-position: 0px 0px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .squareone { /*eerste rechthoek*/
+        width: 1200px;
+        height: 250px;
+        background-color: #099F91;
+        border-radius: 10px;
+        position: relative;
+        top: 100px;
+        left: 50%;
+        transform: translateX(-50%);
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .buurtboer-logo {
+        width: 300px;
+        height: 250px;
+        top: 0px;
+        left: 0%;
+        position: absolute;
+    }
+
+    .text-contactsquareone { /*/*positie en grootte woord: contact*/
+        position: absolute;
+        top: 10px;
+        left: 355px; 
+        color: white;
+        font-family: monospace;
+        font-size: 20px;
+        margin-top: 60px;        
+    }
+
+    .text-containersquareone { /*positie en grootte tekst*/
+        position: absolute;
+        top: 10px;
+        left: 355px; 
+        color: white;
+        font-family: monospace;
+        font-size: 18px;
+        margin-top: 120px;
+        text-decoration: underline;
+    }
+    
+    .squaretwo { /*tweede rechthoek*/
+        width: 1200px;
+        height: 500px;
+        background-color: #099F91;
+        border-radius: 10px;
+        position: relative;
+        top: 150px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .smallersquaretwo { /*grootte kleinere rechthoek in tweede rechthoek*/
+        width: 300px;
+        height: 500px;
+        background-color: #00A89B;
+        border-radius: 10px;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        z-index: -1;
+    }
+    
+    .text-containersquaretwo { /*positie en grootte tekst*/
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        color: white;
+        font-family: monospace;
+        font-size: 24px;
+        margin-top: 120px;
+    }
+
+    input { /*grootte email en wachtwoord blok*/
+        margin-bottom: 30px;
+        border: 2px solid white;
+        border-radius: 8px;
+        padding: 8px;
+        width: 500px;
+    }
+
+    .login-text { /*Login tekst*/
+        position: absolute;
+        top: 35px;
+        left: 350px;
+        color: white;
+        font-family: monospace;
+        font-size: 40px;
+    }
+
+    .button-container { /*positie "NL" en "EN" buttons*/
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        display: flex;
+        flex-direction: row;
+    }
+
+    .language-button-clicked { /*kleur van taal button die aangeklikt is*/
+        background-color: #F9834C;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        padding: 10px 15px;
+        font-size: 16px;
+        margin-right: 10px;
+        cursor: pointer;
+    }
+
+    .language-button-notclicked { /*kleur van taal button die NIET aangeklikt is*/
+        background-color: #099F91;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        padding: 10px 15px;
+        font-size: 16px;
+        margin-right: 10px;
+        cursor: pointer;
+    }
+
+    .continue-button { /*kleur van "Continue" button*/
+        background-color: #F9834C;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 15px 30px;
+        font-size: 24px;
+        cursor: pointer;
+    }
+</style>
+
+
+<div class="squareone"> @* HTML elements*@
+    <div class="text-contactsquareone">
+        <p>CONTACT</p>
+    </div>
+    <div class="text-containersquareone">
+        <p>service@debuurtboer.nl</p>
+        <p>088-730 2200</p>
+    </div>
+    <img src="https://i.imgur.com/MF5gfZC.png" class="buurtboer-logo" />
+</div>
+
+<div class="squaretwo">
+    <div class="smallersquaretwo"></div>
+    <div class="button-container">
+      <button class="@GetLanguageButtonClass(true)" 
+              @onclick="() => SelectLanguage(true)">NL</button>
+
+      <button class="@GetLanguageButtonClass(false)"
+              @onclick="() => SelectLanguage(false)">EN</button>
+    </div>
+
+    <div class="login-text">LOGIN</div>
+    <div class="text-containersquaretwo">
+        <label for="email adress">Email address:</label>
+        <input type="text" id="email adress" />
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" />
+        <button class="continue-button" @onclick="HandleLogin">Continue</button>
+    </div>
+</div>
+
+@code {
+    private bool isLoggedIn = false;    
+
+    private void HandleLogin() // code voor wanneer een gebruiker op "Continue"/ "Ga door" klikt.
+    {
+        // logic om te testen of de persoon een account heeft en of het wachtwoord klopt.
+        // als de gegevens goed zijn zet je isLoggedIn op true en roep je OnInitialized().
+
+        isLoggedIn = true;
+        OnInitialized();
+    }
+
+    protected override void OnInitialized() // code om van inlogscherm naar homescreen te gaan.
+    {
+        if(isLoggedIn) 
+        {
+            NavigationManager.NavigateTo("/home");
+        }
+    }
+
+    private bool isDutchSelected = true;
+
+    private string GetLanguageButtonClass(bool isDutch) // hiermee kijk je welke taal er geselecteerd is en of hij dus moet veranderen of niet.
+    {
+        if (isDutch == isDutchSelected) 
+        {
+            return "language-button-clicked"; 
+        } 
+        else 
+        {
+            return "language-button-notclicked";
+        }
+    }
+
+    private void SelectLanguage(bool isDutch)
+    {
+        // kijken of nederlands geselecteerd is.
+        isDutchSelected = isDutch;
+  
+        // refresh de webpage met de goede kleuren.
+        StateHasChanged();
+    }
+}
