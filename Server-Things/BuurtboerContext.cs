@@ -10,9 +10,10 @@ namespace Server_Things
         public DbSet<Company> Companies { get; set; }
         public DbSet<DaysAtOffice> DaysAtOffice { get; set; }
 
+
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
-            builder.UseNpgsql("Host=localhost;Port=12345;Database=buurtboer;Username=admin;Password=44dPA7k");
+            builder.UseNpgsql("Host=localhost;Port=5432;Database=buurtboer;Username=postgres");
             builder.LogTo(Console.WriteLine, Microsoft.Extensions.Logging.LogLevel.Error);
         }
 
