@@ -12,7 +12,7 @@ namespace Server_Things.Migrations
         {
             migrationBuilder.CreateIndex(
                 name: "IX_Users_Email",
-                table: "Users",
+                table: "User",
                 column: "Email",
                 unique: true);
 
@@ -28,7 +28,7 @@ namespace Server_Things.Migrations
         {
             migrationBuilder.DropIndex(
                 name: "IX_Users_Email",
-                table: "Users");
+                table: "User");
 
             migrationBuilder.DropIndex(
                 name: "IX_Companies_Name",

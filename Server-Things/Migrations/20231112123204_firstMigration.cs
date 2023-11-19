@@ -26,7 +26,7 @@ namespace Server_Things.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Users",
+                name: "User",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -50,7 +50,7 @@ namespace Server_Things.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "DaysAtOffice",
+                name: "OfficeDays",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -63,14 +63,14 @@ namespace Server_Things.Migrations
                     table.ForeignKey(
                         name: "FK_DaysAtOffice_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "Users",
+                        principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_DaysAtOffice_UserId",
-                table: "DaysAtOffice",
+                table: "OfficeDays",
                 column: "UserId");
         }
 
@@ -78,10 +78,10 @@ namespace Server_Things.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "DaysAtOffice");
+                name: "OfficeDays");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "User");
 
             migrationBuilder.DropTable(
                 name: "Companies");

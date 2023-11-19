@@ -48,7 +48,7 @@ namespace Server_Things.Migrations
                     b.ToTable("Companies");
                 });
 
-            modelBuilder.Entity("Server_Things.Models.DaysAtOffice", b =>
+            modelBuilder.Entity("Server_Things.Models.OfficeDays", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -64,7 +64,7 @@ namespace Server_Things.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("DaysAtOffice");
+                    b.ToTable("OfficeDays");
                 });
 
             modelBuilder.Entity("Server_Things.Models.User", b =>
@@ -99,13 +99,13 @@ namespace Server_Things.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.ToTable("Users");
+                    b.ToTable("User");
                 });
 
-            modelBuilder.Entity("Server_Things.Models.DaysAtOffice", b =>
+            modelBuilder.Entity("Server_Things.Models.OfficeDays", b =>
                 {
                     b.HasOne("Server_Things.Models.User", "User")
-                        .WithMany("DaysAtOffice")
+                        .WithMany("OfficeDays")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -116,7 +116,7 @@ namespace Server_Things.Migrations
             modelBuilder.Entity("Server_Things.Models.User", b =>
                 {
                     b.HasOne("Server_Things.Models.Company", "Company")
-                        .WithMany("Users")
+                        .WithMany("User")
                         .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade);
 
@@ -125,12 +125,12 @@ namespace Server_Things.Migrations
 
             modelBuilder.Entity("Server_Things.Models.Company", b =>
                 {
-                    b.Navigation("Users");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Server_Things.Models.User", b =>
                 {
-                    b.Navigation("DaysAtOffice");
+                    b.Navigation("OfficeDays");
                 });
 #pragma warning restore 612, 618
         }

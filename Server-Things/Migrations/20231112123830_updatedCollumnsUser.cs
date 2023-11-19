@@ -13,7 +13,7 @@ namespace Server_Things.Migrations
         {
             migrationBuilder.DropColumn(
                 name: "DaysAtOfficeId",
-                table: "Users");
+                table: "User");
         }
 
         /// <inheritdoc />
@@ -21,7 +21,7 @@ namespace Server_Things.Migrations
         {
             migrationBuilder.AddColumn<Guid>(
                 name: "DaysAtOfficeId",
-                table: "Users",
+                table: "User",
                 type: "uuid",
                 nullable: true);
         }
