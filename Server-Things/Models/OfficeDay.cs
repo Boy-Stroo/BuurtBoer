@@ -2,7 +2,7 @@
 
 namespace Server_Things.Models
 {
-    public class DaysAtOffice
+    public class OfficeDay
     {
         public Guid Id { get; init; }
         [ForeignKey("UserId")]

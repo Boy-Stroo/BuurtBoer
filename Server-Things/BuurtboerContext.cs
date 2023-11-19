@@ -8,7 +8,7 @@ namespace Server_Things
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Company> Companies { get; set; }
-        public DbSet<DaysAtOffice> DaysAtOffice { get; set; }
+        public DbSet<OfficeDay> OfficeDays { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
@@ -51,10 +51,10 @@ namespace Server_Things
                 .IsRequired(false)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<DaysAtOffice>()
+            modelBuilder.Entity<OfficeDay>()
                 .HasKey(_ => _.Id);
 
-            modelBuilder.Entity<DaysAtOffice>()
+            modelBuilder.Entity<OfficeDay>()
                 .HasOne(_ => _.User)
                 .WithMany(_ => _.DaysAtOffice)
                 .HasForeignKey(_ => _.UserId);

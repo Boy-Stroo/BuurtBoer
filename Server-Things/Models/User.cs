@@ -30,7 +30,7 @@ namespace Server_Things.Models
         public Company? Company { get; set; }
         
         public Guid? CompanyId { get; set; }
-        public List<DaysAtOffice> DaysAtOffice { get; set; }
+        public List<OfficeDay> DaysAtOffice { get; set; }
 
         public User(string firstName, string lastName, string password, string email, Role role, Company? company)
         {
@@ -41,11 +41,11 @@ namespace Server_Things.Models
             Email = email;
             Company = company ?? null;
             Role = role;
-            DaysAtOffice = new List<DaysAtOffice>();
+            DaysAtOffice = new List<OfficeDay>();
         }
 
         public User(string firstName, string lastName, string password, string email, Role role, Company? company,
-            List<DaysAtOffice> officeDays) : this(firstName, lastName, password, email, role,company)
+            List<OfficeDay> officeDays) : this(firstName, lastName, password, email, role,company)
         {
             DaysAtOffice = officeDays;
         }
