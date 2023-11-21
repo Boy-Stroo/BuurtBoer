@@ -12,8 +12,8 @@ using Server_Things;
 namespace Server_Things.Migrations
 {
     [DbContext(typeof(BuurtboerContext))]
-    [Migration("20231112123830_updatedCollumnsUser")]
-    partial class updatedCollumnsUser
+    [Migration("20231119195032_first")]
+    partial class first
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -45,10 +45,13 @@ namespace Server_Things.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Name")
+                        .IsUnique();
+
                     b.ToTable("Companies");
                 });
 
-            modelBuilder.Entity("Server_Things.Models.DaysAtOffice", b =>
+            modelBuilder.Entity("Server_Things.Models.OfficeDay", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -64,7 +67,7 @@ namespace Server_Things.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("DaysAtOffice");
+                    b.ToTable("OfficeDays");
                 });
 
             modelBuilder.Entity("Server_Things.Models.User", b =>
@@ -96,10 +99,13 @@ namespace Server_Things.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Email")
+                        .IsUnique();
+
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Server_Things.Models.DaysAtOffice", b =>
+            modelBuilder.Entity("Server_Things.Models.OfficeDay", b =>
                 {
                     b.HasOne("Server_Things.Models.User", "User")
                         .WithMany("DaysAtOffice")

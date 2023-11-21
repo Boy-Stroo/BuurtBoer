@@ -13,7 +13,6 @@ namespace Server_Things.Models
     public class User
     {
         private string _email;
-        [Key]
         public Guid Id { get; init; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -28,10 +27,20 @@ namespace Server_Things.Models
 
         [ForeignKey("CompanyId")]
         public Company? Company { get; set; }
-        
+
         public Guid? CompanyId { get; set; }
         public List<OfficeDay> DaysAtOffice { get; set; }
-
+        public User(Guid id, string firstName, string lastName, string password, string email, Role role, Company? company)
+        {
+            Id = id;
+            FirstName = firstName;
+            LastName = lastName;
+            Password = password;
+            Email = email;
+            Company = company ?? null;
+            Role = role;
+            DaysAtOffice = new List<OfficeDay>();
+        }
         public User(string firstName, string lastName, string password, string email, Role role, Company? company)
         {
             Id = Guid.NewGuid();
@@ -45,9 +54,16 @@ namespace Server_Things.Models
         }
 
         public User(string firstName, string lastName, string password, string email, Role role, Company? company,
-            List<OfficeDay> officeDays) : this(firstName, lastName, password, email, role,company)
+            List<OfficeDay> officeDays) : this(firstName, lastName, password, email, role, company)
         {
             DaysAtOffice = officeDays;
+        }
+        public User(string firstName, string lastName, string password, string email, Role role, Guid? companyId,
+            List<OfficeDay> officeDays) : this(firstName, lastName, password, email, role, null)
+        {
+            DaysAtOffice = officeDays;
+            Company = null;
+            CompanyId = companyId;
         }
 
         public User()

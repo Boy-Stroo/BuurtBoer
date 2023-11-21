@@ -48,7 +48,7 @@ namespace Server_Things.Migrations
                     b.ToTable("Companies");
                 });
 
-            modelBuilder.Entity("Server_Things.Models.OfficeDays", b =>
+            modelBuilder.Entity("Server_Things.Models.OfficeDay", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -99,13 +99,13 @@ namespace Server_Things.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.ToTable("User");
+                    b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Server_Things.Models.OfficeDays", b =>
+            modelBuilder.Entity("Server_Things.Models.OfficeDay", b =>
                 {
                     b.HasOne("Server_Things.Models.User", "User")
-                        .WithMany("OfficeDays")
+                        .WithMany("DaysAtOffice")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -116,7 +116,7 @@ namespace Server_Things.Migrations
             modelBuilder.Entity("Server_Things.Models.User", b =>
                 {
                     b.HasOne("Server_Things.Models.Company", "Company")
-                        .WithMany("User")
+                        .WithMany("Users")
                         .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade);
 
@@ -125,12 +125,12 @@ namespace Server_Things.Migrations
 
             modelBuilder.Entity("Server_Things.Models.Company", b =>
                 {
-                    b.Navigation("User");
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("Server_Things.Models.User", b =>
                 {
-                    b.Navigation("OfficeDays");
+                    b.Navigation("DaysAtOffice");
                 });
 #pragma warning restore 612, 618
         }

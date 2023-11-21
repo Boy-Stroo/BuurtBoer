@@ -1,4 +1,5 @@
 using Server_Things;
+using Server_Things.Helpers;
 using Server_Things.Models;
 using Swashbuckle.AspNetCore;
 
@@ -16,6 +17,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Go TO http://localhost:<portnumber>/swagger/index.html
 
 var app = builder.Build();
 
@@ -39,5 +41,8 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+// Clears and seeds the database, Remove this when database runs on a server
+Seeder.Seed();
 
 app.Run();
