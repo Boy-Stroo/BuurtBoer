@@ -25,7 +25,6 @@ namespace Server_Things.Models
         }
         public Role Role { get; set; }
 
-        [ForeignKey("CompanyId")]
         public Company? Company { get; set; }
 
         public Guid? CompanyId { get; set; }
@@ -53,19 +52,12 @@ namespace Server_Things.Models
             DaysAtOffice = new List<OfficeDay>();
         }
 
-        public User(string firstName, string lastName, string password, string email, Role role, Company? company,
-            List<OfficeDay> officeDays) : this(firstName, lastName, password, email, role, company)
-        {
-            DaysAtOffice = officeDays;
-        }
-        public User(string firstName, string lastName, string password, string email, Role role, Guid? companyId,
+        public User(string firstName, string lastName, string password, string email, Role role, Guid? companyid,
             List<OfficeDay> officeDays) : this(firstName, lastName, password, email, role, null)
         {
             DaysAtOffice = officeDays;
-            Company = null;
-            CompanyId = companyId;
+            CompanyId = companyid;
         }
-
         public User()
         {
 
