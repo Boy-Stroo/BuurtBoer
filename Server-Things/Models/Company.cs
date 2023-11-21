@@ -6,8 +6,7 @@ namespace Server_Things.Models
 {
     public class Company
     {
-        [Key]
-        public Guid Id { get; set; }
+        public Guid Id { get; init; }
 
         private string _name;
         public string Name

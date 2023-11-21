@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Server_Things;
@@ -11,9 +12,11 @@ using Server_Things;
 namespace Server_Things.Migrations
 {
     [DbContext(typeof(BuurtboerContext))]
-    partial class BuurtboerContextModelSnapshot : ModelSnapshot
+    [Migration("20231121101834_removedDirectives")]
+    partial class removedDirectives
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -70,7 +73,6 @@ namespace Server_Things.Migrations
             modelBuilder.Entity("Server_Things.Models.User", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<Guid?>("CompanyId")
@@ -97,8 +99,6 @@ namespace Server_Things.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CompanyId");
-
                     b.HasIndex("Email")
                         .IsUnique();
 
@@ -120,7 +120,7 @@ namespace Server_Things.Migrations
                 {
                     b.HasOne("Server_Things.Models.Company", "Company")
                         .WithMany("Users")
-                        .HasForeignKey("CompanyId")
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Company");

@@ -25,10 +25,15 @@ namespace Server_Things.Helpers
 
         private static void PopulateEmployeeList()
         {
-
-            var user = new User($"Employee1", $"Employee of {CompanyList[1].Name}",
-                $"pass", $"emp1@somewhere.com", Role.Employee, CompanyList[1]);
-            Db.Users.Add(user);
+            for (int i = 1; i < CompanyList.Count; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    var user = new User($"Employee{j}", $"Employee {j} of {CompanyList[i].Name}",
+                        $"pass{j}", $"emp{j}@{CompanyList[i].Name}.com", Role.Employee, CompanyList[i]);
+                    Db.Users.Add(user);
+                }
+            }
         }
 
         public static void Clear()

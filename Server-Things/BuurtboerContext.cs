@@ -38,6 +38,7 @@ namespace Server_Things
             modelBuilder.Entity<User>()
                 .HasOne(_ => _.Company)
                 .WithMany(_ => _.Users)
+                .HasForeignKey(_ => _.CompanyId)
                 .IsRequired(false)
                 .OnDelete(DeleteBehavior.Restrict);
 
@@ -47,7 +48,6 @@ namespace Server_Things
             modelBuilder.Entity<Company>()
                 .HasMany(_ => _.Users)
                 .WithOne(_ => _.Company)
-                .HasForeignKey(_ => _.Id)
                 .IsRequired(false)
                 .OnDelete(DeleteBehavior.Cascade);
 
