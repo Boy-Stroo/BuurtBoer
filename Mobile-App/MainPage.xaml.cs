@@ -13,7 +13,7 @@
         {
             var button = (Button)sender;
             button.IsEnabled = false;
-            await Navigation.PushAsync(new MyPage());
+            await Navigation.PushAsync(new HomePage());
             button.IsEnabled = true;
         }
 
