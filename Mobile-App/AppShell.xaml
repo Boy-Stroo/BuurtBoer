@@ -17,8 +17,8 @@
 
     <ShellContent
         Title="Testing"
-        ContentTemplate="{DataTemplate local:MyPage}"
-        Route="MyPage"
+        ContentTemplate="{DataTemplate local:HomePage}"
+        Route="HomePage"
         Shell.NavBarIsVisible="False"
         Shell.TabBarIsVisible="False"/>
 
