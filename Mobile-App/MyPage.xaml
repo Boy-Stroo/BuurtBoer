@@ -23,7 +23,7 @@
                 BackgroundColor="Transparent"/>
         </StackLayout>
 
-        <Frame Grid.Row="4" Grid.Column="0" Margin="50,170,15,-5" BorderColor="{StaticResource Gray}" Padding="0">
+        <Frame Grid.Row="4" Grid.Column="0" Margin="50,170,15,-5" BorderColor="{StaticResource Secondary}" BackgroundColor="{StaticResource Secondary}" Padding="0">
             <ContentView>
                 <StackLayout>
                     <Label Text="LUNCH ATTENDANCE" TextColor="{StaticResource Primary}" FontFamily="OpenSans-Regular" FontSize="14" FontAttributes="Bold"/>
