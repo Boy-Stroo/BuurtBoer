@@ -20,7 +20,7 @@ namespace Server_Things.Controllers
         [HttpGet("Login")]
         public IEnumerable<User> GetLogin(string email, string password)
         {
-            var query = db.Users.Select(u => u)
+            var query = db.Users.Select(user => user)
                 .Where(u => u.Email.ToLower() == email.ToLower() && u.Password == password);
 
             return query.ToList();
