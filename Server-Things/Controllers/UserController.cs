@@ -9,12 +9,20 @@ namespace Server_Things.Controllers
     public class UserController : ControllerBase
     {
         private readonly BuurtboerContext db = new BuurtboerContext();
- 
-        [HttpGet(Name = "GetUsers")]
+
+        [HttpGet("All")]
         public IEnumerable<User> GetUsers()
         {
-            var query = from u in db.Users
-                select u;
+            var query = db.Users.Select(u => u);
+            return query.ToList();
+        }
+
+        [HttpGet("Login")]
+        public IEnumerable<User> GetLogin(string email, string password)
+        {
+            var query = db.Users.Select(user => user)
+                .Where(u => u.Email.ToLower() == email.ToLower() && u.Password == password);
+
             return query.ToList();
         }
 
