@@ -42,8 +42,8 @@
             <Frame Grid.Row="0" Grid.Column="0" BackgroundColor="{StaticResource Primary}" Margin="55,10,150,0" CornerRadius="10">
                 <ContentView>
                     <StackLayout VerticalOptions="Center">
-                        <Label Text="Monday" WidthRequest="150" Margin="0,-6,0,0" FontFamily="OpenSans-Regular" TextColor="{StaticResource White}" FontSize="18" FontAttributes="Bold"/>
-                        <Label Text="November 20" WidthRequest="150" FontFamily="OpenSans-Regular" TextColor="{StaticResource White}" FontSize="14" />
+                        <Label x:Name="MondayLabel" Text="Monday" WidthRequest="150" Margin="0,-6,0,0" FontFamily="OpenSans-Regular" TextColor="{StaticResource White}" FontSize="18" FontAttributes="Bold"/>
+                        <Label x:Name="MondayDateLabel" WidthRequest="150" FontFamily="OpenSans-Regular" TextColor="{StaticResource White}" FontSize="14" />
                     </StackLayout>
                 </ContentView>
             </Frame>
@@ -51,8 +51,8 @@
             <Frame Grid.Row="1" Grid.Column="0" BackgroundColor="{StaticResource Primary}" Margin="55,10,150,0" CornerRadius="10">
                 <ContentView>
                     <StackLayout>
-                        <Label Text="Tuesday" WidthRequest="150" Margin="0,-6,0,0" FontFamily="OpenSans-Regular" TextColor="{StaticResource White}" FontSize="18" FontAttributes="Bold"/>
-                        <Label Text="November 21" WidthRequest="150" FontFamily="OpenSans-Regular" TextColor="{StaticResource White}" FontSize="14" />
+                        <Label x:Name="TuesdayLabel" Text="Tuesday" WidthRequest="150" Margin="0,-6,0,0" FontFamily="OpenSans-Regular" TextColor="{StaticResource White}" FontSize="18" FontAttributes="Bold"/>
+                        <Label x:Name="TuesdayDateLabel" WidthRequest="150" FontFamily="OpenSans-Regular" TextColor="{StaticResource White}" FontSize="14" />
                     </StackLayout>
                 </ContentView>
             </Frame>
@@ -60,8 +60,8 @@
             <Frame Grid.Row="2" Grid.Column="0" BackgroundColor="{StaticResource Primary}" Margin="55,10,150,0" CornerRadius="10">
                 <ContentView>
                     <StackLayout>
-                        <Label Text="Wednesday" WidthRequest="150" Margin="0,-6,0,0" FontFamily="OpenSans-Regular" TextColor="{StaticResource White}" FontSize="18" FontAttributes="Bold"/>
-                        <Label Text="November 22" WidthRequest="150" FontFamily="OpenSans-Regular" TextColor="{StaticResource White}" FontSize="14" />
+                        <Label x:Name="WednesdayLabel" Text="Wednesday" WidthRequest="150" Margin="0,-6,0,0" FontFamily="OpenSans-Regular" TextColor="{StaticResource White}" FontSize="18" FontAttributes="Bold"/>
+                        <Label x:Name="WednesdayDateLabel" WidthRequest="150" FontFamily="OpenSans-Regular" TextColor="{StaticResource White}" FontSize="14" />
                     </StackLayout>
                 </ContentView>
             </Frame>
@@ -69,8 +69,8 @@
             <Frame Grid.Row="3" Grid.Column="0" BackgroundColor="{StaticResource Primary}" Margin="55,10,150,0" CornerRadius="10">
                 <ContentView>
                     <StackLayout>
-                        <Label Text="Thursday" WidthRequest="150" Margin="0,-6,0,0" FontFamily="OpenSans-Regular" TextColor="{StaticResource White}" FontSize="18" FontAttributes="Bold"/>
-                        <Label Text="November 23" WidthRequest="150" FontFamily="OpenSans-Regular" TextColor="{StaticResource White}" FontSize="14" />
+                        <Label x:Name="ThursdayLabel" Text="Thursday" WidthRequest="150" Margin="0,-6,0,0" FontFamily="OpenSans-Regular" TextColor="{StaticResource White}" FontSize="18" FontAttributes="Bold"/>
+                        <Label x:Name="ThursdayDateLabel" WidthRequest="150" FontFamily="OpenSans-Regular" TextColor="{StaticResource White}" FontSize="14" />
                     </StackLayout>
                 </ContentView>
             </Frame>
@@ -78,18 +78,18 @@
             <Frame Grid.Row="4" Grid.Column="0" BackgroundColor="{StaticResource Primary}" Margin="55,10,150,0" CornerRadius="10">
                 <ContentView>
                     <StackLayout>
-                        <Label Text="Friday" WidthRequest="150" Margin="0,-6,0,0" FontFamily="OpenSans-Regular" TextColor="{StaticResource White}" FontSize="18" FontAttributes="Bold"/>
-                        <Label Text="November 24" WidthRequest="150" FontFamily="OpenSans-Regular" TextColor="{StaticResource White}" FontSize="14" />
+                        <Label x:Name="FridayLabel" Text="Friday" WidthRequest="150" Margin="0,-6,0,0" FontFamily="OpenSans-Regular" TextColor="{StaticResource White}" FontSize="18" FontAttributes="Bold"/>
+                        <Label x:Name="FridayDateLabel" WidthRequest="150" FontFamily="OpenSans-Regular" TextColor="{StaticResource White}" FontSize="14" />
                     </StackLayout>
                 </ContentView>
             </Frame>
 
             <!-- Check/Uncheck Boxes -->
-            <CheckBox Grid.Row="0" Grid.Column="1" Margin="-180,10,10,0" Color="{StaticResource Tertiary}" Scale="3" WidthRequest="20" HeightRequest="20"/>
-            <CheckBox Grid.Row="1" Grid.Column="1" Margin="-180,10,10,0" Color="{StaticResource Tertiary}" Scale="3" WidthRequest="20" HeightRequest="20"/>
-            <CheckBox Grid.Row="2" Grid.Column="1" Margin="-180,10,10,0" Color="{StaticResource Tertiary}" Scale="3" WidthRequest="20" HeightRequest="20"/>
-            <CheckBox Grid.Row="3" Grid.Column="1" Margin="-180,10,10,0" Color="{StaticResource Tertiary}" Scale="3" WidthRequest="20" HeightRequest="20"/>
-            <CheckBox Grid.Row="4" Grid.Column="1" Margin="-180,10,10,0" Color="{StaticResource Tertiary}" Scale="3" WidthRequest="20" HeightRequest="20"/>
+            <CheckBox x:Name="MondayCheckBox" ClassId="Monday" Grid.Row="0" Grid.Column="1" Margin="-180,10,10,0" Color="{StaticResource Tertiary}" Scale="3" WidthRequest="20" HeightRequest="20"/>
+            <CheckBox x:Name="TuesdayCheckBox" ClassId="Tuesday" Grid.Row="1" Grid.Column="1" Margin="-180,10,10,0" Color="{StaticResource Tertiary}" Scale="3" WidthRequest="20" HeightRequest="20"/>
+            <CheckBox x:Name="WednesdayCheckBox" ClassId="Wednesday" Grid.Row="2" Grid.Column="1" Margin="-180,10,10,0" Color="{StaticResource Tertiary}" Scale="3" WidthRequest="20" HeightRequest="20"/>
+            <CheckBox x:Name="ThursdayCheckBox" ClassId="Thursday" Grid.Row="3" Grid.Column="1" Margin="-180,10,10,0" Color="{StaticResource Tertiary}" Scale="3" WidthRequest="20" HeightRequest="20"/>
+            <CheckBox x:Name="FridayCheckBox" ClassId="Friday" Grid.Row="4" Grid.Column="1" Margin="-180,10,10,0" Color="{StaticResource Tertiary}" Scale="3" WidthRequest="20" HeightRequest="20"/>
 
 
             <!-- Save Selection Rectangle -->
