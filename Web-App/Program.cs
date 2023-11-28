@@ -31,6 +31,7 @@ app.UseRouting();
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 
+// Comment this to try out HTTP Request underneath
 app.Run();
 
 
