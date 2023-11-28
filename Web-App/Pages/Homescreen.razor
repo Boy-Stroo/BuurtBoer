@@ -26,6 +26,40 @@
         align-items: center;
     }
 
+    .squareinmainsquare { /*rechthoek in main rechthoek*/
+        width: 800px;
+        height: 500px;
+        background-color: #E9E9E9;
+        border-radius: 10px;
+        position: absolute;
+        top: 200px;
+        left: 350px;
+    }
+
+    .text-containersquaremiddle {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        color: black;
+        font-family: monospace;
+        font-size: 20px;
+        margin-top: 10px;
+        margin-left: 20px;
+    }
+
+    .remind-button { /*kleur van "Remind" button*/
+        background-color: #F9834C;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 15px 0;
+        width: 30%;
+        font-size: 20px;
+        cursor: pointer;
+        margin-top: 175px;
+        margin-left: 280px;
+    }
+
     .smallersquare { /*grootte kleinere rechthoek in tweede rechthoek*/
         width: 300px;
         height: 800px;
@@ -52,7 +86,8 @@
         color: white;
         font-family: monospace;
         font-size: 24px;
-        margin-top: 120px;
+        margin-top: 75px;
+        margin-left: 200px;
     }
 
     .homescreen-button { /*knop om naar home page te gaan*/
@@ -136,6 +171,15 @@
         <button class="companies-button" @onclick="CompanyRouting">Companies</button>
         <button class="lunchdata-button" @onclick="LunchDataRouting">Lunchdata</button>
     </div>
+    <div class="squareinmainsquare">
+        <div class=text-containersquaremiddle>
+            <p>Employees who have already filled in their lunches:</p>
+            <p>Some number</p>
+            <p>Employees who still have to do it:</p>
+            <p>Some number</p>
+        </div>
+        <button class="remind-button" @onclick="RemindButton">Remind</button>
+    </div>
     <div class="text-containersquare">
         <p>@greeting()</p>
         <p>Gebruikersnaam</p>
@@ -197,5 +241,10 @@
     private void LunchDataRouting()
     {
         NavigationManager.NavigateTo("/lunchdata");
+    }
+
+    private void RemindButton()
+    {
+        
     }
 }
