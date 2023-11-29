@@ -1,5 +1,6 @@
 @page "/home"
 @inject NavigationManager NavigationManager
+@inject IJSRuntime JSRuntime
 
 <style>
     body { /*achtergrond*/
@@ -54,7 +55,7 @@
         color: black;
         font-family: monospace;
         font-size: 12px;
-        margin-top: 25px;
+        margin-top: 10px;
         margin-left: 294px;
     }
 
@@ -67,7 +68,7 @@
         width: 30%;
         font-size: 20px;
         cursor: pointer;
-        margin-top: 175px;
+        margin-top: 200px;
         margin-left: 280px;
     }
 
@@ -257,8 +258,8 @@
         NavigationManager.NavigateTo("/lunchdata");
     }
 
-    private void RemindButton()
+    private async Task RemindButton()
     {
-        
+        await JSRuntime.InvokeVoidAsync("alert", "Reminders have been sent!");
     }
 }
