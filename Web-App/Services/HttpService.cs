@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Web_App.Data;
+using Web_App.Models;
 
 namespace EmployeeManagement.Web.Services
 {
@@ -15,9 +15,9 @@ namespace EmployeeManagement.Web.Services
             this.httpClient = httpClient;
         }
 
-        public async Task<IEnumerable<Users>> GetEmployees()
+        public async Task<IEnumerable<User>> GetEmployees()
         {
-            return await httpClient.GetFromJsonAsync<Users[]>("api/User/All");
+            return await httpClient.GetFromJsonAsync<User[]>("api/user/all");
         }
 
     }   
