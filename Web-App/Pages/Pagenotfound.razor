@@ -3,8 +3,7 @@
 
 <style>
     body { /*achtergrond*/
-        background: linear-gradient(to left, #C4A484 50%, transparent 50%),
-            url('https://i.imgur.com/GZVw5gT.png') repeat-x;
+        background: linear-gradient(to left, #C4A484 50%, transparent 50%), url('https://i.imgur.com/GZVw5gT.png') repeat-x;
         background-color: #E9E9E9;
         background-size: 15500px 300px;
         background-position: 0px 0px;
@@ -44,7 +43,7 @@
         left: 0%;
         position: absolute;
     }
-    
+
     .text-containersquare { /*positie en grootte tekst*/
         display: flex;
         flex-direction: column;
@@ -54,13 +53,54 @@
         font-size: 24px;
         margin-top: 120px;
     }
+
+    .homescreen-button { /*knop om naar home page te gaan*/
+        position: absolute;
+        top: 350px;
+        left: 30px;
+        padding: 20px 0;
+        width: 80%;
+        background-color: #099F91;
+        border: 1px solid #099F91;
+        color: white;
+        font-size: 16px;
+        text-align: center;
+        border-radius: 10px;
+    }
+
+        .homescreen-button:hover {
+            background-color: #F9834C;
+        }
 </style>
 
-<div class="mainsquare"> @* HTML elements*@
+<div class="mainsquare">
+    @* HTML elements*@
     <div class="smallersquare">
         <img src="https://i.imgur.com/MF5gfZC.png" class="buurtboer-logo" />
+        <button class="homescreen-button" @onclick="HomeScreenRouting">Home</button>
     </div>
     <div class="text-containersquare">
-        <p>dit is het tekst gedeelte voor het pagenotfound gedeelte</p>
+        <p>dit is de pagenotfound pagina</p>
     </div>
 </div>
+
+@code {
+    private bool IsUserLoggedIn() // kijken of gebruiker ingelogd is.
+    {
+        // Hier checken of gebruiker ingelogd is.
+
+        return true;// deze op false zetten zorgt ervoor dat gebruiker direct naar login scherm wordt gestuurd als hij niet ingelogd is.
+    }
+
+    private void HomeScreenRouting()
+    {
+        if (IsUserLoggedIn())
+        {
+            NavigationManager.NavigateTo("/home");
+        }
+        else
+        {
+            NavigationManager.NavigateTo("/login");
+        }
+    }
+}

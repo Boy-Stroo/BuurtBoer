@@ -3,8 +3,7 @@
 
 <style>
     body { /*achtergrond*/
-        background: linear-gradient(to left, #C4A484 50%, transparent 50%),
-            url('https://i.imgur.com/GZVw5gT.png') repeat-x;
+        background: linear-gradient(to left, #C4A484 50%, transparent 50%), url('https://i.imgur.com/GZVw5gT.png') repeat-x;
         background-color: #E9E9E9;
         background-size: 15500px 300px;
         background-position: 0px 0px;
@@ -44,7 +43,7 @@
         left: 0%;
         position: absolute;
     }
-    
+
     .text-containersquare { /*positie en grootte tekst*/
         display: flex;
         flex-direction: column;
@@ -54,11 +53,88 @@
         font-size: 24px;
         margin-top: 120px;
     }
+
+    .homescreen-button { /*knop om naar home page te gaan*/
+        position: absolute;
+        top: 350px;
+        left: 30px;
+        padding: 20px 0;
+        width: 80%;
+        background-color: #099F91;
+        border: 1px solid #099F91;
+        color: white;
+        font-size: 16px;
+        text-align: center;
+        border-radius: 10px;
+    }
+
+        .homescreen-button:hover {
+            background-color: #F9834C;
+        }
+
+    .employee-button { /*knop om naar employees page te gaan*/
+        position: absolute;
+        top: 425px;
+        left: 30px;
+        padding: 20px 0;
+        width: 80%;
+        background-color: #099F91;
+        border: 1px solid #099F91;
+        color: white;
+        font-size: 16px;
+        text-align: center;
+        border-radius: 10px;
+    }
+
+        .employee-button:hover {
+            background-color: #F9834C;
+        }
+
+    .companies-button { /*knop om naar companies page te gaan*/
+        position: absolute;
+        top: 500px;
+        left: 30px;
+        padding: 20px 0;
+        width: 80%;
+        background-color: #099F91;
+        border: 1px solid #099F91;
+        color: white;
+        font-size: 16px;
+        text-align: center;
+        border-radius: 10px;
+    }
+
+        .companies-button:hover {
+            background-color: #F9834C;
+        }
+
+    .lunchdata-button { /*knop om naar lunchdata page te gaan*/
+        position: absolute;
+        top: 575px;
+        left: 30px;
+        padding: 20px 0;
+        width: 80%;
+        background-color: #099F91;
+        border: 1px solid #099F91;
+        color: white;
+        font-size: 16px;
+        text-align: center;
+        border-radius: 10px;
+    }
+
+        .lunchdata-button:hover {
+            background-color: #F9834C;
+        }
 </style>
 
-<div class="mainsquare"> @* HTML elements*@
+<div class="mainsquare">
+    @* HTML elements*@
     <div class="smallersquare">
         <img src="https://i.imgur.com/MF5gfZC.png" class="buurtboer-logo" />
+        <button class="homescreen-button" @onclick="HomeScreenRouting">Home</button>
+        <button class="employee-button" @onclick="EmployeeRouting">Employees</button>
+        <button class="companies-button" @onclick="CompanyRouting">Companies</button>
+        <button class="lunchdata-button" @onclick="LunchDataRouting">Lunchdata</button>
     </div>
     <div class="text-containersquare">
         <p>dit is het tekst gedeelte voor het employee gedeelte</p>
@@ -69,17 +145,37 @@
 
     protected override void OnInitialized() // Functie om van een page naar een andere te gaan.
     {
-        if(!IsUserLoggedIn()) 
+        if (!IsUserLoggedIn())
         {
-            NavigationManager.NavigateTo("login");
+            NavigationManager.NavigateTo("/login");
         }
-    //andere if statements kunnen hier nog bij om ervoor te kunnen zorgen dat gebruikers naar andere pages kunnen.
+        //andere if statements kunnen hier nog bij om ervoor te kunnen zorgen dat gebruikers naar andere pages kunnen.
     }
 
     private bool IsUserLoggedIn() // kijken of gebruiker ingelogd is.
     {
-    // Hier checken of gebruiker ingelogd is.
-    
+        // Hier checken of gebruiker ingelogd is.
+
         return true;// deze op false zetten zorgt ervoor dat gebruiker direct naar login scherm wordt gestuurd als hij niet ingelogd is.
+    }
+
+    private void HomeScreenRouting()
+    {
+        NavigationManager.NavigateTo("/home");
+    }
+
+    private void EmployeeRouting()
+    {
+        NavigationManager.NavigateTo("/employees");
+    }
+
+    private void CompanyRouting()
+    {
+        NavigationManager.NavigateTo("/companies");
+    }
+
+    private void LunchDataRouting()
+    {
+        NavigationManager.NavigateTo("/lunchdata");
     }
 }
