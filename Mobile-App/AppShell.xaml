@@ -4,16 +4,35 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:Mobile_App"
-    Shell.FlyoutBehavior="Disabled">
-    <!-- Define a new page here. Follow  -->
+    Shell.FlyoutBehavior="Disabled"
+    NavBarIsVisible="False"
+    TabBarIsVisible="False">
+
+    <!-- Define a new page here. Follow the pattern of previous pages -->
     <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage"/>
+        ContentTemplate="{DataTemplate local:LogInPage}"
+        Route="LogInPage"
+        Shell.NavBarIsVisible="False"
+        Shell.TabBarIsVisible="False"/>
 
     <ShellContent
         Title="Testing"
-        ContentTemplate="{DataTemplate local:MyPage}"
-        Route="MyPage"/>
+        ContentTemplate="{DataTemplate local:HomePage}"
+        Route="HomePage"
+        Shell.NavBarIsVisible="False"
+        Shell.TabBarIsVisible="False"/>
+
+    <ShellContent
+        ContentTemplate="{DataTemplate local:ForgotPasswordPage}"
+        Route="ForgotPasswordPage"
+        Shell.NavBarIsVisible="False"
+        Shell.TabBarIsVisible="False"/>
+
+    <ShellContent
+    ContentTemplate="{DataTemplate local:SettingsPage}"
+    Route="SettingsPage"
+    Shell.NavBarIsVisible="False"
+    Shell.TabBarIsVisible="False"/>
+
 
 </Shell>

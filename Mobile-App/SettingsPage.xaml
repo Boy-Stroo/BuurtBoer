@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Mobile_App.SettingsPage"
+             BackgroundColor="{StaticResource Gray}">
+
+    <Grid>
+        <!-- Green rounded square -->
+        <BoxView
+            Color="{StaticResource Primary}"
+            CornerRadius="0,0,10,10"
+            VerticalOptions="Start"
+            HorizontalOptions="Center"
+            HeightRequest="150"
+            WidthRequest="150"
+            Margin="0,0,0,0"/>
+
+        <Image
+            Source="buurtboer_met_tekst.svg"
+            VerticalOptions="Start"
+            HorizontalOptions="Center"
+            Margin="0,15,0,0"
+            HeightRequest="75"
+            WidthRequest="75"/>
+
+        <!-- Orange rectangle with "settings" -->
+        <Grid VerticalOptions="Start" HorizontalOptions="Center" Margin="0,90,0,0">
+            <BoxView
+                Color="{StaticResource Tertiary}"
+                CornerRadius="10"
+                HeightRequest="50"
+                WidthRequest="130"/>
+
+            <!-- Grid for "settings" text within orange rectangle -->
+            <Grid VerticalOptions="Center">
+                <Label Text="SETTINGS" HorizontalOptions="Center" VerticalOptions="Center" TextColor="White" Grid.Row="0" FontSize="Large"/>
+            </Grid>
+        </Grid>
+
+        <!-- Home/calendar button in the top left corner -->
+        <Grid VerticalOptions="Start" HorizontalOptions="Start" Margin="0,0,0,0">
+
+            <!--- White box + outline underneath icon -->
+            <Frame Padding="1" CornerRadius="10">
+                <BoxView
+                Color="{StaticResource White}"
+                HeightRequest="50"
+                WidthRequest="50"/>
+            </Frame>
+
+            <!--- Home/calendar button icon -->
+            <ImageButton
+                Clicked="OnHomeClicked"
+                VerticalOptions="Start"
+                HorizontalOptions="Start"
+                Margin="0,0,0,0"
+                Source="home_calendar_icon.svg"
+                HeightRequest="45"
+                WidthRequest="45"/>
+        </Grid>
+
+        <!-- Settings -->
+        <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto" Margin="0,150,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            
+            <!-- Options: -->
+            
+            <!-- Weekly reminder -->
+                <Frame Grid.Row="0" Grid.Column="0" BackgroundColor="{StaticResource Primary}" Margin="55,10,110,0" CornerRadius="10" Padding="15">
+                    <ContentView>
+                        <StackLayout>
+                            <Label Text="WEEKLY REMINDER" HorizontalOptions="Center" VerticalOptions="Center" FontFamily="OpenSans-Regular" TextColor="{StaticResource White}" FontSize="15" FontAttributes="Bold" Padding="0"/>
+                        </StackLayout>
+                    </ContentView>
+                </Frame>
+            
+                <CheckBox Grid.Row="0" Grid.Column="1" Margin="-110,10,10,0" Color="{StaticResource Tertiary}" Scale="2.5" WidthRequest="20" HeightRequest="20"/>
+
+                <!--- Description of weekly reminder -->
+                    <Frame Grid.Row="1" Grid.Column="0" Margin="55,5,15,-5" Background="{StaticResource Gray}" BorderColor="{StaticResource Gray}" Padding="0">
+                        <ContentView>
+                            <StackLayout>
+                                <Label Text="Receive a push notification every week as a reminder to select your attendance" TextColor="{StaticResource Primary}" FontSize="Small"/>
+                            </StackLayout>
+                        </ContentView>
+                    </Frame>
+            
+            <!--- Recurring selection -->
+                <Frame Grid.Row="2" Grid.Column="0" BackgroundColor="{StaticResource Primary}" Margin="55,10,110,0" CornerRadius="10" Padding="15">
+                    <ContentView>
+                        <StackLayout>
+                            <Label Text="RECURRING SELECTION" HorizontalOptions="Center" VerticalOptions="Center" FontFamily="OpenSans-Regular" TextColor="{StaticResource White}" FontSize="15" FontAttributes="Bold" Padding="0"/>
+                        </StackLayout>
+                    </ContentView>
+                </Frame>
+
+                <CheckBox Grid.Row="2" Grid.Column="1" Margin="-110,10,10,0" Color="{StaticResource Tertiary}" Scale="2.5" WidthRequest="20" HeightRequest="20"/>
+
+                <!--- Description of recurring selection -->
+                    <Frame Grid.Row="3" Grid.Column="0" Margin="55,5,15,-5" Background="{StaticResource Gray}" BorderColor="{StaticResource Gray}" Padding="0">
+                        <ContentView>
+                            <StackLayout>
+                                <Label Text="Remember your latest attendance for future weeks, weekly selection will no longer be necessary" TextColor="{StaticResource Primary}" FontSize="Small"/>
+                            </StackLayout>
+                        </ContentView>
+                    </Frame>
+                
+            <!--- Language -->
+                <Frame Grid.Row="4" Grid.Column="0" Margin="55,10,15,-5" Background="{StaticResource Gray}" BorderColor="{StaticResource Gray}" Padding="0">
+                    <ContentView>
+                        <StackLayout>
+                            <Label Text="LANGUAGE" TextColor="{StaticResource Tertiary}" FontSize="Medium" FontAttributes="Bold"/>
+                        </StackLayout>
+                    </ContentView>
+                </Frame>
+                
+                <!--- English -->
+                    <Frame Grid.Row="5" Grid.Column="0" BackgroundColor="{StaticResource Primary}" Margin="55,10,110,0" CornerRadius="10" Padding="6">
+                        <ContentView>
+                            <StackLayout>
+                                <Label Text="ENGLISH" HorizontalOptions="Center" VerticalOptions="Center" FontFamily="OpenSans-Regular" TextColor="{StaticResource White}" FontSize="15" FontAttributes="Bold" Padding="0"/>
+                            </StackLayout>
+                        </ContentView>
+                    </Frame>
+
+                    <CheckBox Grid.Row="5" Grid.Column="1" Margin="-110,10,10,0" Color="{StaticResource Tertiary}" Scale="2" WidthRequest="20" HeightRequest="20"/>
+
+                <!--- Dutch -->
+                    <Frame Grid.Row="6" Grid.Column="0" BackgroundColor="{StaticResource Primary}" Margin="55,10,110,0" CornerRadius="10" Padding="6">
+                        <ContentView>
+                            <StackLayout>
+                                <Label Text="DUTCH" HorizontalOptions="Center" VerticalOptions="Center" FontFamily="OpenSans-Regular" TextColor="{StaticResource White}" FontSize="15" FontAttributes="Bold" Padding="0"/>
+                            </StackLayout>
+                        </ContentView>
+                    </Frame>
+
+                    <CheckBox Grid.Row="6" Grid.Column="1" Margin="-110,10,10,0" Color="{StaticResource Tertiary}" Scale="2" WidthRequest="20" HeightRequest="20"/>
+            
+            <!--- Save changes -->
+                <Button Text="SAVE CHANGES" 
+                    Grid.Row="7"
+                    BackgroundColor="{StaticResource Tertiary}"
+                    Margin="80,30,80,0"
+                    TextColor="{StaticResource Secondary}"
+                    CornerRadius="10"
+                    Padding="8"
+                    FontSize="17"
+                    FontAttributes="Bold"/>
+
+            <!-- Change password -->
+            <Button Text="CHANGE PASSWORD"
+                        Grid.Row="8"
+                        Margin="80,30,80,0"
+                        CornerRadius="10"
+                        Padding="8"
+                        BackgroundColor="{StaticResource Tertiary}"
+                        TextColor="{StaticResource Secondary}"
+                        FontAttributes="Bold"
+                        FontSize="17"/>
+
+            <!-- Log out -->
+            <Button Text="LOG OUT"
+                    Grid.Row="9"
+                    Margin="80,10,80,0"
+                    CornerRadius="10"
+                    Padding="8"
+                    BackgroundColor="{StaticResource Tertiary}"
+                    TextColor="{StaticResource Secondary}"
+                    FontAttributes="Bold"
+                    FontSize="17"/>
+
+        </Grid>
+
+        <!-- "Welcome, user" block at the bottom -->
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="100"/>
+            </Grid.RowDefinitions>
+
+            <Frame Grid.Row="1" BackgroundColor="{StaticResource Primary}" Margin="0,10,0,0" CornerRadius="0">
+                <Grid VerticalOptions="Center">
+                    <Label Text="Welcome, user" HorizontalOptions="Start" VerticalOptions="Center" TextColor="White" Grid.Row="0" FontSize="Large"/>
+                </Grid>
+
+            </Frame>
+
+        </Grid>
+
+
+
+
+
+    </Grid>
+    
+</ContentPage>
