@@ -32,7 +32,7 @@ app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 
 // Comment this to try out HTTP Request underneath
-app.Run();
+// app.Run();
 
 
 // Create HTTP client
@@ -40,9 +40,8 @@ app.Run();
 // Await request
 
 
-// HttpClient http = new();
-// http.BaseAddress = new Uri("http://localhost:5077");
-// EmployeeService employeeService = new(http);
-// var result = await employeeService.GetEmployees();
-// Console.WriteLine("Hi");
-// result.ToList().ForEach(x => Console.WriteLine(x));
+HttpClient http = new();
+http.BaseAddress = new Uri("http://localhost:5077");
+EmployeeService employeeService = new(http);
+var result = await employeeService.GetEmployees();
+result.ToList().ForEach(x => Console.WriteLine(x));

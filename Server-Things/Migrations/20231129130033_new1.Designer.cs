@@ -12,8 +12,8 @@ using Server_Things;
 namespace Server_Things.Migrations
 {
     [DbContext(typeof(BuurtboerContext))]
-    [Migration("20231121102534_changedContext")]
-    partial class changedContext
+    [Migration("20231129130033_new1")]
+    partial class new1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
