@@ -23,9 +23,9 @@ namespace Server_Things.Controllers
         public async Task<IActionResult> GetLogin(string email, string password)
         {
             var query = db.Users.Select(user => user)
-                .Where(u => u.Email.ToLower() == email.ToLower() && u.Password == password).ToList();
+                .Where(u => u.Email.ToLower() == email.ToLower() && u.Password == password);
             
-            if (query == null)
+            if (query.Count() == 0)
             {
                 return BadRequest("User Not found");
             }
