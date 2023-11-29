@@ -3,13 +3,13 @@ using System.Text.Json;
 using Microsoft.VisualBasic;
 using Mobile_App.Models;
 
-public class HTTPService<T>
+public class HTTPService
 {
     HttpClient _client;
     JsonSerializerOptions _serializerOptions;
     string _domain = "http://localhost:5077";
 
-    public List<T> Context { get; private set; }
+    public List<User> Context { get; private set; }
 
     public HTTPService()
     {
@@ -21,18 +21,18 @@ public class HTTPService<T>
         };
     }
 
-    public async Task<List<T>> GetAll()
+    public async Task<List<User>> GetAll()
     {
-        Context = new List<T>();
+        Context = new List<User>();
 
-        Uri uri = new Uri(string.Format(_domain, $"/api/{typeof(T).Name.ToLower()}/all"));
+        Uri uri = new Uri(string.Format(_domain, $"/api/{typeof(User).Name.ToLower()}/all"));
         try
         {
             HttpResponseMessage response = await _client.GetAsync(uri);
             if (response.IsSuccessStatusCode)
             {
                 string content = await response.Content.ReadAsStringAsync();
-                Context = JsonSerializer.Deserialize<List<T>>(content, _serializerOptions);
+                Context = JsonSerializer.Deserialize<List<User>>(content, _serializerOptions);
             }
         }
         catch (Exception ex)
@@ -41,4 +41,7 @@ public class HTTPService<T>
         }
         return Context;
     }
+
+    // public async Task<List<User>> GetLogin()
+
 }
