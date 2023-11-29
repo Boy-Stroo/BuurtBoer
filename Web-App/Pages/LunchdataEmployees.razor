@@ -1,4 +1,4 @@
-@page "/lunchdata"
+@page "/lunchdataemployees"
 @inject NavigationManager NavigationManager
 
 <style>
@@ -44,15 +44,14 @@
         position: absolute;
     }
 
-    .text-containersquare { /*positie en grootte tekst bovenin scherm*/
+    .text-containersquare { /*positie en grootte tekst*/
         display: flex;
         flex-direction: column;
         justify-content: center;
         color: white;
         font-family: monospace;
         font-size: 24px;
-        margin-top: 75px;
-        margin-left: 200px;
+        margin-top: 120px;
     }
 
     .homescreen-button { /*knop om naar home page te gaan*/
@@ -126,32 +125,6 @@
         .lunchdata-button:hover {
             background-color: #F9834C;
         }
-
-    .employeespecific-button { /*kleur van "employeespecific" button*/
-        background-color: #F9834C;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        padding: 15px 30px;
-        font-size: 24px;
-        cursor: pointer;
-        position: absolute;
-        top: 350px;
-        left: 400px;
-    }
-
-    .companyspecific-button { /*kleur van "companyspecific" button*/
-        background-color: #F9834C;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        padding: 15px 30px;
-        font-size: 24px;
-        cursor: pointer;
-        position: absolute;
-        top: 350px;
-        left: 850px;
-    }
 </style>
 
 <div class="mainsquare">
@@ -164,10 +137,8 @@
         <button class="lunchdata-button" @onclick="LunchDataRouting">Lunchdata</button>
     </div>
     <div class="text-containersquare">
-        <p>Lunchdata</p>
+        <p>dit is het tekst gedeelte voor de lunchdataemployees gedeelte</p>
     </div>
-    <button class="employeespecific-button" @onclick="EmployeeSpecific">Employee specific</button>
-    <button class="companyspecific-button" @onclick="CompanySpecific">Company specific</button>
 </div>
 
 @code {
@@ -206,15 +177,5 @@
     private void LunchDataRouting()
     {
         NavigationManager.NavigateTo("/lunchdata");
-    }
-
-    private void EmployeeSpecific()
-    {
-        NavigationManager.NavigateTo("/lunchdataemployees");
-    }
-
-    private void CompanySpecific()
-    {
-        NavigationManager.NavigateTo("/lunchdatacompanies");
     }
 }

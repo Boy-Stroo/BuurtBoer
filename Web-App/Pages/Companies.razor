@@ -90,7 +90,7 @@
             background-color: #F9834C;
         }
 
-    .companies-button { /*knop om naar companies page te gaan*/
+    .grocerylist-button { /*knop om naar grocerylist page te gaan*/
         position: absolute;
         top: 500px;
         left: 30px;
@@ -104,7 +104,7 @@
         border-radius: 10px;
     }
 
-        .companies-button:hover {
+        .grocerylist-button:hover {
             background-color: #F9834C;
         }
 
@@ -133,7 +133,7 @@
         <img src="https://i.imgur.com/MF5gfZC.png" class="buurtboer-logo" />
         <button class="homescreen-button" @onclick="HomeScreenRouting">Home</button>
         <button class="employee-button" @onclick="EmployeeRouting">Employees</button>
-        <button class="companies-button" @onclick="CompanyRouting">Companies</button>
+        <button class="grocerylist-button" @onclick="GroceryListRouting">Grocery List</button>
         <button class="lunchdata-button" @onclick="LunchDataRouting">Lunchdata</button>
     </div>
     <div class="text-containersquare">
@@ -169,9 +169,9 @@
         NavigationManager.NavigateTo("/employees");
     }
 
-    private void CompanyRouting()
+    private void GroceryListRouting()
     {
-        NavigationManager.NavigateTo("/companies");
+        NavigationManager.NavigateTo("/grocerylist");
     }
 
     private void LunchDataRouting()
