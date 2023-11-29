@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Text.Json;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Server_Things.Models;
 
@@ -11,19 +12,26 @@ namespace Server_Things.Controllers
         private readonly BuurtboerContext db = new BuurtboerContext();
 
         [HttpGet("all")]
-        public IEnumerable<User> GetUsers()
+        public async Task<IActionResult> GetUsers()
         {
-            var query = db.Users.Select(u => u);
-            return query.ToList();
+            var query = db.Users.Select(u => u).ToList();
+            var Users = JsonSerializer.Serialize(query);
+            return Ok(Users);
         }
 
         [HttpGet("login")]
-        public IEnumerable<User> GetLogin(string email, string password)
+        public async Task<IActionResult> GetLogin(string email, string password)
         {
             var query = db.Users.Select(user => user)
-                .Where(u => u.Email.ToLower() == email.ToLower() && u.Password == password);
+                .Where(u => u.Email.ToLower() == email.ToLower() && u.Password == password).ToList();
+            
+            if (query.Count == 0)
+            {
+                BadRequest("User Not found");
+            }
+            var Users = JsonSerializer.Serialize(query);
 
-            return query.ToList();
+            return Ok(Users);
         }
 
     }
