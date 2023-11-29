@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 using EmployeeManagement.Web.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using Web_App.Data;
+using Web_App.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 

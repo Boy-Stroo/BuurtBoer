@@ -1,4 +1,4 @@
-﻿namespace Mobile_App.Models
+﻿namespace Web_App.Models
 {
     public enum Role
     {

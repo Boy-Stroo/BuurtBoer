@@ -1,4 +1,4 @@
-namespace Server_Things.Models
+namespace Mobile_App.Models
 {
     public class ErrorViewModel
     {
