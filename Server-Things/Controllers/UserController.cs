@@ -25,9 +25,9 @@ namespace Server_Things.Controllers
             var query = db.Users.Select(user => user)
                 .Where(u => u.Email.ToLower() == email.ToLower() && u.Password == password).ToList();
             
-            if (query.Count == 0)
+            if (query == null)
             {
-                BadRequest("User Not found");
+                return BadRequest("User Not found");
             }
             var Users = JsonSerializer.Serialize(query);
 
