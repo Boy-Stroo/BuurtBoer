@@ -36,7 +36,7 @@
         left: 350px;
     }
 
-    .text-containersquaremiddle {
+    .text-containersquaremiddle { /*tekst in kleiner rechthoek*/
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -45,6 +45,17 @@
         font-size: 20px;
         margin-top: 10px;
         margin-left: 20px;
+    }
+
+    .text-containerreminderline { /*tekst onder remind knop*/
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        color: black;
+        font-family: monospace;
+        font-size: 12px;
+        margin-top: 25px;
+        margin-left: 294px;
     }
 
     .remind-button { /*kleur van "Remind" button*/
@@ -179,6 +190,9 @@
             <p>Some number</p>
         </div>
         <button class="remind-button" @onclick="RemindButton">Remind</button>
+        <div class=text-containerreminderline>
+            <p>Click Remind for manual reminder</p>
+        </div>
     </div>
     <div class="text-containersquare">
         <p>@greeting()</p>
