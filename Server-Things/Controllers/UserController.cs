@@ -1,6 +1,8 @@
-﻿using System.Text.Json;
+﻿using System.Net.Mime;
+using System.Text.Json;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Server_Things.Models;
 
 namespace Server_Things.Controllers
@@ -10,29 +12,49 @@ namespace Server_Things.Controllers
     public class UserController : ControllerBase
     {
         private readonly BuurtboerContext db = new BuurtboerContext();
+        public record UserCredentials(string Email, string Password);
 
         [HttpGet("all")]
+        // [Produces(MediaTypeNames.Application.Json)]
+        [Consumes("application/json")]
         public async Task<IActionResult> GetUsers()
         {
-            var query = db.Users.Select(u => u).ToList();
-            var Users = JsonSerializer.Serialize(query);
-            return Ok(Users);
-        }
-
-        [HttpGet("login")]
-        public async Task<IActionResult> GetLogin(string email, string password)
-        {
-            var query = db.Users.Select(user => user)
-                .Where(u => u.Email.ToLower() == email.ToLower() && u.Password == password);
-            
-            if (query.Count() == 0)
+            try
             {
-                return BadRequest("User Not found");
+                var query = await db.Users.Select(u => u).ToListAsync();
+                var Users = JsonSerializer.Serialize(query);
+                return Ok(Users);
             }
-            var Users = JsonSerializer.Serialize(query);
-
-            return Ok(Users);
+            catch(Exception e)
+            {
+                return BadRequest(e);
+            }
         }
 
+        [HttpPost("login")]
+        [Consumes("application/json")]
+
+        public async Task<IActionResult> GetLoggedInUser([FromBody] UserCredentials credentials)
+        {
+
+            try
+            {
+                var query = await db.Users.Select(user => user)
+                    .Where(u => u.Email.ToLower() == credentials.Email.ToLower() &&
+                                u.Password == credentials.Password).ToListAsync();
+
+                if (!query.Any())
+                    return NotFound("User Not found");
+
+                var Users = JsonSerializer.Serialize(query);
+
+                return Ok(Users);
+            }
+
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
     }
 }

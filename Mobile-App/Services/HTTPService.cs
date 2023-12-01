@@ -1,17 +1,18 @@
 using System.Diagnostics;
 using System.Text.Json;
 using Microsoft.VisualBasic;
-using Mobile_App.Models;
+using Mobile_App;
 
-public class HTTPService
+
+public class UserService
 {
     HttpClient _client;
     JsonSerializerOptions _serializerOptions;
     string _domain = "http://localhost:5077";
 
-    public List<User> Context { get; private set; }
+    public List<User> Users { get; private set; }
 
-    public HTTPService()
+    public UserService()
     {
         _client = new HttpClient();
         _serializerOptions = new JsonSerializerOptions
@@ -23,23 +24,23 @@ public class HTTPService
 
     public async Task<List<User>> GetAll()
     {
-        Context = new List<User>();
+        Users = new List<User>();
 
-        Uri uri = new Uri(string.Format(_domain, $"/api/{typeof(User).Name.ToLower()}/all"));
+        Uri uri = new Uri(string.Format(_domain, $"/api/user/all"));
         try
         {
             HttpResponseMessage response = await _client.GetAsync(uri);
             if (response.IsSuccessStatusCode)
             {
                 string content = await response.Content.ReadAsStringAsync();
-                Context = JsonSerializer.Deserialize<List<User>>(content, _serializerOptions);
+                Users = JsonSerializer.Deserialize<List<User>>(content, _serializerOptions);
             }
         }
         catch (Exception ex)
         {
             Debug.WriteLine(@"\tERROR {0}", ex.Message);
         }
-        return Context;
+        return Users;
     }
 
     // public async Task<List<User>> GetLogin()
