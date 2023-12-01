@@ -29,10 +29,16 @@
         Shell.TabBarIsVisible="False"/>
 
     <ShellContent
-    ContentTemplate="{DataTemplate local:SettingsPage}"
-    Route="SettingsPage"
-    Shell.NavBarIsVisible="False"
-    Shell.TabBarIsVisible="False"/>
+        ContentTemplate="{DataTemplate local:SettingsPage}"
+        Route="SettingsPage"
+        Shell.NavBarIsVisible="False"
+        Shell.TabBarIsVisible="False"/>
+
+    <ShellContent
+        ContentTemplate="{DataTemplate local:TestPageApiCalls}"
+        Route="TestPageApiCalls"
+        Shell.NavBarIsVisible="False"
+        Shell.TabBarIsVisible="False"/>
 
 
 </Shell>

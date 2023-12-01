@@ -1,17 +1,22 @@
+using System.Collections.ObjectModel;
+
 namespace Mobile_App;
 
 
-public partial class NewPage1 : ContentPage
+public partial class TestPageApiCalls : ContentPage
 {
-	public NewPage1()
-	{
-		InitializeComponent();
-	}
+    UserService _userService;
+    public TestPageApiCalls()
+    {
+        InitializeComponent();
+        _userService = new UserService();
+    }
 
-	public async Task<List<User>> GetUsersAsync()
-	{
-        UserService http = new();
-        List<User> Users = await http.GetAll();
-		return Users;
+    // This method is called when the page is navigated to.
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        await _userService.GetAll();
+        UserView.ItemsSource = _userService.Users;
     }
 }

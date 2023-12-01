@@ -32,12 +32,12 @@
 
         private void OnGoogleClicked(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new LogInPage());
+            Navigation.PushAsync(new TestPageApiCalls());
         }
 
         private void OnMicrosoftClicked(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new ForgotPasswordPage());
+            Navigation.PushAsync(new TestPageApiCalls());
         }
     }
 }
