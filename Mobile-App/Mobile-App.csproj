@@ -58,6 +58,9 @@
 	  <Compile Update="ForgotPasswordPage.xaml.cs">
 	    <DependentUpon>ForgotPasswordPage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="TestPageApiCalls.xaml.cs">
+	    <DependentUpon>TestPageApiCalls.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="TestPage.xaml.cs">
 	    <DependentUpon>TestPage.xaml</DependentUpon>
 	  </Compile>
@@ -68,6 +71,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="ForgotPasswordPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="TestPageApiCalls.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="SettingsPage.xaml">
