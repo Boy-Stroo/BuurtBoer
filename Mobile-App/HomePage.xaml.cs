@@ -6,7 +6,15 @@ public partial class HomePage : ContentPage
 {
     string apiUrl = "http://localhost:5077";
     List<DateTime> weekDates;
+    UserController _userController;
    
+    public HomePage(UserController controller)
+    {
+        InitializeComponent();
+        DateTime today = DateTime.Today;
+        weekDates = GetCurrentWeekDates(today);
+        UpdateDateLabels();
+    }
     public HomePage()
     {
         InitializeComponent();

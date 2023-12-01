@@ -5,18 +5,22 @@ namespace Mobile_App;
 
 public partial class TestPageApiCalls : ContentPage
 {
-    UserService _userService;
+    UserController _userController;
+    public TestPageApiCalls(UserController userController)
+    {
+        InitializeComponent();
+        _userController = userController;
+    }
     public TestPageApiCalls()
     {
         InitializeComponent();
-        _userService = new UserService();
     }
 
     // This method is called when the page is navigated to.
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        await _userService.GetAll();
-        UserView.ItemsSource = _userService.Users;
+        await _userController.GetAllUsers();
+        UserView.ItemsSource = _userController.Users;
     }
 }

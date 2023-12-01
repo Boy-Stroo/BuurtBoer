@@ -1,33 +1,20 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Text;
 using System.Text.Json;
 using Microsoft.VisualBasic;
 using Mobile_App;
 
 // This is the service that will be used to make calls to the backend
-public class UserService
+public record UserCredentials(string Email, string Password);
+public class UserService : HTTPService
 {
-    HttpClient _client;
-    JsonSerializerOptions _serializerOptions;
-    //Default gateway: 10.0.2.2 (the ip address through which the android emulator can connect to the internet) 
-    // Translates to our local pc then port 5077 where backend is running
-    string _domain = "http://10.0.2.2:5077";
-
-    // ObservableCollection is useful for data binding, acts like a list
-    public ObservableCollection<User> Users { get; private set; }
-
     public UserService()
     {
-        _client = new HttpClient();
-        _serializerOptions = new JsonSerializerOptions
-        {
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            WriteIndented = true
-        };
-        Users = new ObservableCollection<User>();
+
     }
 
-    public async Task GetAll()
+    public async Task<ObservableCollection<User>> GetAll()
     {
 
         try
@@ -38,16 +25,31 @@ public class UserService
             if (response.IsSuccessStatusCode)
             {
                 string content = await response.Content.ReadAsStringAsync();
-                Users = JsonSerializer.Deserialize<ObservableCollection<User>>(content);
+                return JsonSerializer.Deserialize<ObservableCollection<User>>(content);
             }
         }
         // Too broad of an exception, but yeah
         catch (Exception ex)
         {
-            Debug.WriteLine(@"\tERROR {0}", ex.Message);
+            Debug.WriteLine($"ERROR {ex.Message}");
         }
+        return null;
     }
+    //Post
+     public async Task<User> GetLogin(UserCredentials credentials)
+    {
 
-    // public async Task GetLogin()
-
+            // Call to the backend
+            var json = JsonSerializer.Serialize(credentials);
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await _client.PostAsync($"{_domain}/api/user/login", data);
+            // If the call is successful, read the response and deserialize it into a users
+            if (response.IsSuccessStatusCode)
+            {
+                string content = await response.Content.ReadAsStringAsync();
+                var user = JsonSerializer.Deserialize<List<User>>(content)[0];
+                return user;
+            }
+        return null;
+    }
 }
