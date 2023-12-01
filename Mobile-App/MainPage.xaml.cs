@@ -4,7 +4,6 @@
     {
         private bool _english = false;
         private readonly UserController _userController;
-
         public LogInPage(UserController userController)
         {
             InitializeComponent();
