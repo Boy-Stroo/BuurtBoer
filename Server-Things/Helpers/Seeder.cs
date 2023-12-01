@@ -17,10 +17,10 @@ namespace Server_Things.Helpers
 
         private static readonly List<User> AdminList = new List<User>()
         {
-            new User("Admin", "Van de Admins", "abcd", "admin@deadmins.com", Role.SuperAdmin, CompanyList[0]),
-            new User("Admin", "van den Google", "1234", "adminvdgoogle@google.com", Role.Admin, CompanyList[1]),
-            new User("Admin", "van den Microsoft", "wachtwoord", "admin@dereelmicrosoft.com", Role.Admin, CompanyList[2]),
-            new User("Admin", "'s Apple", "qwerty78", "admin@TruApple.com", Role.Admin, CompanyList[3])
+            new User("Admin", "Van de Admins", "admin", "admin@ad.min", Role.SuperAdmin, CompanyList[0]),
+            new User("Admin", "van den Google", "wachtwoord", "admin@google.com", Role.Admin, CompanyList[1]),
+            new User("Admin", "van der Microsoft", "wachtwoord", "admin@dereelmicrosoft.com", Role.Admin, CompanyList[2]),
+            new User("Admin", "'s Apple", "wachtwoord", "admin@apple.com", Role.Admin, CompanyList[3])
         };
 
         private static void PopulateEmployeeList()
@@ -29,7 +29,7 @@ namespace Server_Things.Helpers
             {
                 for (int j = 0; j < 5; j++)
                 {
-                    var user = new User($"Employee{j}", $"Employee {j} of {CompanyList[i].Name}",
+                    var user = new User($"Employee{j}", $"of {CompanyList[i].Name}",
                         $"pass{j}", $"emp{j}@{CompanyList[i].Name}.com", Role.Employee, CompanyList[i]);
                     Db.Users.Add(user);
                 }
