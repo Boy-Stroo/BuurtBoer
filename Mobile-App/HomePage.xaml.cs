@@ -4,15 +4,14 @@ namespace Mobile_App;
 
 public partial class HomePage : ContentPage
 {
-    string apiUrl = "http://10.0.0.2:5077";
-    List<DateTime> weekDates;
+    List<DateOnly> weekDates;
     UserController UserController;
     private readonly OfficeDayService _officeDayService = new OfficeDayService();
 
     public HomePage(UserController controller)
     {
         InitializeComponent();
-        DateTime today = DateTime.Today;
+        DateOnly today = DateOnly.FromDateTime(DateTime.Today);
         weekDates = GetCurrentWeekDates(today);
         UpdateDateLabels();
         UserController = controller;
@@ -20,7 +19,7 @@ public partial class HomePage : ContentPage
     public HomePage()
     {
         InitializeComponent();
-        DateTime today = DateTime.Today;
+        DateOnly today = DateOnly.FromDateTime(DateTime.Today);
         weekDates = GetCurrentWeekDates(today);
         UpdateDateLabels();
         UserController = new UserController(new UserService());
@@ -36,15 +35,15 @@ public partial class HomePage : ContentPage
             welcomeLabel.Text = "Welcome, " + name;
         }
     }
-    private List<DateTime> GetCurrentWeekDates(DateTime startDate)
+    private List<DateOnly> GetCurrentWeekDates(DateOnly startDate)
     {
         int delta = DayOfWeek.Monday - startDate.DayOfWeek;
 
         // Adjust the date to Monday of the current week
-        DateTime monday = startDate.AddDays(delta);
+        DateOnly monday = startDate.AddDays(delta);
 
         // Create a list to store the dates for the current week
-        List<DateTime> weekDates = new List<DateTime>();
+        List<DateOnly> weekDates = new List<DateOnly>();
 
         // Populate the list with the dates for the current week
         for (int i = 0; i < 5; i++) // Assuming 5 working days (Monday to Friday)
@@ -67,7 +66,7 @@ public partial class HomePage : ContentPage
 
     private async void SaveSelection(object sender, EventArgs e)
     {
-        List<DateTime> selectedDates = new List<DateTime>();
+        List<DateOnly> selectedDates = new List<DateOnly>();
 
         // Check each checkbox to determine selected dates
         if (MondayCheckBox.IsChecked)
@@ -111,17 +110,20 @@ public partial class HomePage : ContentPage
                 }
                 else
                 {
-                    await DisplayAlert("Error", "Failed to fetch existing dates", "OK");
+                    await DisplayAlert("Error", "Selection not saved!", "FAILED");
                 }
+
+
             }
         }
+
     }
 
 
     private void PreviousWeekButton_Clicked(object sender, EventArgs e)
     {
-        DateTime previousMonday = weekDates[0].AddDays(-7);
-        DateTime today = DateTime.Today;
+        DateOnly previousMonday = weekDates[0].AddDays(-7);
+        DateOnly today = DateOnly.FromDateTime(DateTime.Today);
 
 
         if (previousMonday >= today.AddDays(-7))
@@ -135,8 +137,8 @@ public partial class HomePage : ContentPage
 
     private void NextWeekButton_Clicked(object sender, EventArgs e)
     {
-        DateTime nextMonday = weekDates[0].AddDays(7);
-        DateTime today = DateTime.Today;
+        DateOnly nextMonday = weekDates[0].AddDays(7);
+        DateOnly today = DateOnly.FromDateTime(DateTime.Today);
 
         if (nextMonday <= today.AddDays(7))
         {

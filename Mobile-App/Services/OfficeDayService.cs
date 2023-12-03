@@ -29,7 +29,7 @@ public class OfficeDayService : HTTPService
         return null;
     }
 
-    public async Task<bool> CreateOfficeDay(DateTime date, Guid userId)
+    public async Task<bool> CreateOfficeDay(DateOnly date, Guid userId)
     {
          
         var officeDay = new OfficeDay

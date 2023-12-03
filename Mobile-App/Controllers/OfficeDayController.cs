@@ -29,7 +29,7 @@ namespace Mobile_App
             OfficeDays = await _officeDayService.GetAllOfficeDays();
         }
 
-        public async Task<bool> CreateOfficeDay(DateTime date, Guid userId)
+        public async Task<bool> CreateOfficeDay(DateOnly date, Guid userId)
         {
             return await _officeDayService.CreateOfficeDay(date, userId);
         }
