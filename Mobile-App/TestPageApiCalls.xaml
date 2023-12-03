@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Mobile_App.TestPageApiCalls"
+             Title="NewPage1">
+    <VerticalStackLayout>
+        <!-- The List that holds all the users -->
+        <ListView x:Name="UserView"
+                  BackgroundColor="{StaticResource Primary}">
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding ListViewString}" 
+                              TextColor="{StaticResource Secondary}"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+
+        </ListView>
+    </VerticalStackLayout>
+</ContentPage>

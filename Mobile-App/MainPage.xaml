@@ -79,7 +79,8 @@
                         <RoundRectangle CornerRadius="5" />
                     </Border.StrokeShape>
 
-                    <Entry 
+                    <Entry
+                        x:Name="emailEntry"
                     Placeholder="Email"
                     HorizontalTextAlignment="Center"
                     FontSize="20"
@@ -95,6 +96,7 @@
                     </Border.StrokeShape>
 
                     <Entry 
+                    x:Name="passwordEntry"
                     Placeholder="Password"
                     HorizontalTextAlignment="Center"
                     FontSize="20"

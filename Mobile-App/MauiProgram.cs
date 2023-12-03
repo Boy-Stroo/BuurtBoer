@@ -8,6 +8,8 @@ namespace Mobile_App
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
+            builder.Services.AddSingleton<UserController>();
+            builder.Services.AddSingleton<UserService>();
             builder
                 .UseMauiApp<App>()
                 .UseMauiCommunityToolkit()

@@ -6,13 +6,34 @@ public partial class HomePage : ContentPage
 {
     string apiUrl = "http://localhost:5077";
     List<DateTime> weekDates;
+    UserController UserController;
    
+    public HomePage(UserController controller)
+    {
+        InitializeComponent();
+        DateTime today = DateTime.Today;
+        weekDates = GetCurrentWeekDates(today);
+        UpdateDateLabels();
+        UserController = controller;
+    }
     public HomePage()
     {
         InitializeComponent();
         DateTime today = DateTime.Today;
         weekDates = GetCurrentWeekDates(today);
         UpdateDateLabels();
+        UserController = new UserController(new UserService());
+    }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        var user = UserController.CurrentUser;
+        if (user != null)
+        {
+            var name = user.FirstName + " " + user.LastName;
+            welcomeLabel.Text = "Welcome, " + name;
+        }
     }
     private List<DateTime> GetCurrentWeekDates(DateTime startDate)
     {
@@ -135,7 +156,7 @@ public partial class HomePage : ContentPage
     {
         var button = (ImageButton)sender;
         button.IsEnabled = false;
-        await Navigation.PushAsync(new SettingsPage());
+        await Navigation.PushAsync(new SettingsPage(UserController));
         button.IsEnabled = true;
     }
 

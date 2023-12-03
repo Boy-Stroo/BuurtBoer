@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace Web_App.Models
+namespace Web_App
 {
     public class Company
     {

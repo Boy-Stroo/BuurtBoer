@@ -1,24 +1,21 @@
-using Microsoft.AspNetCore.Components;
+using System;
 using System.Collections.Generic;
-using System.Net.Http;
+using System.Linq;
+using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
-using Web_App.Models;
 
-namespace EmployeeManagement.Web.Services
+namespace Web_App
 {
-    public class EmployeeService
+    // This is the service that will be used to make calls to the backend
+    public class HTTPService
     {
-        private readonly HttpClient httpClient;
+        protected HttpClient _client;
+        protected string _domain = "http://localhost:5077";
 
-        public EmployeeService(HttpClient httpClient)
+        public HTTPService()
         {
-            this.httpClient = httpClient;
+            _client = new HttpClient();
         }
-
-        public async Task<IEnumerable<User>> GetEmployees()
-        {
-            return await httpClient.GetFromJsonAsync<User[]>("api/user/all");
-        }
-
-    }   
+    }
 }

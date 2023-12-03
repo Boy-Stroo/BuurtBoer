@@ -1,47 +1,29 @@
-using System.Diagnostics;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
-using Microsoft.VisualBasic;
-using Mobile_App.Models;
+using System.Threading.Tasks;
 
-public class HTTPService
+namespace Mobile_App
 {
-    HttpClient _client;
-    JsonSerializerOptions _serializerOptions;
-    string _domain = "http://localhost:5077";
-
-    public List<User> Context { get; private set; }
-
-    public HTTPService()
+    // This is the service that will be used to make calls to the backend
+    public class HTTPService
     {
-        _client = new HttpClient();
-        _serializerOptions = new JsonSerializerOptions
-        {
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            WriteIndented = true
-        };
-    }
+        protected HttpClient _client;
+        protected JsonSerializerOptions _serializerOptions;
+        // Default gateway for android emulator: 10.0.2.2 (the ip address through which the android emulator can connect to the internet) 
+        // Translates to our local pc then port 5077 where backend is running
+        protected string _domain = "http://10.0.2.2:5077";
 
-    public async Task<List<User>> GetAll()
-    {
-        Context = new List<User>();
-
-        Uri uri = new Uri(string.Format(_domain, $"/api/{typeof(User).Name.ToLower()}/all"));
-        try
+        public HTTPService()
         {
-            HttpResponseMessage response = await _client.GetAsync(uri);
-            if (response.IsSuccessStatusCode)
+            _client = new HttpClient();
+            _serializerOptions = new JsonSerializerOptions
             {
-                string content = await response.Content.ReadAsStringAsync();
-                Context = JsonSerializer.Deserialize<List<User>>(content, _serializerOptions);
-            }
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                WriteIndented = true
+            };
         }
-        catch (Exception ex)
-        {
-            Debug.WriteLine(@"\tERROR {0}", ex.Message);
-        }
-        return Context;
     }
-
-    // public async Task<List<User>> GetLogin()
-
 }

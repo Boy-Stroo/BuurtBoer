@@ -12,8 +12,8 @@ namespace Mobile_App
             {
                 entry.CursorPosition = 0;
             });
-
             MainPage = new AppShell();
         }
+
     }
 }

@@ -40,7 +40,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
-
+// app.UseJwtBearerAuthentication   (new JwtBearerOptionsM());
 
 app.MapControllerRoute(
     name: "default",

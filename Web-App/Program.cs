@@ -1,9 +1,8 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using EmployeeManagement.Web.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using Web_App.Models;
+using Web_App;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,17 +30,24 @@ app.UseRouting();
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 
-// Comment this to try out HTTP Request underneath
+// Commented this to try out HTTP Request underneath
+
 // app.Run();
 
 
-// Create HTTP client
-// Register the service
-// Await request
-
-
-HttpClient http = new();
-http.BaseAddress = new Uri("http://localhost:5077");
-EmployeeService employeeService = new(http);
-var result = await employeeService.GetEmployees();
-result.ToList().ForEach(x => Console.WriteLine(x));
+// UserController has the UserServiceHttpclient
+UserController Users = new();
+await Users.GetAllUsers();
+//printing all users to console
+Users.Users.ToList().ForEach(x => Console.WriteLine($"{x.FirstName}, {x.Email}"));
+//Checking login
+if (await Users.LogIn(new("emp2@microsoft.com", "pass2")))
+{
+    //Logged in user is saved in the Controller
+    User user = Users.CurrentUser!;
+    Console.WriteLine($"Success baby: {user.FirstName} {user.LastName}");
+}
+else
+{
+    Console.WriteLine("altijd janken");
+}
