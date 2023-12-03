@@ -3,8 +3,7 @@
 
 <style>
     body { /*achtergrond*/
-        background: linear-gradient(to left, #C4A484 50%, transparent 50%),
-            url('https://i.imgur.com/GZVw5gT.png') repeat-x;
+        background: linear-gradient(to left, #C4A484 50%, transparent 50%), url('https://i.imgur.com/GZVw5gT.png') repeat-x;
         background-color: #E9E9E9;
         background-size: 15500px 300px;
         background-position: 0px 0px;
@@ -37,6 +36,42 @@
         z-index: -1;
     }
 
+    .squareinmainsquare { /*wit rechthoek in main rechthoek*/
+        width: 800px;
+        height: 700px;
+        background-color: #E9E9E9;
+        border-radius: 10px;
+        position: absolute;
+        top: 50px;
+        left: 350px;
+    }
+
+    .employeespecific-button { /*kleur van "employeespecific" button*/
+        background-color: #F9834C;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 15px 30px;
+        font-size: 24px;
+        cursor: pointer;
+        position: absolute;
+        top: 350px;
+        left: 75px;
+    }
+
+    .companyspecific-button { /*kleur van "companyspecific" button*/
+        background-color: #F9834C;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 15px 30px;
+        font-size: 24px;
+        cursor: pointer;
+        position: absolute;
+        top: 350px;
+        left: 475px;
+    }
+
     .buurtboer-logo {
         width: 300px;
         height: 250px;
@@ -44,24 +79,106 @@
         left: 0%;
         position: absolute;
     }
-    
-    .text-containersquare { /*positie en grootte tekst*/
+
+    .text-containersquare { /*positie en grootte tekst bovenin scherm*/
         display: flex;
         flex-direction: column;
         justify-content: center;
-        color: white;
+        color: black;
         font-family: monospace;
         font-size: 24px;
-        margin-top: 120px;
+        margin-top: 75px;
+        margin-left: 325px;
     }
+
+    .homescreen-button { /*knop om naar home page te gaan*/
+        position: absolute;
+        top: 350px;
+        left: 30px;
+        padding: 20px 0;
+        width: 80%;
+        background-color: #099F91;
+        border: 1px solid #099F91;
+        color: white;
+        font-size: 16px;
+        text-align: center;
+        border-radius: 10px;
+    }
+
+        .homescreen-button:hover {
+            background-color: #F9834C;
+        }
+
+    .employee-button { /*knop om naar employees page te gaan*/
+        position: absolute;
+        top: 425px;
+        left: 30px;
+        padding: 20px 0;
+        width: 80%;
+        background-color: #099F91;
+        border: 1px solid #099F91;
+        color: white;
+        font-size: 16px;
+        text-align: center;
+        border-radius: 10px;
+    }
+
+        .employee-button:hover {
+            background-color: #F9834C;
+        }
+
+    .grocerylist-button { /*knop om naar grocerylist page te gaan*/
+        position: absolute;
+        top: 500px;
+        left: 30px;
+        padding: 20px 0;
+        width: 80%;
+        background-color: #099F91;
+        border: 1px solid #099F91;
+        color: white;
+        font-size: 16px;
+        text-align: center;
+        border-radius: 10px;
+    }
+
+        .grocerylist-button:hover {
+            background-color: #F9834C;
+        }
+
+    .lunchdata-button { /*knop om naar lunchdata page te gaan*/
+        position: absolute;
+        top: 575px;
+        left: 30px;
+        padding: 20px 0;
+        width: 80%;
+        background-color: #099F91;
+        border: 1px solid #099F91;
+        color: white;
+        font-size: 16px;
+        text-align: center;
+        border-radius: 10px;
+    }
+
+        .lunchdata-button:hover {
+            background-color: #F9834C;
+        }
 </style>
 
-<div class="mainsquare"> @* HTML elements*@
+<div class="mainsquare">
+    @* HTML elements*@
     <div class="smallersquare">
         <img src="https://i.imgur.com/MF5gfZC.png" class="buurtboer-logo" />
+        <button class="homescreen-button" @onclick="HomeScreenRouting">Home</button>
+        <button class="employee-button" @onclick="EmployeeRouting">Employees</button>
+        <button class="grocerylist-button" @onclick="GroceryListRouting">Grocery List</button>
+        <button class="lunchdata-button" @onclick="LunchDataRouting">Lunchdata</button>
     </div>
-    <div class="text-containersquare">
-        <p>dit is het tekst gedeelte voor het lunchdata gedeelte</p>
+    <div class="squareinmainsquare">
+        <div class="text-containersquare">
+            <p>Lunchdata</p>
+        </div>
+        <button class="employeespecific-button" @onclick="EmployeeSpecific">Employee specific</button>
+        <button class="companyspecific-button" @onclick="CompanySpecific">Company specific</button>
     </div>
 </div>
 
@@ -69,17 +186,47 @@
 
     protected override void OnInitialized() // Functie om van een page naar een andere te gaan.
     {
-        if(!IsUserLoggedIn()) 
+        if (!IsUserLoggedIn())
         {
-            NavigationManager.NavigateTo("login");
+            NavigationManager.NavigateTo("/login");
         }
-    //andere if statements kunnen hier nog bij om ervoor te kunnen zorgen dat gebruikers naar andere pages kunnen.
+        //andere if statements kunnen hier nog bij om ervoor te kunnen zorgen dat gebruikers naar andere pages kunnen.
     }
 
     private bool IsUserLoggedIn() // kijken of gebruiker ingelogd is.
     {
-    // Hier checken of gebruiker ingelogd is.
-    
+        // Hier checken of gebruiker ingelogd is.
+
         return true;// deze op false zetten zorgt ervoor dat gebruiker direct naar login scherm wordt gestuurd als hij niet ingelogd is.
+    }
+
+    private void HomeScreenRouting()
+    {
+        NavigationManager.NavigateTo("/home");
+    }
+
+    private void EmployeeRouting()
+    {
+        NavigationManager.NavigateTo("/employees");
+    }
+
+    private void GroceryListRouting()
+    {
+        NavigationManager.NavigateTo("/grocerylist");
+    }
+
+    private void LunchDataRouting()
+    {
+        NavigationManager.NavigateTo("/lunchdata");
+    }
+
+    private void EmployeeSpecific()
+    {
+        NavigationManager.NavigateTo("/lunchdataemployees");
+    }
+
+    private void CompanySpecific()
+    {
+        NavigationManager.NavigateTo("/lunchdatacompanies");
     }
 }
