@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mobile_App
+namespace Web_App
 {
     public class UserController
     {
@@ -16,11 +16,16 @@ namespace Mobile_App
             get => _users;
             set => _users = value;
         }
-        private User _currentUser;
-        public User CurrentUser
+        private User? _currentUser;
+        public User? CurrentUser
         {
             get => _currentUser;
             private set => _currentUser = value;
+        }
+        public UserController()
+        {
+            _userService = new();
+            _users = new ObservableCollection<User>();
         }
 
         public UserController(UserService userService)
