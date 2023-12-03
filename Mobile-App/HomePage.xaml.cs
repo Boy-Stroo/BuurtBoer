@@ -4,10 +4,11 @@ namespace Mobile_App;
 
 public partial class HomePage : ContentPage
 {
-    string apiUrl = "http://localhost:5077";
+    string apiUrl = "http://10.0.0.2:5077";
     List<DateTime> weekDates;
     UserController UserController;
-   
+    private readonly OfficeDayService _officeDayService = new OfficeDayService();
+
     public HomePage(UserController controller)
     {
         InitializeComponent();
@@ -80,46 +81,38 @@ public partial class HomePage : ContentPage
         if (FridayCheckBox.IsChecked)
             selectedDates.Add(weekDates[4]);
 
-        string jsonSelectedDates = JsonConvert.SerializeObject(selectedDates);
-
-        using (var client = new HttpClient())
+        // Fetch existing OfficeDays from the server
+        var existingDays = await _officeDayService.GetAllOfficeDays();
+        if (existingDays != null)
         {
-            // Retrieve existing dates from the database
-            var existingDatesResponse = await client.GetAsync(apiUrl); // Replace with your actual endpoint
-            if (existingDatesResponse.IsSuccessStatusCode)
+            var newOfficeDays = selectedDates
+                .Select(date => new OfficeDay { UserId = UserController.CurrentUser.Id, Date = date })
+                .ToList();
+
+            var daysToAdd = newOfficeDays.Where(newDay =>
+                !existingDays.Any(existingDay => existingDay.UserId == newDay.UserId && existingDay.Date == newDay.Date))
+                .ToList();
+
+            var daysToRemove = existingDays
+                .Where(existingDay =>
+                    !newOfficeDays.Any(newDay => existingDay.UserId == newDay.UserId && existingDay.Date == newDay.Date))
+                .ToList();
+
+            foreach (var dayToRemove in daysToRemove)
             {
-                var existingDatesJson = await existingDatesResponse.Content.ReadAsStringAsync();
-                List<DateTime> existingDates = JsonConvert.DeserializeObject<List<DateTime>>(existingDatesJson);
+                await _officeDayService.DeleteOfficeDay(dayToRemove.Id);
+            }
 
-                // Find dates to add (not already in the database)
-                var datesToAdd = selectedDates.Except(existingDates).ToList();
-
-                // Find dates to remove (in the database but not selected)
-                var datesToRemove = existingDates.Except(selectedDates).ToList();
-
-                // Perform addition of new dates
-                var addContent = new StringContent(JsonConvert.SerializeObject(datesToAdd), Encoding.UTF8, "application/json");
-                var addResponse = await client.PostAsync(apiUrl, addContent); // Replace with your actual endpoint
-
-                // Perform removal of unselected dates
-                var removeContent = new StringContent(JsonConvert.SerializeObject(datesToRemove), Encoding.UTF8, "application/json");
-                var removeResponse = await client.PostAsync(apiUrl, removeContent); // Replace with your actual endpoint
-
-                if (addResponse.IsSuccessStatusCode && removeResponse.IsSuccessStatusCode)
+            foreach (var dayToAdd in daysToAdd)
+            {
+                if (await _officeDayService.CreateOfficeDay(dayToAdd.Date, dayToAdd.UserId))
                 {
-                    // Handle success (data saved and removed successfully)
                     await DisplayAlert("Success", "Selection saved!", "OK");
                 }
                 else
                 {
-                    // Handle failure (error in saving or removing data)
-                    await DisplayAlert("Error", "Failed to save selection", "OK");
+                    await DisplayAlert("Error", "Failed to fetch existing dates", "OK");
                 }
-            }
-            else
-            {
-                // Handle failure (error in retrieving existing dates)
-                await DisplayAlert("Error", "Failed to retrieve existing dates", "OK");
             }
         }
     }
