@@ -8,9 +8,16 @@ namespace Server_Things.Models
         public Guid Id { get; init; }
         [Required]
         public Guid UserId { get; set; }
-        public User User { get; set; }
+        public User? User { get; set; }
 
         [Required]
-        public DateTime Date { get; set; }
+        public DateOnly Date { get; set; }
+
+        public OfficeDay(Guid userId, DateOnly date)
+        {
+            UserId = userId;
+            Date = date;
+            Id = Guid.NewGuid();
+        }
     }
 }

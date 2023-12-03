@@ -13,7 +13,7 @@ namespace Server_Things
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
-            builder.UseNpgsql("Host=localhost;Port=5432;Database=buurtboer;Username=postgres");
+            builder.UseNpgsql("Host=localhost;Port=5432;Database=buurtboer;Username=postgres;Include Error Detail=true");
             builder.LogTo(Console.WriteLine, Microsoft.Extensions.Logging.LogLevel.Error);
         }
 

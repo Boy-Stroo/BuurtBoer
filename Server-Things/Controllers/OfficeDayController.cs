@@ -32,17 +32,17 @@ namespace Server_Things.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateOfficeDay([FromBody] OfficeDay officeDay)
+        public async Task<IActionResult> CreateOfficeDay([FromHeader] Guid userID, DateOnly officeDay)
         {
             try
             {
-                db.OfficeDays.Add(officeDay);
+                db.OfficeDays.Add(new(userID, officeDay));
                 await db.SaveChangesAsync();
                 return Ok("OfficeDay created successfully");
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+            return BadRequest(e.Message);
             }
         }
     }
