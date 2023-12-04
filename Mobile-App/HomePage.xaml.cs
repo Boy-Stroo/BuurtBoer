@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Text;
 using Newtonsoft.Json;
 namespace Mobile_App;
@@ -34,6 +35,22 @@ public partial class HomePage : ContentPage
             var name = user.FirstName + " " + user.LastName;
             welcomeLabel.Text = "Welcome, " + name;
         }
+
+        // Get the current date
+        DateTime currentDate = DateTime.Today;
+
+        // Get the current week number
+        int currentWeek = CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(
+            currentDate,
+            CalendarWeekRule.FirstFourDayWeek,
+            DayOfWeek.Monday
+        );
+
+        // Set the week label text
+        WeekLabel.Text = $"Week {currentWeek}";
+
+        // Set the month label text
+        MonthLabel.Text = currentDate.ToString("MMMM");
     }
     private List<DateOnly> GetCurrentWeekDates(DateOnly startDate)
     {
@@ -112,13 +129,13 @@ public partial class HomePage : ContentPage
                 {
                     await DisplayAlert("Error", "Selection not saved!", "FAILED");
                 }
-
-
             }
         }
-
+        else
+        {
+            await DisplayAlert("Error", "Failed to fetch existing dates", "OK");
+        }
     }
-
 
     private void PreviousWeekButton_Clicked(object sender, EventArgs e)
     {
@@ -146,7 +163,6 @@ public partial class HomePage : ContentPage
             UpdateDateLabels();
         }
     }
-
     private async void OnSettingsClicked(object sender, EventArgs e)
     {
         var button = (ImageButton)sender;
@@ -154,6 +170,5 @@ public partial class HomePage : ContentPage
         await Navigation.PushAsync(new SettingsPage(UserController));
         button.IsEnabled = true;
     }
-
-
+    
 }

@@ -152,9 +152,10 @@
                 </Grid.RowDefinitions>
 
                 <!-- Add your labels for week and month here -->
-                <Label Text="Week 45" HorizontalOptions="Center" VerticalOptions="Center" TextColor="White" Grid.Row="0" />
-                <Label Text="November" HorizontalOptions="Center" VerticalOptions="Center" TextColor="White" Grid.Row="1" />
+                <Label x:Name="WeekLabel" HorizontalOptions="Center" VerticalOptions="Center" TextColor="White" Grid.Row="0" />
+                <Label x:Name="MonthLabel" HorizontalOptions="Center" VerticalOptions="Center" TextColor="White" Grid.Row="1" />
             </Grid>
+
         </Grid>
 
         <!-- "Welcome, user" block at the bottom -->
