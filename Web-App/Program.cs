@@ -32,7 +32,7 @@ app.MapFallbackToPage("/_Host");
 
 // Commented this to try out HTTP Request underneath
 
-// app.Run();
+app.Run();
 
 
 // UserController has the UserServiceHttpclient
