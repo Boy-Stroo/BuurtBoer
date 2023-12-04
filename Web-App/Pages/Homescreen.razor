@@ -198,13 +198,12 @@
     </div>
     <div class="text-containersquare">
         <p>@greeting()</p>
-        <p>@currentUser.FirstName</p>
+        <p>@(User.CurrentUser.FirstName) @(User.CurrentUser.LastName)</p>
     </div>
 </div>
 
 @code {
     public int currentHour;
-    public User currentUser = new();
 
     protected async override Task OnInitializedAsync() // Make the method asynchronous
     {
@@ -213,12 +212,6 @@
         if (!IsUserLoggedIn())
         {
             NavigationManager.NavigateTo("/login");
-        }
-
-        if (await GetUsername())
-        {
-            currentUser = User.CurrentUser!;
-            StateHasChanged(); // Trigger a re-render
         }
     }
 
@@ -242,18 +235,6 @@
             return "Good evening";
         }
     }
-
-    private async Task<bool> GetUsername()
-    {
-        if (await User.LogIn(new UserCredentials("admin@ad.min", "admin")))
-        {
-            return true;
-        }
-
-        return false ;
-    }
-
-    private string currentName = "";
 
     private void HomeScreenRouting()
     {
