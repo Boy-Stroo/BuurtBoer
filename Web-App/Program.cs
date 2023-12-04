@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddHttpClient("https://localhost:5077");
-
+builder.Services.AddSingleton<UserController>();
 
 var app = builder.Build();
 
@@ -34,20 +34,19 @@ app.MapFallbackToPage("/_Host");
 
 app.Run();
 
-
-// UserController has the UserServiceHttpclient
-UserController Users = new();
-await Users.GetAllUsers();
-//printing all users to console
-Users.Users.ToList().ForEach(x => Console.WriteLine($"{x.FirstName}, {x.Email}"));
-//Checking login
-if (await Users.LogIn(new("emp2@microsoft.com", "pass2")))
-{
-    //Logged in user is saved in the Controller
-    User user = Users.CurrentUser!;
-    Console.WriteLine($"Success baby: {user.FirstName} {user.LastName}");
-}
-else
-{
-    Console.WriteLine("altijd janken");
-}
+//// UserController has the UserServiceHttpclient
+//UserController Users = new();
+//await Users.GetAllUsers();
+////printing all users to console
+//Users.Users.ToList().ForEach(x => Console.WriteLine($"{x.FirstName}, {x.Email}"));
+////Checking login
+//if (await Users.LogIn(new("emp2@microsoft.com", "pass2")))
+//{
+//    //Logged in user is saved in the Controller
+//    User user = Users.CurrentUser!;
+//    Console.WriteLine($"Success baby: {user.FirstName} {user.LastName}");
+//}
+//else
+//{
+//    Console.WriteLine("altijd janken");
+//}

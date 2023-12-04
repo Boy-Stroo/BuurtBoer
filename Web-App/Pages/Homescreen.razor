@@ -1,11 +1,11 @@
 @page "/home"
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JSRuntime
+@inject UserController User
 
 <style>
     body { /*achtergrond*/
-        background: linear-gradient(to left, #C4A484 50%, transparent 50%),
-            url('https://i.imgur.com/GZVw5gT.png') repeat-x;
+        background: linear-gradient(to left, #C4A484 50%, transparent 50%), url('https://i.imgur.com/GZVw5gT.png') repeat-x;
         background-color: #E9E9E9;
         background-size: 15500px 300px;
         background-position: 0px 0px;
@@ -90,7 +90,7 @@
         left: 0%;
         position: absolute;
     }
-    
+
     .text-containersquare { /*positie en grootte tekst*/
         display: flex;
         flex-direction: column;
@@ -175,7 +175,8 @@
         }
 </style>
 
-<div class="mainsquare"> @* HTML elements*@
+<div class="mainsquare">
+    @* HTML elements*@
     <div class="smallersquare">
         <img src="https://i.imgur.com/MF5gfZC.png" class="buurtboer-logo" />
         <button class="homescreen-button" @onclick="HomeScreenRouting">Home</button>
@@ -197,46 +198,62 @@
     </div>
     <div class="text-containersquare">
         <p>@greeting()</p>
-        <p>Gebruikersnaam</p>
+        <p>@currentUser.FirstName</p>
     </div>
 </div>
 
 @code {
     public int currentHour;
+    public User currentUser = new();
 
-    protected override void OnInitialized() // Functie om van een page naar een andere te gaan.
+    protected async override Task OnInitializedAsync() // Make the method asynchronous
     {
         currentHour = DateTime.Now.Hour;
-        if(!IsUserLoggedIn()) 
+        
+        if (!IsUserLoggedIn())
         {
             NavigationManager.NavigateTo("/login");
         }
-        //andere if statements kunnen hier nog bij om ervoor te kunnen zorgen dat gebruikers naar andere pages kunnen.
+
+        if (await GetUsername())
+        {
+            currentUser = User.CurrentUser!;
+            StateHasChanged(); // Trigger a re-render
+        }
     }
 
     private bool IsUserLoggedIn() // kijken of gebruiker ingelogd is.
     {
-        // Hier checken of gebruiker ingelogd is.
-
-        return true;// deze op false zetten zorgt ervoor dat gebruiker direct naar login scherm wordt gestuurd als hij niet ingelogd is.
+        return User.CurrentUser != null;// deze op false zetten zorgt ervoor dat gebruiker direct naar login scherm wordt gestuurd als hij niet ingelogd is.
     }
-
 
     private string greeting() // kijken hoe laat het is en daarop baseren welke message er komt.
     {
-        if(currentHour < 12 && currentHour > 3) 
+        if (currentHour < 12 && currentHour > 3)
         {
             return "Good morning";
-        } 
-        else if(currentHour < 18 && currentHour > 11)
+        }
+        else if (currentHour < 18 && currentHour > 11)
         {
             return "Good afternoon";
-        } 
+        }
         else
         {
             return "Good evening";
         }
     }
+
+    private async Task<bool> GetUsername()
+    {
+        if (await User.LogIn(new UserCredentials("admin@ad.min", "admin")))
+        {
+            return true;
+        }
+
+        return false ;
+    }
+
+    private string currentName = "";
 
     private void HomeScreenRouting()
     {
