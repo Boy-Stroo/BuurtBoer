@@ -1,5 +1,6 @@
 @page "/login"
 @inject NavigationManager NavigationManager
+@inject UserController User
 
 <style>
     body { /*achtergrond*/
@@ -172,24 +173,29 @@
     <div class="login-text">LOGIN</div>
     <div class="text-containersquaretwo">
         <label for="email adress">Email address:</label>
-        <input type="text" id="email adress" />
+        <input type="text" @bind="email" />
 
         <label for="password">Password:</label>
-        <input type="password" id="password" />
+        <input type="password" @bind="password" />
         <button class="continue-button" @onclick="HandleLogin">Continue</button>
     </div>
 </div>
 
 @code {
-    private bool isLoggedIn = false;    
+    private bool isLoggedIn = false;
+    private string email = "";
+    private string password = "";
 
-    private void HandleLogin() // code voor wanneer een gebruiker op "Continue"/ "Ga door" klikt.
+    private async void HandleLogin() // code voor wanneer een gebruiker op "Continue"/ "Ga door" klikt.
     {
         // logic om te testen of de persoon een account heeft en of het wachtwoord klopt.
         // als de gegevens goed zijn zet je isLoggedIn op true en roep je OnInitialized().
-
-        isLoggedIn = true;
-        OnInitialized();
+        var credentials = new UserCredentials(email, password);
+        if (await User.LogIn(credentials))
+        {
+            isLoggedIn = true;
+            OnInitialized();
+        }
     }
 
     protected override void OnInitialized() // code om van inlogscherm naar homescreen te gaan.
