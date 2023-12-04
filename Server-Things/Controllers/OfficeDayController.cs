@@ -47,5 +47,27 @@ namespace Server_Things.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteOfficeDay(Guid id)
+        {
+            try
+            {
+                var officeDay = await db.OfficeDays.FindAsync(id);
+                if (officeDay == null)
+                {
+                    return NotFound("OfficeDay not found");
+                }
+
+                db.OfficeDays.Remove(officeDay);
+                await db.SaveChangesAsync();
+
+                return Ok("OfficeDay deleted successfully");
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }
