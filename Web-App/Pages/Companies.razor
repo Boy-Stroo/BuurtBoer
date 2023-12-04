@@ -1,5 +1,6 @@
 ﻿@page "/companies"
 @inject NavigationManager NavigationManager
+@inject UserController User
 
 <style>
     body { /*achtergrond*/
@@ -142,21 +143,19 @@
 </div>
 
 @code {
+    public User currentUser = new();
 
-    protected override void OnInitialized() // Functie om van een page naar een andere te gaan.
+    protected async override Task OnInitializedAsync() // Make the method asynchronous
     {
         if (!IsUserLoggedIn())
         {
             NavigationManager.NavigateTo("/login");
         }
-        //andere if statements kunnen hier nog bij om ervoor te kunnen zorgen dat gebruikers naar andere pages kunnen.
     }
 
     private bool IsUserLoggedIn() // kijken of gebruiker ingelogd is.
     {
-        // Hier checken of gebruiker ingelogd is.
-
-        return true;// deze op false zetten zorgt ervoor dat gebruiker direct naar login scherm wordt gestuurd als hij niet ingelogd is.
+        return User.CurrentUser != null;// deze op false zetten zorgt ervoor dat gebruiker direct naar login scherm wordt gestuurd als hij niet ingelogd is.
     }
 
     private void HomeScreenRouting()
