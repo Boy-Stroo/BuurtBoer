@@ -31,18 +31,20 @@ namespace Server_Things.Controllers
             }
         }
 
+        public record temp(Guid userID, DateOnly date);
+
         [HttpPost]
-        public async Task<IActionResult> CreateOfficeDay([FromHeader] Guid userID, DateOnly officeDay)
+        public async Task<IActionResult> CreateOfficeDay([FromBody] temp officeDay)
         {
             try
             {
-                db.OfficeDays.Add(new(userID, officeDay));
+                db.OfficeDays.Add(new(officeDay.userID, officeDay.date));
                 await db.SaveChangesAsync();
                 return Ok("OfficeDay created successfully");
             }
             catch (Exception e)
             {
-            return BadRequest(e.Message);
+                return BadRequest(e.Message);
             }
         }
     }
