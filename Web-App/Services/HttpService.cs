@@ -11,11 +11,17 @@ namespace Web_App
     public class HTTPService
     {
         protected HttpClient _client;
+        protected JsonSerializerOptions _serializerOptions;
         protected string _domain = "http://localhost:5077";
 
         public HTTPService()
         {
             _client = new HttpClient();
+            _serializerOptions = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                WriteIndented = true
+            };
         }
     }
 }
