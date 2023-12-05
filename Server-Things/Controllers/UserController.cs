@@ -25,7 +25,7 @@ namespace Server_Things.Controllers
                 var Users = JsonSerializer.Serialize(query);
                 return Ok(Users);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
@@ -45,6 +45,24 @@ namespace Server_Things.Controllers
 
                 if (!query.Any())
                     return NotFound("User Not found");
+
+                var Users = JsonSerializer.Serialize(query);
+
+                return Ok(Users);
+            }
+
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpGet("all/{companyId}")]
+        public IActionResult GetUsersByCompany(Guid companyId)
+        {
+            try
+            {
+                var query = db.Users.Where(u => u.CompanyId == companyId);
 
                 var Users = JsonSerializer.Serialize(query);
 

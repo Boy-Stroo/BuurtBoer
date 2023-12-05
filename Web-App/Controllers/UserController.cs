@@ -38,6 +38,11 @@ namespace Web_App
             Users = await _userService.GetAll();
         }
 
+        public async Task GetAllEmployeesPerCompany(Guid CompanyID)
+        {
+            Users = await _userService.GetUsersPerCompany(CompanyID);
+        }
+
         public async Task<bool> LogIn(UserCredentials userCredentials)
         {
             CurrentUser = await _userService.GetLogin(userCredentials);
