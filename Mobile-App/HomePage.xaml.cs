@@ -1,3 +1,4 @@
+using System.Diagnostics.Metrics;
 using System.Globalization;
 using System.Text;
 using Newtonsoft.Json;
@@ -114,21 +115,30 @@ public partial class HomePage : ContentPage
                     !newOfficeDays.Any(newDay => existingDay.UserId == newDay.UserId && existingDay.Date == newDay.Date))
                 .ToList();
 
+            int counter = 0;
+
             foreach (var dayToRemove in daysToRemove)
             {
                 await _officeDayService.DeleteOfficeDay(dayToRemove.Id);
+
             }
 
             foreach (var dayToAdd in daysToAdd)
             {
                 if (await _officeDayService.CreateOfficeDay(dayToAdd.Date, dayToAdd.UserId))
                 {
-                    await DisplayAlert("Success", "Selection saved!", "OK");
+                    counter += 1;
                 }
+            
                 else
                 {
                     await DisplayAlert("Error", "Selection not saved!", "FAILED");
                 }
+            }
+
+            if (counter > 0)
+            {
+                await DisplayAlert("Changes", "Selection saved!", "OK");
             }
         }
         else
