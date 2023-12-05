@@ -3,6 +3,8 @@ using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Web_App;
+using Syncfusion.Blazor;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddHttpClient("https://localhost:5077");
 builder.Services.AddSingleton<UserController>();
+builder.Services.AddSyncfusionBlazor();
 
 var app = builder.Build();
 

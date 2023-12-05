@@ -7,4 +7,9 @@
     <RootNamespace>Web_App</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Syncfusion.Blazor.Lists" Version="23.2.4" />
+    <PackageReference Include="Syncfusion.Blazor.Themes" Version="23.2.4" />
+  </ItemGroup>
+
 </Project>

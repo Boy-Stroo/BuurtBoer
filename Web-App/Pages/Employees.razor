@@ -1,6 +1,8 @@
 ﻿@page "/employees"
 @inject NavigationManager NavigationManager
 @inject UserController Usercontroller
+@using Syncfusion.Blazor
+@using Syncfusion.Blazor.Lists
 
 <style>
     body { /*achtergrond*/
@@ -64,6 +66,14 @@
         font-size: 24px;
         margin-top: 30px;
         margin-left: 325px;
+    }
+
+    .trashcan-button {
+        width: 40px;
+        height: 40px;
+        top: 75px;
+        left: 740px;
+        position: absolute;
     }
 
     .homescreen-button { /*knop om naar home page te gaan*/
@@ -152,18 +162,50 @@
         <div class="text-containersquare">
             <p>Employees</p>
         </div>
-        @foreach (var employee in Usercontroller.Users)
-        {
-            <p>
-                @employee.FirstName
-                <br>
-                @employee.Email
-            </p>
-        }
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                </tr>
+            </thead>    
+            <tbody>
+                @foreach (var employee in employees)
+                {
+                    <tr>
+                        <td>@employee.Name</td>
+                        <td>@employee.Email</td>
+                        <button @onclick="() => ButtonClicked(employee)"></button>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <img src="https://imgur.com/eOCpUcm.png" class="trashcan-button" />
     </div>
 </div>
 
 @code {
+    List<DataModel> employees = new();
+
+    private void ButtonClicked(DataModel employee)
+    {
+        // Open details, edit, etc for clicked employee
+        Console.WriteLine($"{employee.Name} button clicked!");
+    }
+
+    private void temp()
+    {
+        foreach (var employee in Usercontroller.Users)
+        {
+            employees.Add(new DataModel { Name = employee.FirstName + " " +  employee.LastName, Email = employee.Email });
+        }
+    }
+
+    public class DataModel
+    {
+        public string Name { get; set; }
+        public string Email { get; set; }
+    }
 
     protected async override Task OnInitializedAsync() // Make the method asynchronous
     {
@@ -173,6 +215,7 @@
             NavigationManager.NavigateTo("/login");
         }
         await GetEmployees();
+        temp();
         StateHasChanged();
     }
 
@@ -181,7 +224,7 @@
         return Usercontroller.CurrentUser != null;// deze op false zetten zorgt ervoor dat gebruiker direct naar login scherm wordt gestuurd als hij niet ingelogd is.
     }
 
-    private async Task GetEmployees()
+    private async Task GetEmployees() // alle employees van een bedrijf pakken zodat je ze op het scherm kan laten zien.
     {
         await Usercontroller.GetAllEmployeesPerCompany(Usercontroller.CurrentUser.CompanyId);
     }
