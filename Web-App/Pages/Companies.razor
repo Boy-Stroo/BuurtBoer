@@ -27,6 +27,16 @@
         align-items: center;
     }
 
+    .squareinmainsquare { /*wit rechthoek in main rechthoek*/
+        width: 800px;
+        height: 700px;
+        background-color: #E9E9E9;
+        border-radius: 10px;
+        position: absolute;
+        top: 50px;
+        left: 350px;
+    }
+
     .smallersquare { /*grootte kleinere rechthoek in tweede rechthoek*/
         width: 300px;
         height: 800px;
@@ -46,14 +56,41 @@
         position: absolute;
     }
 
+    .table-container {
+        height: 500px;
+        overflow-y: scroll;
+    }
+
     .text-containersquare { /*positie en grootte tekst*/
         display: flex;
         flex-direction: column;
         justify-content: center;
-        color: white;
+        color: black;
         font-family: monospace;
         font-size: 24px;
-        margin-top: 120px;
+        margin-top: 30px;
+        margin-left: 325px;
+    }
+
+    .trashcan-button {
+        width: 40px;
+        height: 40px;
+        top: 40px;
+        left: 725px;
+        position: absolute;
+    }
+
+    .savechanges-button {
+        background-color: #F9834C;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 15px 0;
+        width: 30%;
+        font-size: 20px;
+        cursor: pointer;
+        margin-top: 20px;
+        margin-left: 280px;
     }
 
     .homescreen-button { /*knop om naar home page te gaan*/
@@ -156,6 +193,7 @@
                         <tr>
                             <td>@company.Name</td>
                             <td>@company.Description</td>
+                            <td><input type="checkbox" @onclick="() => CheckboxClicked(company)" @bind=@company.IsSelected /></td>
                         </tr>
                     }
                 </tbody>
@@ -169,6 +207,23 @@
 @code {
     public List<Company> CompanyDisplayList = new();
     public List<Company> CompaniesToBeDeleted = new();
+
+    private void CheckboxClicked(Company company) // als knop geklikt wordt gebruiker toevoegen aan lijst om te verwijderen en anders er weer uit halen.
+    {
+        // geselecteerd van true naar false of andersom.
+        company.IsSelected = !company.IsSelected;
+
+        if (company.IsSelected)
+        {
+            // gebruiker toevoegen.
+            CompaniesToBeDeleted.Add(company);
+        }
+        else
+        {
+            // Gebruiker verwijderen.
+            CompaniesToBeDeleted.Remove(company);
+        }
+    }
 
     protected async override Task OnInitializedAsync() // Make the method asynchronous
     {

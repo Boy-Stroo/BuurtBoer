@@ -22,6 +22,7 @@ namespace Web_App
         public string Description { get; set; }
         public string Address { get; set;}
         public ICollection<User> Users { get; set; }
+        public bool IsSelected { get; set; }
 
         public Company(string name, string description, string address)
         {
@@ -30,6 +31,7 @@ namespace Web_App
             Description = description;
             Address = address;
             Users = new List<User>();
+            IsSelected = false;
         }
 
         public Company(string name, string description, string address, ICollection<User> users) : this(name,
