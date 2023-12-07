@@ -195,7 +195,7 @@
                         <tr>
                             <td>@employee.Name</td>
                             <td>@employee.Email</td>
-                            <td><input type="checkbox" @onclick="() => CheckboxClicked(employee)" /></td>
+                            <td><input type="checkbox" @onclick="() => CheckboxClicked(employee)" @bind=@employee.IsSelected /></td>
                         </tr>
                     }
                 </tbody>
@@ -224,7 +224,11 @@
                 // }
                 StateHasChanged();
             }
-            OnInitialized();
+            foreach ( var employee in employees)
+            {
+                employee.IsSelected = false;
+                StateHasChanged();
+            }
         }
     }
 
