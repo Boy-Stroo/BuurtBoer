@@ -78,25 +78,25 @@ namespace Server_Things.Controllers
         }
 
         [HttpDelete("delete/{ID}")]
-        public async Task DeleteUsersDatabase([FromQuery] Guid[] UserIds)
+        public async Task DeleteUsersDatabase(Guid ID)
         {
-            foreach (var ID in UserIds)
+            try
             {
-                try
-                {
-                    var usertodelete = await db.Users.FindAsync(ID);
+                var usertodelete = db.Users.Where(u => u.Id == ID);
 
-                    if (usertodelete != null)
-                    {
-                        await db.SaveChangesAsync();
-                        db.Users.RemoveRange(usertodelete);
-                    }
-                }
-                catch (Exception ex)
+                if (usertodelete != null)
                 {
-                    Console.WriteLine(ex.Message);
+                    db.Users.RemoveRange(usertodelete);
+                    await db.SaveChangesAsync();
+                    Ok();
                 }
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                BadRequest();
+            }
+
         }
     }
 }
