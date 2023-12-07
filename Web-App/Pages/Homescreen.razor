@@ -236,6 +236,11 @@
         }
     }
 
+    private async Task RemindButton() // code voor reminder button
+    {
+        await JSRuntime.InvokeVoidAsync("alert", "Reminders have been sent!"); // dit is de code voor de alert die in het beeld te zien is.
+    }
+
     private void HomeScreenRouting()
     {
         NavigationManager.NavigateTo("/home");
@@ -254,10 +259,5 @@
     private void LunchDataRouting()
     {
         NavigationManager.NavigateTo("/lunchdata");
-    }
-
-    private async Task RemindButton() // code voor reminder button
-    {
-        await JSRuntime.InvokeVoidAsync("alert", "Reminders have been sent!"); // dit is de code voor de alert die in het beeld te zien is.
     }
 }

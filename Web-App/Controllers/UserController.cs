@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Web_App.Pages.Employees;
 
 namespace Web_App
 {
@@ -47,6 +48,11 @@ namespace Web_App
         {
             CurrentUser = await _userService.GetLogin(userCredentials);
             return CurrentUser != null;
+        }
+
+        public async Task DeleteUsers(List<DataModel> UsersToDelete)
+        {
+            await _userService.DeleteUsersDatabase(UsersToDelete);
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualBasic;
 using Web_App;
+using static Web_App.Pages.Employees;
 
 // This is the service that will be used to make calls to the backend
 public record UserCredentials(string Email, string Password);
@@ -40,7 +41,6 @@ public class UserService : HTTPService
 
     public async Task<ObservableCollection<User>> GetUsersPerCompany(Guid CompanyID)
     {
-
         try
         {
             // Call to the backend
@@ -76,5 +76,19 @@ public class UserService : HTTPService
                 return user;
             }
         return null;
+    }
+
+    public async Task DeleteUsersDatabase(List<DataModel> UsersToDelete)
+    {
+        // Build list of user ids to delete  
+        var emails = UsersToDelete.Select(x => x.Email).ToList();
+
+        // Construct JSON with the ids
+        var json = JsonSerializer.Serialize(emails);
+
+        var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+        // Send HTTP request to delete endpoint    
+        var response = await _client.PostAsync($"{_domain}/api/user/delete", content);
     }
 }

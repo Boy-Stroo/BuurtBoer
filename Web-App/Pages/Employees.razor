@@ -49,6 +49,11 @@
         left: 350px;
     }
 
+    .table-container {
+        height: 500px;
+        overflow-y: scroll;
+    }
+
     .buurtboer-logo {
         width: 300px;
         height: 250px;
@@ -71,9 +76,22 @@
     .trashcan-button {
         width: 40px;
         height: 40px;
-        top: 75px;
-        left: 740px;
+        top: 40px;
+        left: 725px;
         position: absolute;
+    }
+
+    .savechanges-button {
+        background-color: #F9834C;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 15px 0;
+        width: 30%;
+        font-size: 20px;
+        cursor: pointer;
+        margin-top: 20px;
+        margin-left: 280px;
     }
 
     .homescreen-button { /*knop om naar home page te gaan*/
@@ -162,49 +180,85 @@
         <div class="text-containersquare">
             <p>Employees</p>
         </div>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                </tr>
-            </thead>    
-            <tbody>
-                @foreach (var employee in employees)
-                {
+        <div class="table-container">
+            <table class="table">
+                <thead>
                     <tr>
-                        <td>@employee.Name</td>
-                        <td>@employee.Email</td>
-                        <button @onclick="() => ButtonClicked(employee)"></button>
+                        <th>Name</th>
+                        <th>Email</th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>    
+                <tbody>
+                    @foreach (var employee in employees)
+                    {
+                        <tr>
+                            <td>@employee.Name</td>
+                            <td>@employee.Email</td>
+                            <td><input type="checkbox" @onclick="() => CheckboxClicked(employee)" /></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
         <img src="https://imgur.com/eOCpUcm.png" class="trashcan-button" />
+        <button class="savechanges-button" @onclick="SaveChanges">Save Changes</button>
     </div>
 </div>
 
 @code {
     List<DataModel> employees = new();
+    List<DataModel> employeesToBeDeleted = new();
 
-    private void ButtonClicked(DataModel employee)
+    private async void SaveChanges()
     {
-        // Open details, edit, etc for clicked employee
-        Console.WriteLine($"{employee.Name} button clicked!");
+        if (employeesToBeDeleted != null)
+        {
+            await Usercontroller.DeleteUsers(employeesToBeDeleted);
+        }
+    }
+
+    private void CheckboxClicked(DataModel employee) // als knop geklikt wordt gebruiker toevoegen aan lijst om te verwijderen en anders er weer uit halen.
+    {
+        // geselecteerd van true naar false of andersom.
+        employee.IsSelected = !employee.IsSelected;
+
+        if (employee.IsSelected)
+        {
+            // gebruiker toevoegen.
+            employeesToBeDeleted.Add(employee);
+        }
+        else
+        {
+            // Gebruiker verwijderen.
+            employeesToBeDeleted.Remove(employee);
+        }
     }
 
     private void temp()
     {
         foreach (var employee in Usercontroller.Users)
         {
-            employees.Add(new DataModel { Name = employee.FirstName + " " +  employee.LastName, Email = employee.Email });
+            if (employee.Id == Usercontroller.CurrentUser.Id)
+            {
+                continue;
+            }
+            else
+            {
+                employees.Add(new DataModel { Name = employee.FirstName + " " + employee.LastName, Email = employee.Email });
+            }
         }
     }
 
     public class DataModel
     {
+        public DataModel()
+        {
+            IsSelected = false;
+        }
+
         public string Name { get; set; }
         public string Email { get; set; }
+        public bool IsSelected { get; set; }
     }
 
     protected async override Task OnInitializedAsync() // Make the method asynchronous
