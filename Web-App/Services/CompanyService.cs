@@ -11,7 +11,7 @@ public class CompanyService : HTTPService
         try
         {
             // Call to the backend
-            HttpResponseMessage response = await _client.GetAsync($"{_domain}/api/user/all");
+            HttpResponseMessage response = await _client.GetAsync($"{_domain}/api/company/all");
             // If the call is successful, read the response and deserialize it into a list of users
             if (response.IsSuccessStatusCode)
             {

@@ -16,7 +16,7 @@ namespace Server_Things.Controllers
         [HttpGet("all")]
         // [Produces(MediaTypeNames.Application.Json)]
         [Consumes("application/json")]
-        public async Task<IActionResult> GetUsers()
+        public async Task<IActionResult> GetCompanies()
         {
             try
             {

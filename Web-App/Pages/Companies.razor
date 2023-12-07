@@ -151,7 +151,7 @@
                     </tr>
                 </thead>    
                 <tbody>
-                    @foreach (var company in CompanyDisplayList)
+                    @foreach (var company in CompanyController.Companies)
                     {
                         <tr>
                             <td>@company.Name</td>
@@ -178,7 +178,6 @@
             NavigationManager.NavigateTo("/login");
         }
         await GetCompanies();
-        PopulateList();
         StateHasChanged();
     }
     private bool IsUserLoggedIn() // kijken of gebruiker ingelogd is.
@@ -186,18 +185,9 @@
         return User.CurrentUser != null;// deze op false zetten zorgt ervoor dat gebruiker direct naar login scherm wordt gestuurd als hij niet ingelogd is.
     }
 
-    private void PopulateList()
-    {
-        foreach (var company in CompanyController.Companies)
-        {
-            CompanyDisplayList.Add(company);
-        }
-    }
-
     private async Task GetCompanies()
     {
         await CompanyController.GetAllCompanies();
-        PopulateList();
     } 
     private async void SaveChanges()
     {
