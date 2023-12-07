@@ -1,6 +1,7 @@
 ﻿@page "/employees"
 @inject NavigationManager NavigationManager
 @inject UserController Usercontroller
+@inject IJSRuntime JSRuntime
 @using Syncfusion.Blazor
 @using Syncfusion.Blazor.Lists
 @using System.Collections.ObjectModel;
@@ -210,20 +211,24 @@
     ObservableCollection<UserModel> employees = new();
     List<UserModel> employeesToBeDeleted = new();
 
-    private async void SaveChanges()
+    private async void SaveChanges() // de knop om de geselecteerde medewerkers te verwijderen.
     {
         if (employeesToBeDeleted != null)
         {
-            await Usercontroller.DeleteUsers(employeesToBeDeleted.Select(u => u.ID).ToArray());
+            await Usercontroller.DeleteUsers(employeesToBeDeleted.Select(u => u.ID).ToArray()); // deleteusers callen met de ID's van de medewerkers in een array.
             foreach( var employee in employeesToBeDeleted )
             {
                 employees.Remove(employee);
-                // foreach (var employeeobject in employees)
-                // {
-                //     employeeobject.IsSelected = false;
-                // }
             }
             StateHasChanged();
+            if (employeesToBeDeleted.Count() > 1) // bevestigingspopup op het scherm laten zien.
+            {
+                await JSRuntime.InvokeVoidAsync("alert", "Users have been deleted!");
+            }
+            else
+            {
+                await JSRuntime.InvokeVoidAsync("alert", "User has been deleted!");
+            }
         }
     }
 
@@ -244,7 +249,7 @@
         }
     }
 
-    private void temp()
+    private void temp() // alles omzetten naar een usermodel en de admin van dat moment niet toevoegen aan de lijst.
     {
         foreach (var employee in Usercontroller.Users)
         {
@@ -273,11 +278,10 @@
         public Guid ID { get; set; }
     }
 
-    protected async override Task OnInitializedAsync() // Make the method asynchronous
+    protected async override Task OnInitializedAsync() // direct wanneer pagina geladen wordt kijken of er iemand is ingelogd en de medewerkers ophalen.
     {
         if (!IsUserLoggedIn())
         {
-
             NavigationManager.NavigateTo("/login");
         }
         await GetEmployees();
