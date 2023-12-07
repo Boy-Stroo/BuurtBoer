@@ -206,18 +206,18 @@
 </div>
 
 @code {
-    List<DataModel> employees = new();
-    List<DataModel> employeesToBeDeleted = new();
+    List<UserModel> employees = new();
+    List<UserModel> employeesToBeDeleted = new();
 
     private async void SaveChanges()
     {
         if (employeesToBeDeleted != null)
         {
-            await Usercontroller.DeleteUsers(employeesToBeDeleted);
+            await Usercontroller.DeleteUsers(employeesToBeDeleted.Select(u => u.ID).ToArray());
         }
     }
 
-    private void CheckboxClicked(DataModel employee) // als knop geklikt wordt gebruiker toevoegen aan lijst om te verwijderen en anders er weer uit halen.
+    private void CheckboxClicked(UserModel employee) // als knop geklikt wordt gebruiker toevoegen aan lijst om te verwijderen en anders er weer uit halen.
     {
         // geselecteerd van true naar false of andersom.
         employee.IsSelected = !employee.IsSelected;
@@ -244,21 +244,17 @@
             }
             else
             {
-                employees.Add(new DataModel { Name = employee.FirstName + " " + employee.LastName, Email = employee.Email });
+                employees.Add(new UserModel { Name = employee.FirstName + " " + employee.LastName, Email = employee.Email, IsSelected = false, ID = employee.Id });
             }
         }
     }
 
-    public class DataModel
+    public class UserModel
     {
-        public DataModel()
-        {
-            IsSelected = false;
-        }
-
         public string Name { get; set; }
         public string Email { get; set; }
         public bool IsSelected { get; set; }
+        public Guid ID { get; set; }
     }
 
     protected async override Task OnInitializedAsync() // Make the method asynchronous
