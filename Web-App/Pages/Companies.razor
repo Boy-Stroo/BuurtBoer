@@ -1,6 +1,7 @@
 ﻿@page "/companies"
 @inject NavigationManager NavigationManager
 @inject UserController User
+@inject CompanyController CompanyController
 
 <style>
     body { /*achtergrond*/
@@ -137,27 +138,74 @@
         <button class="grocerylist-button" @onclick="GroceryListRouting">Grocery List</button>
         <button class="lunchdata-button" @onclick="LunchDataRouting">Lunchdata</button>
     </div>
-    <div class="text-containersquare">
-        <p>dit is het tekst gedeelte voor het company gedeelte</p>
+    <div class="squareinmainsquare">
+        <div class="text-containersquare">
+            <p>Companies</p>
+        </div>
+        <div class="table-container">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>    
+                <tbody>
+                    @foreach (var company in CompanyDisplayList)
+                    {
+                        <tr>
+                            <td>@company.Name</td>
+                            <td>@company.Description</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <img src="https://imgur.com/eOCpUcm.png" class="trashcan-button" />
+        <button class="savechanges-button" @onclick="SaveChanges">Save Changes</button>
     </div>
 </div>
 
 @code {
-    public User currentUser = new();
+    public List<Company> CompanyDisplayList = new();
+    public List<Company> CompaniesToBeDeleted = new();
 
     protected async override Task OnInitializedAsync() // Make the method asynchronous
     {
         if (!IsUserLoggedIn())
         {
+
             NavigationManager.NavigateTo("/login");
         }
+        await GetCompanies();
+        PopulateList();
+        StateHasChanged();
     }
-
     private bool IsUserLoggedIn() // kijken of gebruiker ingelogd is.
     {
         return User.CurrentUser != null;// deze op false zetten zorgt ervoor dat gebruiker direct naar login scherm wordt gestuurd als hij niet ingelogd is.
     }
 
+    private void PopulateList()
+    {
+        foreach (var company in CompanyController.Companies)
+        {
+            CompanyDisplayList.Add(company);
+        }
+    }
+
+    private async Task GetCompanies()
+    {
+        await CompanyController.GetAllCompanies();
+        PopulateList();
+    } 
+    private async void SaveChanges()
+    {
+        if (CompaniesToBeDeleted != null)
+        {
+            @* await Usercontroller.DeleteUsers(employeesToBeDeleted); *@
+        }
+    }
     private void HomeScreenRouting()
     {
         NavigationManager.NavigateTo("/home");
