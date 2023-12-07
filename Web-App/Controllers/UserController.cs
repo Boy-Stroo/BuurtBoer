@@ -52,7 +52,11 @@ namespace Web_App
 
         public async Task DeleteUsers(Guid[] UsersToDelete)
         {
-            await _userService.DeleteUsersDatabase(UsersToDelete);
+            foreach (var userToDelete in UsersToDelete) 
+            {
+                await _userService.DeleteUsersDatabase(userToDelete);
+            }
+            
         }
     }
 }

@@ -3,6 +3,7 @@
 @inject UserController Usercontroller
 @using Syncfusion.Blazor
 @using Syncfusion.Blazor.Lists
+@using System.Collections.ObjectModel;
 
 <style>
     body { /*achtergrond*/
@@ -206,7 +207,7 @@
 </div>
 
 @code {
-    List<UserModel> employees = new();
+    ObservableCollection<UserModel> employees = new();
     List<UserModel> employeesToBeDeleted = new();
 
     private async void SaveChanges()
@@ -214,6 +215,16 @@
         if (employeesToBeDeleted != null)
         {
             await Usercontroller.DeleteUsers(employeesToBeDeleted.Select(u => u.ID).ToArray());
+            foreach( var employee in employeesToBeDeleted )
+            {
+                employees.Remove(employee);
+                // foreach (var employeeobject in employees)
+                // {
+                //     employeeobject.IsSelected = false;
+                // }
+                StateHasChanged();
+            }
+            OnInitialized();
         }
     }
 
@@ -244,7 +255,13 @@
             }
             else
             {
-                employees.Add(new UserModel { Name = employee.FirstName + " " + employee.LastName, Email = employee.Email, IsSelected = false, ID = employee.Id });
+                employees.Add(new UserModel
+                {
+                    Name = employee.FirstName + " " + employee.LastName,
+                    Email = employee.Email,
+                    IsSelected = false, // Set to false here
+                    ID = employee.Id
+                });
             }
         }
     }

@@ -79,19 +79,28 @@ public class UserService : HTTPService
         return null;
     }
 
-    public async Task DeleteUsersDatabase(Guid[] UserIds)
+    public async Task DeleteUsersDatabase(Guid UserId)
     {
+        //try
+        //{
+        //    StringBuilder path = new($"{_domain}/api/user/delete?");
+        //    // Send HTTP request to delete endpoint    
+        //    foreach (var id in UserIds)
+        //    {
+        //        path.Append($"UserIds={id.ToString()}&");
+        //    }
+        //    path.Remove(path.Length - 1, 1);
+
+        //    var responce = await _client.DeleteAsync(path.ToString());
+        //}
+        //catch (Exception ex)
+        //{
+        //    Debug.WriteLine($"ERROR {ex.Message}");
+        //}
+
         try
         {
-            StringBuilder path = new($"{_domain}/api/user/delete?");
-            // Send HTTP request to delete endpoint    
-            foreach (var id in UserIds)
-            {
-                path.Append($"UserIds={id.ToString()}&");
-            }
-            path.Remove(path.Length - 1, 1);
-
-            var responce = await _client.DeleteAsync(path.ToString());
+            HttpResponseMessage response = await _client.DeleteAsync($"{_domain}/api/user/delete/{UserId}");
         }
         catch (Exception ex)
         {
