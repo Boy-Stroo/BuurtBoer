@@ -110,6 +110,7 @@
         top: 640px;
         left: 20px;
         position: absolute;
+        cursor: pointer;
     }
 
     .change-multiplierbutton {
@@ -211,7 +212,7 @@
             <p>or</p>
         </div>
         <button class="getgrocerylist-button" @onclick="GroceryListbutton">Get Grocery List</button>
-        <img src="https://i.imgur.com/lVGmhhZ.png" class="instellingen-logo" />
+        <img src="https://i.imgur.com/lVGmhhZ.png" class="instellingen-logo" @onclick="ChangeMultiplier" />
         <button class="change-multiplierbutton" @onclick="ChangeMultiplier">
             <span>Change multiplier</span>
         </button>
