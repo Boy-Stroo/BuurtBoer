@@ -222,13 +222,8 @@
                 // {
                 //     employeeobject.IsSelected = false;
                 // }
-                StateHasChanged();
             }
-            foreach ( var employee in employees)
-            {
-                employee.IsSelected = false;
-                StateHasChanged();
-            }
+            StateHasChanged();
         }
     }
 
