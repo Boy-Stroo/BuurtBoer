@@ -224,10 +224,17 @@
             if (employeesToBeDeleted.Count() > 1) // bevestigingspopup op het scherm laten zien.
             {
                 await JSRuntime.InvokeVoidAsync("alert", "Users have been deleted!");
+                int amountinlist = employeesToBeDeleted.Count();
+                while ( amountinlist > 0)
+                {
+                    employeesToBeDeleted.Remove(employeesToBeDeleted[0]);
+                    amountinlist -= 1;
+                }
             }
-            else
+            else if (employeesToBeDeleted.Count() > 0)
             {
                 await JSRuntime.InvokeVoidAsync("alert", "User has been deleted!");
+                employeesToBeDeleted.Remove(employeesToBeDeleted[0]);
             }
         }
     }
