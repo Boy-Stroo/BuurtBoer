@@ -48,12 +48,12 @@ namespace Server_Things.Controllers
             }
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> DeleteOfficeDay(Guid id)
+        [HttpDelete("{officeDayId}")]
+        public async Task<IActionResult> DeleteOfficeDay(Guid officeDayId)
         {
             try
             {
-                var officeDay = await db.OfficeDays.FindAsync(id);
+                var officeDay = await db.OfficeDays.FindAsync(officeDayId);
                 if (officeDay == null)
                 {
                     return NotFound("OfficeDay not found");

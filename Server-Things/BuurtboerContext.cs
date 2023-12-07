@@ -1,5 +1,4 @@
-﻿
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Server_Things.Models;
 
 namespace Server_Things
@@ -25,11 +24,11 @@ namespace Server_Things
             modelBuilder.Entity<User>()
                 .HasIndex(_ => _.Email)
                 .IsUnique();
-            
+
             modelBuilder.Entity<Company>()
                 .HasIndex(_ => _.Name)
                 .IsUnique();
-            
+
             modelBuilder.Entity<User>()
                 .HasMany(_ => _.DaysAtOffice)
                 .WithOne(_ => _.User)
