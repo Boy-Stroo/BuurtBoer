@@ -220,11 +220,10 @@
             {
                 employees.Remove(employee);
             }
-            StateHasChanged();
-
             string alert = employeesToBeDeleted.Count() > 1 ? "Users have been deleted!" : "User has been deleted!";
             await JSRuntime.InvokeVoidAsync("alert", alert);
             employeesToBeDeleted.Clear();
+            StateHasChanged();
         }
     }
 
