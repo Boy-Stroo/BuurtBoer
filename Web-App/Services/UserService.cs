@@ -10,6 +10,7 @@ using static Web_App.Pages.Employees;
 
 // This is the service that will be used to make calls to the backend
 public record UserCredentials(string Email, string Password);
+
 public class UserService : HTTPService
 {
     public UserService()
@@ -50,7 +51,7 @@ public class UserService : HTTPService
             if (response.IsSuccessStatusCode)
             {
                 string content = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<ObservableCollection<User>>(content); 
+                return JsonSerializer.Deserialize<ObservableCollection<User>>(content);
             }
         }
         // Too broad of an exception, but yeah
@@ -64,31 +65,37 @@ public class UserService : HTTPService
     public async Task<User> GetLogin(UserCredentials credentials)
     {
 
-            // Call to the backend
-            var json = JsonSerializer.Serialize(credentials);
-            var data = new StringContent(json, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = await _client.PostAsync($"{_domain}/api/user/login", data);
-            // If the call is successful, read the response and deserialize it into a users
-            if (response.IsSuccessStatusCode)
-            {
-                string content = await response.Content.ReadAsStringAsync();
-                var user = JsonSerializer.Deserialize<List<User>>(content)![0];
-                return user;
-            }
+        // Call to the backend
+        var json = JsonSerializer.Serialize(credentials);
+        var data = new StringContent(json, Encoding.UTF8, "application/json");
+        HttpResponseMessage response = await _client.PostAsync($"{_domain}/api/user/login", data);
+        // If the call is successful, read the response and deserialize it into a users
+        if (response.IsSuccessStatusCode)
+        {
+            string content = await response.Content.ReadAsStringAsync();
+            var user = JsonSerializer.Deserialize<List<User>>(content)![0];
+            return user;
+        }
         return null;
     }
 
-    public async Task DeleteUsersDatabase(List<DataModel> UsersToDelete)
+    public async Task DeleteUsersDatabase(Guid[] UserIds)
     {
-        // Build list of user ids to delete  
-        var emails = UsersToDelete.Select(x => x.Email).ToList();
+        try
+        {
+            StringBuilder path = new($"{_domain}/api/user/delete?");
+            // Send HTTP request to delete endpoint    
+            foreach (var id in UserIds)
+            {
+                path.Append($"UserIds={id.ToString()}&");
+            }
+            path.Remove(path.Length - 1, 1);
 
-        // Construct JSON with the ids
-        var json = JsonSerializer.Serialize(emails);
-
-        var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-        // Send HTTP request to delete endpoint    
-        var response = await _client.PostAsync($"{_domain}/api/user/delete", content);
+            var responce = await _client.DeleteAsync(path.ToString());
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"ERROR {ex.Message}");
+        }
     }
 }

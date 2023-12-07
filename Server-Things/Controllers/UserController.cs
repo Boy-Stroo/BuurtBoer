@@ -14,6 +14,8 @@ namespace Server_Things.Controllers
         private readonly BuurtboerContext db = new BuurtboerContext();
         public record UserCredentials(string Email, string Password);
 
+        public record UserModel(string Email, string Password, bool IsSelected, Guid ID);
+
         [HttpGet("all")]
         // [Produces(MediaTypeNames.Application.Json)]
         [Consumes("application/json")]
@@ -72,6 +74,28 @@ namespace Server_Things.Controllers
             catch (Exception e)
             {
                 return BadRequest(e.Message);
+            }
+        }
+
+        [HttpDelete("delete/{ID}")]
+        public async Task DeleteUsersDatabase([FromQuery] Guid[] UserIds)
+        {
+            foreach (var ID in UserIds)
+            {
+                try
+                {
+                    var usertodelete = await db.Users.FindAsync(ID);
+
+                    if (usertodelete != null)
+                    {
+                        await db.SaveChangesAsync();
+                        db.Users.RemoveRange(usertodelete);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
             }
         }
     }

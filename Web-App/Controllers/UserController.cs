@@ -50,7 +50,7 @@ namespace Web_App
             return CurrentUser != null;
         }
 
-        public async Task DeleteUsers(List<DataModel> UsersToDelete)
+        public async Task DeleteUsers(Guid[] UsersToDelete)
         {
             await _userService.DeleteUsersDatabase(UsersToDelete);
         }
