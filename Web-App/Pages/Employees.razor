@@ -213,7 +213,7 @@
 
     private async void SaveChanges() // de knop om de geselecteerde medewerkers te verwijderen.
     {
-        if (employeesToBeDeleted != null)
+        if (employeesToBeDeleted.Count() > 0)
         {
             await Usercontroller.DeleteUsers(employeesToBeDeleted.Select(u => u.ID).ToArray()); // deleteusers callen met de ID's van de medewerkers in een array.
             foreach( var employee in employeesToBeDeleted )
@@ -221,21 +221,10 @@
                 employees.Remove(employee);
             }
             StateHasChanged();
-            if (employeesToBeDeleted.Count() > 1) // bevestigingspopup op het scherm laten zien.
-            {
-                await JSRuntime.InvokeVoidAsync("alert", "Users have been deleted!");
-                int amountinlist = employeesToBeDeleted.Count();
-                while ( amountinlist > 0)
-                {
-                    employeesToBeDeleted.Remove(employeesToBeDeleted[0]);
-                    amountinlist -= 1;
-                }
-            }
-            else if (employeesToBeDeleted.Count() > 0)
-            {
-                await JSRuntime.InvokeVoidAsync("alert", "User has been deleted!");
-                employeesToBeDeleted.Remove(employeesToBeDeleted[0]);
-            }
+
+            string alert = employeesToBeDeleted.Count() > 1 ? "Users have been deleted!" : "User has been deleted!";
+            await JSRuntime.InvokeVoidAsync("alert", alert);
+            employeesToBeDeleted.Clear();
         }
     }
 
