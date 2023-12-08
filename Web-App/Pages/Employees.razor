@@ -51,7 +51,7 @@
         left: 350px;
     }
 
-    .table-container {
+    .table-container { /*scroll gedeelte als er veel employees zijn*/
         height: 500px;
         overflow-y: scroll;
     }
@@ -79,8 +79,20 @@
         width: 40px;
         height: 40px;
         top: 40px;
-        left: 725px;
+        left: 717px;
         position: absolute;
+    }
+
+    .text-containertrashcan {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: absolute;
+        color: black;
+        font-family: monospace;
+        font-size: 12px;
+        top: 5px;
+        margin-left: 710px;
     }
 
     .savechanges-button {
@@ -94,6 +106,50 @@
         cursor: pointer;
         margin-top: 20px;
         margin-left: 280px;
+    }
+
+    .text-containersavechanges { /*tekst onder save changes knop*/
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        color: black;
+        font-family: monospace;
+        font-size: 12px;
+        margin-top: 10px;
+        margin-left: 250px;
+    }
+
+    .orange-square-button { /*add knop achtergrond*/
+        width: 40px;
+        height: 40px;
+        margin-top: 10px;
+        margin-left: 10px;
+        position: absolute;
+        cursor: pointer;
+        background-color: #F9834C;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .fa-plus { /*plus teken in add knop*/
+        font-size: 50px;
+        color: white;
+        margin-top: 3px;
+        margin-left: -3px;
+    }
+
+    .text-containeraddbutton {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: absolute;
+        color: black;
+        font-family: monospace;
+        font-size: 12px;
+        margin-top: 20px;
+        margin-left: 60px;
     }
 
     .homescreen-button { /*knop om naar home page te gaan*/
@@ -179,9 +235,19 @@
         <button class="lunchdata-button" @onclick="LunchDataRouting">Lunchdata</button>
     </div>
     <div class="squareinmainsquare">
+        <div @onclick="AddEmployeeRouting" class="orange-square-button">
+            <i class="fas fa-plus">+</i>
+        </div>
+        <div class="text-containeraddbutton">
+            <p>add employee(s)</p>
+        </div>
         <div class="text-containersquare">
             <p>Employees</p>
         </div>
+        <div class="text-containertrashcan">
+            <p>delete employee(s)</p>
+        </div>
+        <img src="https://imgur.com/eOCpUcm.png" class="trashcan-button" />
         <div class="table-container">
             <table class="table">
                 <thead>
@@ -202,8 +268,10 @@
                 </tbody>
             </table>
         </div>
-        <img src="https://imgur.com/eOCpUcm.png" class="trashcan-button" />
         <button class="savechanges-button" @onclick="SaveChanges">Save Changes</button>
+        <div class="text-containersavechanges">
+            <p>Click Save Changes to delete selected employees</p>
+        </div>
     </div>
 </div>
 
@@ -312,5 +380,10 @@
     private void LunchDataRouting()
     {
         NavigationManager.NavigateTo("/lunchdata");
+    }
+
+    private void AddEmployeeRouting()
+    {
+        NavigationManager.NavigateTo("/addemployee");
     }
 }

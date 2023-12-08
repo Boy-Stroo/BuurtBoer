@@ -68,6 +68,19 @@ namespace Web_App
             DaysAtOffice = new List<OfficeDay>();
         }
 
+        public User(string firstName, string lastName, string password, string email, Role role, Company? company, Guid companyid)
+        {
+            Id = Guid.NewGuid();
+            FirstName = firstName;
+            LastName = lastName;
+            Password = password;
+            Email = email;
+            Company = company ?? null;
+            Role = role;
+            DaysAtOffice = new List<OfficeDay>();
+            CompanyId = companyid;
+        }
+
         public User(string firstName, string lastName, string password, string email, Role role, Guid companyid,
             List<OfficeDay> officeDays) : this(firstName, lastName, password, email, role, null)
         {

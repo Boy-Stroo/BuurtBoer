@@ -96,7 +96,8 @@ namespace Server_Things.Controllers
                 Console.WriteLine(ex.Message);
                 BadRequest();
             }
-
         }
+
+
     }
 }
