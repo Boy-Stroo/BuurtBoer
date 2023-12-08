@@ -98,6 +98,19 @@ namespace Server_Things.Controllers
             }
         }
 
+        [HttpPost("add")]
+        public async Task AddUser(User user)
+        {
+            try
+            {
+                db.Users.Add(user);
 
+                var response = await db.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(BadRequest(ex.Message));
+            }
+        }
     }
 }

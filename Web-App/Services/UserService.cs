@@ -81,26 +81,28 @@ public class UserService : HTTPService
 
     public async Task DeleteUsersDatabase(Guid UserId)
     {
-        //try
-        //{
-        //    StringBuilder path = new($"{_domain}/api/user/delete?");
-        //    // Send HTTP request to delete endpoint    
-        //    foreach (var id in UserIds)
-        //    {
-        //        path.Append($"UserIds={id.ToString()}&");
-        //    }
-        //    path.Remove(path.Length - 1, 1);
-
-        //    var responce = await _client.DeleteAsync(path.ToString());
-        //}
-        //catch (Exception ex)
-        //{
-        //    Debug.WriteLine($"ERROR {ex.Message}");
-        //}
-
         try
         {
             HttpResponseMessage response = await _client.DeleteAsync($"{_domain}/api/user/delete/{UserId}");
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"ERROR {ex.Message}");
+        }
+    }
+
+    public async Task addUserDatabase(User user)
+    {
+        try
+        {
+            // Serialize user to JSON
+            var json = JsonSerializer.Serialize(user);
+
+            // Create HTTP content from JSON 
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            // Send POST request
+            var response = await _client.PostAsync($"{_domain}/api/user/add", content);
         }
         catch (Exception ex)
         {

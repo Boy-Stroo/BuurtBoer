@@ -58,5 +58,10 @@ namespace Web_App
             }
             
         }
+
+        public async Task addUser(User user)
+        {
+            await _userService.addUserDatabase(user);
+        }
     }
 }

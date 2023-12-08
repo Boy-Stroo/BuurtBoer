@@ -1,6 +1,7 @@
 ﻿@page "/addemployee"
 @inject NavigationManager NavigationManager
-@inject UserController User
+@inject UserController Usercontroller
+@inject IJSRuntime JSRuntime
 
 <style>
     body { /*achtergrond*/
@@ -204,11 +205,31 @@
     private string lastname = "";
     private string email = "";
 
-    private void addEmployee()
+    private async void addEmployee()
     {
         if (firstname != "" && lastname != "" && email != "")
         {
-            User user = new User(firstname, lastname, "", email, User.CurrentUser.Role + 1, null, User.CurrentUser.CompanyId);
+            // Specify Role Enum value
+            var role = Role.Employee;
+
+            // Add placeholder password
+            var password = "wachtwoordvoornu";
+
+            var user = new User(
+              firstname,
+              lastname,
+              password,
+              email,
+              role,
+              null,
+              Usercontroller.CurrentUser.CompanyId
+            );
+
+            await Usercontroller.addUser(user);
+            await JSRuntime.InvokeVoidAsync("alert", "Employee has been invited");
+            // employee moet nog op inactief staan en dus mag nog niet in lijst van employees komen te staan?
+            // wachtwoord, hoe gaan we dat fixen staat nu op niks
+            // invite voor mobiele app sturen via mail naar gebruiker.
         }
     }
 
@@ -222,7 +243,7 @@
 
     private bool IsUserLoggedIn() // kijken of gebruiker ingelogd is.
     {
-        return User.CurrentUser != null;// deze op false zetten zorgt ervoor dat gebruiker direct naar login scherm wordt gestuurd als hij niet ingelogd is.
+        return Usercontroller.CurrentUser != null;// deze op false zetten zorgt ervoor dat gebruiker direct naar login scherm wordt gestuurd als hij niet ingelogd is.
     }
 
     private void HomeScreenRouting()
