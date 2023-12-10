@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Mobile_App"
+             xmlns:lang="clr-namespace:Mobile_App.Resources.Languages"
              x:Class="Mobile_App.HomePage"
              BackgroundColor="{StaticResource Secondary}">
 
@@ -26,7 +28,7 @@
         <Frame Grid.Row="4" Grid.Column="0" Margin="50,170,15,-5" BorderColor="{StaticResource Secondary}" BackgroundColor="{StaticResource Secondary}" Padding="0">
             <ContentView>
                 <StackLayout>
-                    <Label Text="LUNCH ATTENDANCE" TextColor="{StaticResource Primary}" FontFamily="OpenSans-Regular" FontSize="14" FontAttributes="Bold"/>
+                    <Label Text="{local:Translator Name=lunchAttendance}" TextColor="{StaticResource Primary}" FontFamily="OpenSans-Regular" FontSize="14" FontAttributes="Bold"/>
                 </StackLayout>
             </ContentView>
         </Frame>
@@ -42,7 +44,7 @@
             <Frame Grid.Row="0" Grid.Column="0" BackgroundColor="{StaticResource Primary}" Margin="55,10,150,0" CornerRadius="10">
                 <ContentView>
                     <StackLayout VerticalOptions="Center">
-                        <Label x:Name="MondayLabel" Text="Monday" WidthRequest="150" Margin="0,-6,0,0" FontFamily="OpenSans-Regular" TextColor="{StaticResource White}" FontSize="18" FontAttributes="Bold"/>
+                        <Label x:Name="MondayLabel" Text="{local:Translator Name=monday}" WidthRequest="150" Margin="0,-6,0,0" FontFamily="OpenSans-Regular" TextColor="{StaticResource White}" FontSize="18" FontAttributes="Bold"/>
                         <Label x:Name="MondayDateLabel" WidthRequest="150" FontFamily="OpenSans-Regular" TextColor="{StaticResource White}" FontSize="14" />
                     </StackLayout>
                 </ContentView>
@@ -51,7 +53,7 @@
             <Frame Grid.Row="1" Grid.Column="0" BackgroundColor="{StaticResource Primary}" Margin="55,10,150,0" CornerRadius="10">
                 <ContentView>
                     <StackLayout>
-                        <Label x:Name="TuesdayLabel" Text="Tuesday" WidthRequest="150" Margin="0,-6,0,0" FontFamily="OpenSans-Regular" TextColor="{StaticResource White}" FontSize="18" FontAttributes="Bold"/>
+                        <Label x:Name="TuesdayLabel" Text="{local:Translator Name=tuesday}" WidthRequest="150" Margin="0,-6,0,0" FontFamily="OpenSans-Regular" TextColor="{StaticResource White}" FontSize="18" FontAttributes="Bold"/>
                         <Label x:Name="TuesdayDateLabel" WidthRequest="150" FontFamily="OpenSans-Regular" TextColor="{StaticResource White}" FontSize="14" />
                     </StackLayout>
                 </ContentView>
@@ -60,7 +62,7 @@
             <Frame Grid.Row="2" Grid.Column="0" BackgroundColor="{StaticResource Primary}" Margin="55,10,150,0" CornerRadius="10">
                 <ContentView>
                     <StackLayout>
-                        <Label x:Name="WednesdayLabel" Text="Wednesday" WidthRequest="150" Margin="0,-6,0,0" FontFamily="OpenSans-Regular" TextColor="{StaticResource White}" FontSize="18" FontAttributes="Bold"/>
+                        <Label x:Name="WednesdayLabel" Text="{local:Translator Name=wednesday}" WidthRequest="150" Margin="0,-6,0,0" FontFamily="OpenSans-Regular" TextColor="{StaticResource White}" FontSize="18" FontAttributes="Bold"/>
                         <Label x:Name="WednesdayDateLabel" WidthRequest="150" FontFamily="OpenSans-Regular" TextColor="{StaticResource White}" FontSize="14" />
                     </StackLayout>
                 </ContentView>
@@ -69,7 +71,7 @@
             <Frame Grid.Row="3" Grid.Column="0" BackgroundColor="{StaticResource Primary}" Margin="55,10,150,0" CornerRadius="10">
                 <ContentView>
                     <StackLayout>
-                        <Label x:Name="ThursdayLabel" Text="Thursday" WidthRequest="150" Margin="0,-6,0,0" FontFamily="OpenSans-Regular" TextColor="{StaticResource White}" FontSize="18" FontAttributes="Bold"/>
+                        <Label x:Name="ThursdayLabel" Text="{local:Translator Name=thursday}" WidthRequest="150" Margin="0,-6,0,0" FontFamily="OpenSans-Regular" TextColor="{StaticResource White}" FontSize="18" FontAttributes="Bold"/>
                         <Label x:Name="ThursdayDateLabel" WidthRequest="150" FontFamily="OpenSans-Regular" TextColor="{StaticResource White}" FontSize="14" />
                     </StackLayout>
                 </ContentView>
@@ -78,7 +80,7 @@
             <Frame Grid.Row="4" Grid.Column="0" BackgroundColor="{StaticResource Primary}" Margin="55,10,150,0" CornerRadius="10">
                 <ContentView>
                     <StackLayout>
-                        <Label x:Name="FridayLabel" Text="Friday" WidthRequest="150" Margin="0,-6,0,0" FontFamily="OpenSans-Regular" TextColor="{StaticResource White}" FontSize="18" FontAttributes="Bold"/>
+                        <Label x:Name="FridayLabel" Text="{local:Translator Name=friday}" WidthRequest="150" Margin="0,-6,0,0" FontFamily="OpenSans-Regular" TextColor="{StaticResource White}" FontSize="18" FontAttributes="Bold"/>
                         <Label x:Name="FridayDateLabel" WidthRequest="150" FontFamily="OpenSans-Regular" TextColor="{StaticResource White}" FontSize="14" />
                     </StackLayout>
                 </ContentView>
@@ -97,7 +99,7 @@
 
         <!-- Save Selection Rectangle -->
         <Button x:Name="SaveButton" 
-        Text="Save Selection"
+        Text="{local:Translator Name=saveSelection}"
         HorizontalOptions="Center"
         VerticalOptions="Center"  
         FontFamily="OpenSans-Regular"

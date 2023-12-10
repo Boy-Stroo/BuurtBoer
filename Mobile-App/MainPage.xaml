@@ -2,8 +2,11 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:local="clr-namespace:Mobile_App"
+             xmlns:lang="clr-namespace:Mobile_App.Resources.Languages"
              x:Class="Mobile_App.LogInPage"
              BackgroundColor="{StaticResource Secondary}">
+    
     <ContentPage.Behaviors>
         <toolkit:StatusBarBehavior StatusBarColor="{StaticResource Primary}"/>
     </ContentPage.Behaviors>
@@ -49,21 +52,25 @@
                 <HorizontalStackLayout Spacing="5">
 
                     <Button 
+                    x:Name="NLbutton"
                     Text="NL"
                     BackgroundColor="{StaticResource Primary}"
                     TextColor="{StaticResource Secondary}"
                     FontSize="12"
                     BorderColor="{StaticResource Secondary}"
                     BorderWidth="1"
+                    Clicked="ChangeLanguage"
                     CornerRadius="8"/>
 
                     <Button 
+                    x:Name="ENbutton"
                     Text="EN"
                     BackgroundColor="{StaticResource Primary}"
                     TextColor="{StaticResource Secondary}"
                     FontSize="12"
                     BorderColor="{StaticResource Secondary}"
                     BorderWidth="1"
+                    Clicked="ChangeLanguage"
                     CornerRadius="8"/>
 
                 </HorizontalStackLayout>
@@ -80,7 +87,7 @@
                     </Border.StrokeShape>
 
                     <Entry
-                        x:Name="emailEntry"
+                    x:Name="emailEntry"
                     Placeholder="Email"
                     HorizontalTextAlignment="Center"
                     FontSize="20"
@@ -97,7 +104,7 @@
 
                     <Entry 
                     x:Name="passwordEntry"
-                    Placeholder="Password"
+                    Placeholder="{local:Translator Name=password}"
                     HorizontalTextAlignment="Center"
                     FontSize="20"
                     IsPassword="True"
@@ -108,7 +115,7 @@
 
                 </Border>
 
-                <Label Text="Forgot Password?"
+                <Label Text="{local:Translator Name=forgotPassword}"
                        TextColor="{StaticResource Tertiary}"
                        Margin="5,10,0,10">
 
@@ -117,7 +124,7 @@
                     </Label.GestureRecognizers>
                 </Label>
 
-                <Button Text="Login" 
+                <Button Text="{local:Translator Name=login}" 
                     BackgroundColor="{StaticResource Tertiary}"
                     Margin="0,5"
                     TextColor="{StaticResource Secondary}"
@@ -131,7 +138,7 @@
             <VerticalStackLayout Grid.Row="2" Grid.Column="1">
 
 
-                <Label Text="-----Or login with-----"
+                <Label Text="{local:Translator Name=orLoginWith}"
                    HorizontalOptions="Center"
                    Margin="0,-5,0,10"
                    TextColor="Black"

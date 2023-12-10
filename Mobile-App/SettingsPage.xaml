@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Mobile_App"
+             xmlns:lang="clr-namespace:Mobile_App.Resources.Languages"
              x:Class="Mobile_App.SettingsPage"
              BackgroundColor="{StaticResource Gray}">
 
@@ -33,7 +35,7 @@
 
             <!-- Grid for "settings" text within orange rectangle -->
             <Grid VerticalOptions="Center">
-                <Label Text="SETTINGS" HorizontalOptions="Center" VerticalOptions="Center" TextColor="White" Grid.Row="0" FontSize="Large"/>
+                <Label Text="{local:Translator Name=settings}" HorizontalOptions="Center" VerticalOptions="Center" TextColor="White" Grid.Row="0" FontSize="Large"/>
             </Grid>
         </Grid>
 
@@ -72,7 +74,7 @@
                 <Frame Grid.Row="0" Grid.Column="0" BackgroundColor="{StaticResource Primary}" Margin="55,10,110,0" CornerRadius="10" Padding="15">
                     <ContentView>
                         <StackLayout>
-                            <Label Text="WEEKLY REMINDER" HorizontalOptions="Center" VerticalOptions="Center" FontFamily="OpenSans-Regular" TextColor="{StaticResource White}" FontSize="15" FontAttributes="Bold" Padding="0"/>
+                            <Label Text="{local:Translator Name=weeklyReminder}" HorizontalOptions="Center" VerticalOptions="Center" FontFamily="OpenSans-Regular" TextColor="{StaticResource White}" FontSize="15" FontAttributes="Bold" Padding="0"/>
                         </StackLayout>
                     </ContentView>
                 </Frame>
@@ -83,7 +85,7 @@
                     <Frame Grid.Row="1" Grid.Column="0" Margin="55,5,15,-5" Background="{StaticResource Gray}" BorderColor="{StaticResource Gray}" Padding="0">
                         <ContentView>
                             <StackLayout>
-                                <Label Text="Receive a push notification every week as a reminder to select your attendance" TextColor="{StaticResource Primary}" FontSize="Small"/>
+                                <Label Text="{local:Translator Name=weeklyReminderInfo}" TextColor="{StaticResource Primary}" FontSize="Small"/>
                             </StackLayout>
                         </ContentView>
                     </Frame>
@@ -92,7 +94,7 @@
                 <Frame Grid.Row="2" Grid.Column="0" BackgroundColor="{StaticResource Primary}" Margin="55,10,110,0" CornerRadius="10" Padding="15">
                     <ContentView>
                         <StackLayout>
-                            <Label Text="RECURRING SELECTION" HorizontalOptions="Center" VerticalOptions="Center" FontFamily="OpenSans-Regular" TextColor="{StaticResource White}" FontSize="15" FontAttributes="Bold" Padding="0"/>
+                            <Label Text="{local:Translator Name=recurringSelection}" HorizontalOptions="Center" VerticalOptions="Center" FontFamily="OpenSans-Regular" TextColor="{StaticResource White}" FontSize="15" FontAttributes="Bold" Padding="0"/>
                         </StackLayout>
                     </ContentView>
                 </Frame>
@@ -103,7 +105,7 @@
                     <Frame Grid.Row="3" Grid.Column="0" Margin="55,5,15,-5" Background="{StaticResource Gray}" BorderColor="{StaticResource Gray}" Padding="0">
                         <ContentView>
                             <StackLayout>
-                                <Label Text="Remember your latest attendance for future weeks, weekly selection will no longer be necessary" TextColor="{StaticResource Primary}" FontSize="Small"/>
+                                <Label Text="{local:Translator Name=recurringSelectionInfo}" TextColor="{StaticResource Primary}" FontSize="Small"/>
                             </StackLayout>
                         </ContentView>
                     </Frame>
@@ -112,7 +114,7 @@
                 <Frame Grid.Row="4" Grid.Column="0" Margin="55,10,15,-5" Background="{StaticResource Gray}" BorderColor="{StaticResource Gray}" Padding="0">
                     <ContentView>
                         <StackLayout>
-                            <Label Text="LANGUAGE" TextColor="{StaticResource Tertiary}" FontSize="Medium" FontAttributes="Bold"/>
+                            <Label Text="{local:Translator Name=language}" TextColor="{StaticResource Tertiary}" FontSize="Medium" FontAttributes="Bold"/>
                         </StackLayout>
                     </ContentView>
                 </Frame>
@@ -121,26 +123,26 @@
                     <Frame Grid.Row="5" Grid.Column="0" BackgroundColor="{StaticResource Primary}" Margin="55,10,110,0" CornerRadius="10" Padding="6">
                         <ContentView>
                             <StackLayout>
-                                <Label Text="ENGLISH" HorizontalOptions="Center" VerticalOptions="Center" FontFamily="OpenSans-Regular" TextColor="{StaticResource White}" FontSize="15" FontAttributes="Bold" Padding="0"/>
+                                <Label Text="{local:Translator Name=english}" HorizontalOptions="Center" VerticalOptions="Center" FontFamily="OpenSans-Regular" TextColor="{StaticResource White}" FontSize="15" FontAttributes="Bold" Padding="0"/>
                             </StackLayout>
                         </ContentView>
                     </Frame>
 
-                    <CheckBox Grid.Row="5" Grid.Column="1" Margin="-110,10,10,0" Color="{StaticResource Tertiary}" Scale="2" WidthRequest="20" HeightRequest="20"/>
+                    <CheckBox Grid.Row="5" Grid.Column="1" Margin="-110,10,10,0" Color="{StaticResource Tertiary}" Scale="2" WidthRequest="20" HeightRequest="20" x:Name="ENcheckbox" CheckedChanged="ChangeLanguage"/>
 
                 <!--- Dutch -->
                     <Frame Grid.Row="6" Grid.Column="0" BackgroundColor="{StaticResource Primary}" Margin="55,10,110,0" CornerRadius="10" Padding="6">
                         <ContentView>
                             <StackLayout>
-                                <Label Text="DUTCH" HorizontalOptions="Center" VerticalOptions="Center" FontFamily="OpenSans-Regular" TextColor="{StaticResource White}" FontSize="15" FontAttributes="Bold" Padding="0"/>
+                                <Label Text="{local:Translator Name=dutch}" HorizontalOptions="Center" VerticalOptions="Center" FontFamily="OpenSans-Regular" TextColor="{StaticResource White}" FontSize="15" FontAttributes="Bold" Padding="0"/>
                             </StackLayout>
                         </ContentView>
                     </Frame>
 
-                    <CheckBox Grid.Row="6" Grid.Column="1" Margin="-110,10,10,0" Color="{StaticResource Tertiary}" Scale="2" WidthRequest="20" HeightRequest="20"/>
+                    <CheckBox Grid.Row="6" Grid.Column="1" Margin="-110,10,10,0" Color="{StaticResource Tertiary}" Scale="2" WidthRequest="20" HeightRequest="20" x:Name="NLcheckbox" CheckedChanged="ChangeLanguage"/>
             
             <!--- Save changes -->
-                <Button Text="SAVE CHANGES" 
+                <Button Text="{local:Translator Name=saveChanges}" 
                     Grid.Row="7"
                     BackgroundColor="{StaticResource Tertiary}"
                     Margin="80,30,80,0"
@@ -151,7 +153,7 @@
                     FontAttributes="Bold"/>
 
             <!-- Change password -->
-            <Button Text="CHANGE PASSWORD"
+            <Button Text="{local:Translator Name=changePassword}"
                         Grid.Row="8"
                         Margin="80,30,80,0"
                         CornerRadius="10"
@@ -162,7 +164,7 @@
                         FontSize="17"/>
 
             <!-- Log out -->
-            <Button Text="LOG OUT"
+            <Button Text="{local:Translator Name=logOut}"
                     Grid.Row="9"
                     Margin="80,10,80,0"
                     CornerRadius="10"

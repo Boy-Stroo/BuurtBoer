@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace Mobile_App;
 
 public partial class SettingsPage : ContentPage
@@ -30,5 +32,28 @@ public partial class SettingsPage : ContentPage
             var name = user.FirstName + " " + user.LastName;
             welcomeLabel.Text = "Welcome, " + name;
         }
+    }
+
+    private void ChangeLanguage(object sender, EventArgs e)
+    {
+        var checkBox = (CheckBox)sender;
+
+        if (checkBox == NLcheckbox)
+        {
+            if (NLcheckbox.IsChecked == true)
+            {
+                ENcheckbox.IsChecked = false;
+                LocalizationResourceManager.Instance.SetCulture(new CultureInfo("nl"));
+            }
+        }
+        else if (checkBox == ENcheckbox)
+        {
+            if (ENcheckbox.IsChecked == true)
+            {
+                NLcheckbox.IsChecked = false;   
+                LocalizationResourceManager.Instance.SetCulture(new CultureInfo("en"));
+            }
+        }
+
     }
 }
