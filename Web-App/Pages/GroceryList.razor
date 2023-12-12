@@ -1,6 +1,7 @@
 @page "/grocerylist"
 @inject NavigationManager NavigationManager
 @inject UserController User
+@inject CurrentLanguage language
 
 <style>
     body { /*achtergrond*/
@@ -175,6 +176,24 @@
             background-color: #F9834C;
         }
 
+    .companies-button { /*knop om naar grocerylist page te gaan*/
+        position: absolute;
+        top: 500px;
+        left: 30px;
+        padding: 20px 0;
+        width: 80%;
+        background-color: #099F91;
+        border: 1px solid #099F91;
+        color: white;
+        font-size: 16px;
+        text-align: center;
+        border-radius: 10px;
+    }
+
+        .companies-button:hover {
+            background-color: #F9834C;
+        }
+
     .lunchdata-button { /*knop om naar lunchdata page te gaan*/
         position: absolute;
         top: 575px;
@@ -192,15 +211,63 @@
         .lunchdata-button:hover {
             background-color: #F9834C;
         }
+
+    .button-container { /*positie "NL" en "EN" buttons*/
+        position: absolute;
+        top: 250px;
+        left: 20px;
+        display: flex;
+        flex-direction: row;
+    }
+
+    .language-button-clicked { /*kleur van taal button die aangeklikt is*/
+        background-color: #F9834C;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        padding: 10px 15px;
+        font-size: 16px;
+        margin-right: 10px;
+        cursor: pointer;
+    }
+
+    .language-button-notclicked { /*kleur van taal button die NIET aangeklikt is*/
+        background-color: #099F91;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        padding: 10px 15px;
+        font-size: 16px;
+        margin-right: 10px;
+        cursor: pointer;
+    }
 </style>
 
 <div class="mainsquare">
     @* HTML elements*@
     <div class="smallersquare">
         <img src="https://i.imgur.com/MF5gfZC.png" class="buurtboer-logo" />
+        <div class="button-container">
+            <button class="@GetLanguageButtonClass(true)"
+            @onclick="() => SelectLanguage(true)">
+                NL
+            </button>
+
+            <button class="@GetLanguageButtonClass(false)"
+            @onclick="() => SelectLanguage(false)">
+                EN
+            </button>
+        </div>
         <button class="homescreen-button" @onclick="HomeScreenRouting">Home</button>
+        @if (CheckUserRole() == Role.SuperAdmin)
+        {
+            <button class="companies-button" @onclick="CompaniesRouting">Companies</button>
+        }
+        else
+        {
+            <button class="grocerylist-button" @onclick="GroceryListRouting">Grocery List</button>
+        }
         <button class="employee-button" @onclick="EmployeeRouting">Employees</button>
-        <button class="grocerylist-button" @onclick="GroceryListRouting">Grocery List</button>
         <button class="lunchdata-button" @onclick="LunchDataRouting">Lunchdata</button>
     </div>
     <div class="squareinmainsquare">
@@ -221,6 +288,7 @@
 
 @code {
     public User currentUser = new();
+    private bool isDutchSelected = true;
 
     protected async override Task OnInitializedAsync() // Make the method asynchronous
     {
@@ -233,6 +301,11 @@
     private bool IsUserLoggedIn() // kijken of gebruiker ingelogd is.
     {
         return User.CurrentUser != null;// deze op false zetten zorgt ervoor dat gebruiker direct naar login scherm wordt gestuurd als hij niet ingelogd is.
+    }
+
+    private Role CheckUserRole()
+    {
+        return User.CurrentUser.Role;
     }
 
     private void HomeScreenRouting()
@@ -257,7 +330,7 @@
 
     private void APIbutton() // hier komt de API
     {
-        
+
     }
 
     private void GroceryListbutton()
@@ -268,5 +341,31 @@
     private void ChangeMultiplier()
     {
         NavigationManager.NavigateTo("/changegrocerymultiplier");
+    }
+
+    private string GetLanguageButtonClass(bool isDutch) // hiermee kijk je welke taal er geselecteerd is en of hij dus moet veranderen of niet.
+    {
+        if (isDutch == language.isDutchSelected)
+        {
+            return "language-button-clicked";
+        }
+        else
+        {
+            return "language-button-notclicked";
+        }
+    }
+
+    private void SelectLanguage(bool isDutch)
+    {
+        // kijken of nederlands geselecteerd is.
+        language.isDutchSelected = isDutch;
+
+        // refresh de webpage met de goede kleuren.
+        StateHasChanged();
+    }
+
+    private void CompaniesRouting()
+    {
+        NavigationManager.NavigateTo("/companies");
     }
 }

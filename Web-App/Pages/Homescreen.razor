@@ -2,6 +2,7 @@
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JSRuntime
 @inject UserController User
+@inject CurrentLanguage language
 
 <style>
     body { /*achtergrond*/
@@ -191,12 +192,72 @@
         .lunchdata-button:hover {
             background-color: #F9834C;
         }
+
+    .button-container { /*positie "NL" en "EN" buttons*/
+        position: absolute;
+        top: 250px;
+        left: 20px;
+        display: flex;
+        flex-direction: row;
+    }
+
+    .language-button-clicked { /*kleur van taal button die aangeklikt is*/
+        background-color: #F9834C;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        padding: 10px 15px;
+        font-size: 16px;
+        margin-right: 10px;
+        cursor: pointer;
+    }
+
+    .language-button-notclicked { /*kleur van taal button die NIET aangeklikt is*/
+        background-color: #099F91;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        padding: 10px 15px;
+        font-size: 16px;
+        margin-right: 10px;
+        cursor: pointer;
+    }
+
+    .logout-button {
+        position: absolute;
+        top: 750px;
+        left: 25px;
+        padding: 20px 40px;
+        height: 25px;
+        width: 25%;
+        background-color: #099F91;
+        border: 1px solid #099F91;
+        color: white;
+        font-size: 10px;
+        text-align: center;
+        border-radius: 10px;
+    }
+
+        .logout-button:hover {
+            background-color: #F9834C;
+        }
 </style>
 
 <div class="mainsquare">
     @* HTML elements*@
     <div class="smallersquare">
         <img src="https://i.imgur.com/MF5gfZC.png" class="buurtboer-logo" />
+        <div class="button-container">
+            <button class="@GetLanguageButtonClass(true)"
+            @onclick="() => SelectLanguage(true)">
+                NL
+            </button>
+
+            <button class="@GetLanguageButtonClass(false)"
+            @onclick="() => SelectLanguage(false)">
+                EN
+            </button>
+        </div>
         <button class="homescreen-button" @onclick="HomeScreenRouting">Home</button>
         @if ( CheckUserRole() == Role.SuperAdmin)
         {
@@ -208,6 +269,7 @@
         }
         <button class="employee-button" @onclick="EmployeeRouting">Employees</button>
         <button class="lunchdata-button" @onclick="LunchDataRouting">Lunchdata</button>
+        <button class="logout-button" @onclick="HandleLogout">Log out</button>
     </div>
     <div class="squareinmainsquare">
         <div class=text-containersquaremiddle>
@@ -229,6 +291,7 @@
 
 @code {
     public int currentHour;
+    private bool isDutchSelected = true;
 
     protected async override Task OnInitializedAsync() // Make the method asynchronous
     {
@@ -294,5 +357,33 @@
     private void CompaniesRouting()
     {
         NavigationManager.NavigateTo("/companies");
+    }
+
+
+    private string GetLanguageButtonClass(bool isDutch) // hiermee kijk je welke taal er geselecteerd is en of hij dus moet veranderen of niet.
+    {
+        if (isDutch == language.isDutchSelected)
+        {
+            return "language-button-clicked";
+        }
+        else
+        {
+            return "language-button-notclicked";
+        }
+    }
+
+    private void SelectLanguage(bool isDutch)
+    {
+        // kijken of nederlands geselecteerd is.
+        language.isDutchSelected = isDutch;
+
+        // refresh de webpage met de goede kleuren.
+        StateHasChanged();
+    }
+
+    private void HandleLogout()
+    {
+        User.Logout();
+        NavigationManager.NavigateTo("/login");
     }
 }
