@@ -147,6 +147,24 @@
             background-color: #F9834C;
         }
 
+    .companies-button { /*knop om naar grocerylist page te gaan*/
+        position: absolute;
+        top: 500px;
+        left: 30px;
+        padding: 20px 0;
+        width: 80%;
+        background-color: #099F91;
+        border: 1px solid #099F91;
+        color: white;
+        font-size: 16px;
+        text-align: center;
+        border-radius: 10px;
+    }
+
+        .companies-button:hover {
+            background-color: #F9834C;
+        }
+
     .lunchdata-button { /*knop om naar lunchdata page te gaan*/
         position: absolute;
         top: 575px;
@@ -212,8 +230,15 @@
             </button>
         </div>
         <button class="homescreen-button" @onclick="HomeScreenRouting">Home</button>
+        @if (CheckUserRole() == Role.SuperAdmin)
+        {
+            <button class="companies-button" @onclick="CompaniesRouting">Companies</button>
+        }
+        else
+        {
+            <button class="grocerylist-button" @onclick="GroceryListRouting">Grocery List</button>
+        }
         <button class="employee-button" @onclick="EmployeeRouting">Employees</button>
-        <button class="grocerylist-button" @onclick="GroceryListRouting">Grocery List</button>
         <button class="lunchdata-button" @onclick="LunchDataRouting">Lunchdata</button>
     </div>
     <div class="squareinmainsquare">
@@ -240,6 +265,11 @@
     private bool IsUserLoggedIn() // kijken of gebruiker ingelogd is.
     {
         return User.CurrentUser != null;// deze op false zetten zorgt ervoor dat gebruiker direct naar login scherm wordt gestuurd als hij niet ingelogd is.
+    }
+
+    private Role CheckUserRole()
+    {
+        return User.CurrentUser.Role;
     }
 
     private void HomeScreenRouting()
