@@ -175,6 +175,24 @@
             background-color: #F9834C;
         }
 
+    .companies-button { /*knop om naar grocerylist page te gaan*/
+        position: absolute;
+        top: 500px;
+        left: 30px;
+        padding: 20px 0;
+        width: 80%;
+        background-color: #099F91;
+        border: 1px solid #099F91;
+        color: white;
+        font-size: 16px;
+        text-align: center;
+        border-radius: 10px;
+    }
+
+        .companies-button:hover {
+            background-color: #F9834C;
+        }
+
     .lunchdata-button { /*knop om naar lunchdata page te gaan*/
         position: absolute;
         top: 575px;
@@ -199,9 +217,14 @@
     <div class="smallersquare">
         <img src="https://i.imgur.com/MF5gfZC.png" class="buurtboer-logo" />
         <button class="homescreen-button" @onclick="HomeScreenRouting">Home</button>
-        <button class="employee-button" @onclick="EmployeeRouting">Employees</button>
-        <button class="grocerylist-button" @onclick="GroceryListRouting">Grocery List</button>
-        <button class="lunchdata-button" @onclick="LunchDataRouting">Lunchdata</button>
+        @if (CheckUserRole() == Role.SuperAdmin)
+        {
+            <button class="companies-button" @onclick="CompaniesRouting">Companies</button>
+        }
+        else
+        {
+            <button class="grocerylist-button" @onclick="GroceryListRouting">Grocery List</button>
+        }
     </div>
     <div class="squareinmainsquare">
         <div class="text-containersquare">
@@ -235,6 +258,11 @@
         return User.CurrentUser != null;// deze op false zetten zorgt ervoor dat gebruiker direct naar login scherm wordt gestuurd als hij niet ingelogd is.
     }
 
+    private Role CheckUserRole()
+    {
+        return User.CurrentUser.Role;
+    }
+
     private void HomeScreenRouting()
     {
         NavigationManager.NavigateTo("/home");
@@ -257,7 +285,7 @@
 
     private void APIbutton() // hier komt de API
     {
-        
+
     }
 
     private void GroceryListbutton()
@@ -268,5 +296,10 @@
     private void ChangeMultiplier()
     {
         NavigationManager.NavigateTo("/changegrocerymultiplier");
+    }
+
+    private void CompaniesRouting()
+    {
+        NavigationManager.NavigateTo("/companies");
     }
 }

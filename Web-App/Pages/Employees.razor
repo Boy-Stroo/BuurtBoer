@@ -1,6 +1,6 @@
 ﻿@page "/employees"
 @inject NavigationManager NavigationManager
-@inject UserController Usercontroller
+@inject UserController User
 @inject IJSRuntime JSRuntime
 @using Syncfusion.Blazor
 @using Syncfusion.Blazor.Lists
@@ -308,7 +308,7 @@
     {
         if (employeesToBeDeleted.Count() > 0)
         {
-            await Usercontroller.DeleteUsers(employeesToBeDeleted.Select(u => u.ID).ToArray()); // deleteusers callen met de ID's van de medewerkers in een array.
+            await User.DeleteUsers(employeesToBeDeleted.Select(u => u.ID).ToArray()); // deleteusers callen met de ID's van de medewerkers in een array.
             foreach( var employee in employeesToBeDeleted )
             {
                 employees.Remove(employee);
@@ -339,9 +339,9 @@
 
     private void temp() // alles omzetten naar een usermodel en de admin van dat moment niet toevoegen aan de lijst.
     {
-        foreach (var employee in Usercontroller.Users)
+        foreach (var employee in User.Users)
         {
-            if (employee.Id == Usercontroller.CurrentUser.Id)
+            if (employee.Id == User.CurrentUser.Id)
             {
                 continue;
             }
@@ -379,12 +379,12 @@
 
     private bool IsUserLoggedIn() // kijken of gebruiker ingelogd is.
     {
-        return Usercontroller.CurrentUser != null;// deze op false zetten zorgt ervoor dat gebruiker direct naar login scherm wordt gestuurd als hij niet ingelogd is.
+        return User.CurrentUser != null;// deze op false zetten zorgt ervoor dat gebruiker direct naar login scherm wordt gestuurd als hij niet ingelogd is.
     }
 
     private async Task GetEmployees() // alle employees van een bedrijf pakken zodat je ze op het scherm kan laten zien.
     {
-        await Usercontroller.GetAllEmployeesPerCompany(Usercontroller.CurrentUser.CompanyId);
+        await User.GetAllEmployeesPerCompany(User.CurrentUser.CompanyId);
     }
 
     private Role CheckUserRole()
