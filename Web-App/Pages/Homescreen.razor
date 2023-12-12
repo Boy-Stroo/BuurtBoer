@@ -193,7 +193,6 @@
             background-color: #F9834C;
         }
 
-<<<<<<< Updated upstream
     .button-container { /*positie "NL" en "EN" buttons*/
         position: absolute;
         top: 250px;
@@ -223,7 +222,7 @@
         margin-right: 10px;
         cursor: pointer;
     }
-=======
+
     .logout-button {
         position: absolute;
         top: 750px;
@@ -242,7 +241,6 @@
         .logout-button:hover {
             background-color: #F9834C;
         }
->>>>>>> Stashed changes
 </style>
 
 <div class="mainsquare">
@@ -361,7 +359,7 @@
         NavigationManager.NavigateTo("/companies");
     }
 
-<<<<<<< Updated upstream
+
     private string GetLanguageButtonClass(bool isDutch) // hiermee kijk je welke taal er geselecteerd is en of hij dus moet veranderen of niet.
     {
         if (isDutch == language.isDutchSelected)
@@ -381,11 +379,11 @@
 
         // refresh de webpage met de goede kleuren.
         StateHasChanged();
-=======
+    }
+
     private void HandleLogout()
     {
         User.Logout();
         NavigationManager.NavigateTo("/login");
->>>>>>> Stashed changes
     }
 }
