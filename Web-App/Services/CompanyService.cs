@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Text;
 using System.Text.Json;
 using Web_App;
 
@@ -25,5 +26,24 @@ public class CompanyService : HTTPService
             Debug.WriteLine($"ERROR {ex.Message}");
         }
         return null;
+    }
+
+    public async Task addCompanyDatabase(User user)
+    {
+        try
+        {
+            // Serialize user to JSON
+            var json = JsonSerializer.Serialize(user);
+
+            // Create HTTP content from JSON 
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            // Send POST request
+            var response = await _client.PostAsync($"{_domain}/api/company/add", content);
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"ERROR {ex.Message}");
+        }
     }
 }

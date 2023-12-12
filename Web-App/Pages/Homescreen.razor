@@ -156,6 +156,24 @@
             background-color: #F9834C;
         }
 
+    .companies-button { /*knop om naar grocerylist page te gaan*/
+        position: absolute;
+        top: 500px;
+        left: 30px;
+        padding: 20px 0;
+        width: 80%;
+        background-color: #099F91;
+        border: 1px solid #099F91;
+        color: white;
+        font-size: 16px;
+        text-align: center;
+        border-radius: 10px;
+    }
+
+        .companies-button:hover {
+            background-color: #F9834C;
+        }
+
     .lunchdata-button { /*knop om naar lunchdata page te gaan*/
         position: absolute;
         top: 575px;
@@ -180,8 +198,15 @@
     <div class="smallersquare">
         <img src="https://i.imgur.com/MF5gfZC.png" class="buurtboer-logo" />
         <button class="homescreen-button" @onclick="HomeScreenRouting">Home</button>
+        @if ( CheckUserRole() == Role.SuperAdmin)
+        {
+            <button class="companies-button" @onclick="CompaniesRouting">Companies</button>
+        }
+        else
+        {
+            <button class="grocerylist-button" @onclick="GroceryListRouting">Grocery List</button>
+        }
         <button class="employee-button" @onclick="EmployeeRouting">Employees</button>
-        <button class="grocerylist-button" @onclick="GroceryListRouting">Grocery List</button>
         <button class="lunchdata-button" @onclick="LunchDataRouting">Lunchdata</button>
     </div>
     <div class="squareinmainsquare">
@@ -208,7 +233,7 @@
     protected async override Task OnInitializedAsync() // Make the method asynchronous
     {
         currentHour = DateTime.Now.Hour;
-        
+
         if (!IsUserLoggedIn())
         {
             NavigationManager.NavigateTo("/login");
@@ -241,6 +266,11 @@
         await JSRuntime.InvokeVoidAsync("alert", "Reminders have been sent!"); // dit is de code voor de alert die in het beeld te zien is.
     }
 
+    private Role CheckUserRole()
+    {
+        return User.CurrentUser.Role;
+    }
+
     private void HomeScreenRouting()
     {
         NavigationManager.NavigateTo("/home");
@@ -259,5 +289,10 @@
     private void LunchDataRouting()
     {
         NavigationManager.NavigateTo("/lunchdata");
+    }
+
+    private void CompaniesRouting()
+    {
+        NavigationManager.NavigateTo("/companies");
     }
 }
