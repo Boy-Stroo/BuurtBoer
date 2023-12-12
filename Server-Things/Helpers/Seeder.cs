@@ -32,6 +32,21 @@ namespace Server_Things.Helpers
                     var user = new User($"Employee{j}", $"of {CompanyList[i].Name}",
                         $"pass{j}", $"emp{j}@{CompanyList[i].Name}.com", Role.Employee, CompanyList[i]);
                     Db.Users.Add(user);
+
+                    Random rand = new();
+                    if (rand.Next(0, 8) != 7 && user.Role == Role.Employee)
+                    {
+                        DateOnly today = DateOnly.FromDateTime(DateTime.Today);
+                        for (int x = 0; x < 7; x++)
+                        {
+                            if (rand.Next(2) == 1)
+                            {
+                                Db.OfficeDays.Add(new(user.Id, today));
+                            }
+                            today = today.AddDays(1);
+                        }
+                    }
+
                 }
             }
         }
