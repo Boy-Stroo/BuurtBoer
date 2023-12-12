@@ -14,6 +14,7 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddHttpClient("https://localhost:5077");
 builder.Services.AddSingleton<UserController>();
 builder.Services.AddSingleton<CompanyController>();
+builder.Services.AddSingleton<CurrentLanguage>();
 builder.Services.AddSyncfusionBlazor();
 
 var app = builder.Build();
