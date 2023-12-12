@@ -50,6 +50,11 @@ namespace Web_App
             return CurrentUser != null;
         }
 
+        public void Logout()
+        {
+            CurrentUser = null;
+        }
+
         public async Task DeleteUsers(Guid[] UsersToDelete)
         {
             foreach (var userToDelete in UsersToDelete) 
