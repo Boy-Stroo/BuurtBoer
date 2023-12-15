@@ -1,7 +1,7 @@
 ﻿@page "/"
 @inject NavigationManager NavigationManager
 
-@code { // hier redirect je van deze pagina naar de login pagina.
+@code { // hier redirect je van de standaard pagina naar de login pagina.
     protected override void OnInitialized()
     {
         NavigationManager.NavigateTo("/login");

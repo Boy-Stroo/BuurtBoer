@@ -196,7 +196,7 @@
     .button-container { /*positie "NL" en "EN" buttons*/
         position: absolute;
         top: 250px;
-        left: 20px;
+        left: 30px;
         display: flex;
         flex-direction: row;
     }
@@ -275,9 +275,9 @@
     <div class="squareinmainsquare">
         <div class=text-containersquaremiddle>
             <p>Employees who have already filled in their lunches:</p>
-            <p>Some number</p>
+            <p>@userswithlunches.Count()</p>
             <p>Employees who still have to do it:</p>
-            <p>Some number</p>
+            <p>@userswithoutlunches.Count()</p>
         </div>
         <button class="remind-button" @onclick="RemindButton">Remind</button>
         <div class=text-containerreminderline>
@@ -292,16 +292,22 @@
 
 @code {
     public int currentHour;
+    public List<User> userswithlunches = new();
+    public List<User> userswithoutlunches = new();
+    public DayOfWeek dayOfWeek;
     private bool isDutchSelected = true;
 
-    protected async override Task OnInitializedAsync() // Make the method asynchronous
+    protected async override Task OnInitializedAsync()
     {
         currentHour = DateTime.Now.Hour;
+        dayOfWeek = DateTime.Today.DayOfWeek;
 
         if (!IsUserLoggedIn())
         {
             NavigationManager.NavigateTo("/login");
         }
+        await employeesWithLunches();
+        await employeesWithoutLunches();
     }
 
     private bool IsUserLoggedIn() // kijken of gebruiker ingelogd is.
@@ -385,5 +391,17 @@
     {
         User.Logout();
         NavigationManager.NavigateTo("/login");
+    }
+
+    private async Task employeesWithLunches()
+    {
+        //userswithlunches = deze functie
+        userswithlunches = await User.usersWithLunches(User.CurrentUser.CompanyId, dayOfWeek);
+    }
+
+    private async Task employeesWithoutLunches()
+    {
+        //userswithoutlunches = deze functie
+        userswithoutlunches = await User.usersWithoutLunches(User.CurrentUser.CompanyId, dayOfWeek);
     }
 }
