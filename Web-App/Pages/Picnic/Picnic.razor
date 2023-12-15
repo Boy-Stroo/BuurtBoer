@@ -1,0 +1,294 @@
+@page "/picnic"
+@inject NavigationManager NavigationManager
+@inject UserController User
+@inject CurrentLanguage language
+
+<style>
+    body { /*achtergrond*/
+        background: linear-gradient(to left, #C4A484 50%, transparent 50%), url('https://i.imgur.com/GZVw5gT.png') repeat-x;
+        background-color: #E9E9E9;
+        background-size: 15500px 300px;
+        background-position: 0px 0px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .mainsquare { /*rechthoek*/
+        width: 1200px;
+        height: 800px;
+        background-color: #099F91;
+        border-radius: 10px;
+        position: relative;
+        top: 100px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .smallersquare { /*grootte kleinere rechthoek in tweede rechthoek*/
+        width: 300px;
+        height: 800px;
+        background-color: #00A89B;
+        border-radius: 10px;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        z-index: -1;
+    }
+
+    .squareinmainsquare { /*wit rechthoek in main rechthoek*/
+        width: 800px;
+        height: 700px;
+        background-color: #E9E9E9;
+        border-radius: 10px;
+        position: absolute;
+        top: 50px;
+        left: 350px;
+    }
+
+    .buurtboer-logo {
+        width: 300px;
+        height: 250px;
+        top: 0px;
+        left: 0%;
+        position: absolute;
+    }
+
+    .text-containersquare { /*positie en grootte tekst*/
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        color: white;
+        font-family: monospace;
+        font-size: 24px;
+        margin-top: 120px;
+    }
+
+    .homescreen-button { /*knop om naar home page te gaan*/
+        position: absolute;
+        top: 350px;
+        left: 30px;
+        padding: 20px 0;
+        width: 80%;
+        background-color: #099F91;
+        border: 1px solid #099F91;
+        color: white;
+        font-size: 16px;
+        text-align: center;
+        border-radius: 10px;
+    }
+
+        .homescreen-button:hover {
+            background-color: #F9834C;
+        }
+
+    .employee-button { /*knop om naar employees page te gaan*/
+        position: absolute;
+        top: 425px;
+        left: 30px;
+        padding: 20px 0;
+        width: 80%;
+        background-color: #099F91;
+        border: 1px solid #099F91;
+        color: white;
+        font-size: 16px;
+        text-align: center;
+        border-radius: 10px;
+    }
+
+        .employee-button:hover {
+            background-color: #F9834C;
+        }
+
+    .grocerylist-button { /*knop om naar grocerylist page te gaan*/
+        position: absolute;
+        top: 500px;
+        left: 30px;
+        padding: 20px 0;
+        width: 80%;
+        background-color: #099F91;
+        border: 1px solid #099F91;
+        color: white;
+        font-size: 16px;
+        text-align: center;
+        border-radius: 10px;
+    }
+
+        .grocerylist-button:hover {
+            background-color: #F9834C;
+        }
+
+    .companies-button { /*knop om naar grocerylist page te gaan*/
+        position: absolute;
+        top: 500px;
+        left: 30px;
+        padding: 20px 0;
+        width: 80%;
+        background-color: #099F91;
+        border: 1px solid #099F91;
+        color: white;
+        font-size: 16px;
+        text-align: center;
+        border-radius: 10px;
+    }
+
+        .companies-button:hover {
+            background-color: #F9834C;
+        }
+
+    .lunchdata-button { /*knop om naar lunchdata page te gaan*/
+        position: absolute;
+        top: 575px;
+        left: 30px;
+        padding: 20px 0;
+        width: 80%;
+        background-color: #099F91;
+        border: 1px solid #099F91;
+        color: white;
+        font-size: 16px;
+        text-align: center;
+        border-radius: 10px;
+    }
+
+        .lunchdata-button:hover {
+            background-color: #F9834C;
+        }
+
+    .button-container { /*positie "NL" en "EN" buttons*/
+        position: absolute;
+        top: 250px;
+        left: 20px;
+        display: flex;
+        flex-direction: row;
+    }
+
+    .language-button-clicked { /*kleur van taal button die aangeklikt is*/
+        background-color: #F9834C;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        padding: 10px 15px;
+        font-size: 16px;
+        margin-right: 10px;
+        cursor: pointer;
+    }
+
+    .language-button-notclicked { /*kleur van taal button die NIET aangeklikt is*/
+        background-color: #099F91;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        padding: 10px 15px;
+        font-size: 16px;
+        margin-right: 10px;
+        cursor: pointer;
+    }
+</style>
+
+<div class="mainsquare">
+    @* HTML elements*@
+    <div class="smallersquare">
+        <img src="https://i.imgur.com/MF5gfZC.png" class="buurtboer-logo" />
+        <div class="button-container">
+            <button class="@GetLanguageButtonClass(true)"
+            @onclick="() => SelectLanguage(true)">
+                NL
+            </button>
+
+            <button class="@GetLanguageButtonClass(false)"
+            @onclick="() => SelectLanguage(false)">
+                EN
+            </button>
+        </div>
+        <button class="homescreen-button" @onclick="HomeScreenRouting">Home</button>
+        @if (CheckUserRole() == Role.SuperAdmin)
+        {
+            <button class="companies-button" @onclick="CompaniesRouting">Companies</button>
+        }
+        else
+        {
+            <button class="grocerylist-button" @onclick="GroceryListRouting">Grocery List</button>
+        }
+        <button class="employee-button" @onclick="EmployeeRouting">Employees</button>
+        <button class="lunchdata-button" @onclick="LunchDataRouting">Lunchdata</button>
+    </div>
+    <div class="text-containersquare">
+        <p>hier komt de Picnic API</p>
+    </div>
+    <div class="squareinmainsquare">
+        <div class="text-containersquare">
+            <p>Groceries</p>
+        </div>
+    </div>
+</div>
+
+@code {
+    public User currentUser = new();
+    private bool isDutchSelected = true;
+
+    protected async override Task OnInitializedAsync() // Make the method asynchronous
+    {
+        if (!IsUserLoggedIn())
+        {
+            NavigationManager.NavigateTo("/login");
+        }
+    }
+
+    private bool IsUserLoggedIn() // kijken of gebruiker ingelogd is.
+    {
+        return User.CurrentUser != null;// deze op false zetten zorgt ervoor dat gebruiker direct naar login scherm wordt gestuurd als hij niet ingelogd is.
+    }
+
+    private Role CheckUserRole()
+    {
+        return User.CurrentUser.Role;
+    }
+
+    private void HomeScreenRouting()
+    {
+        NavigationManager.NavigateTo("/home");
+    }
+
+    private void EmployeeRouting()
+    {
+        NavigationManager.NavigateTo("/employees");
+    }
+
+    private void GroceryListRouting()
+    {
+        NavigationManager.NavigateTo("/grocerylist");
+    }
+
+    private void LunchDataRouting()
+    {
+        NavigationManager.NavigateTo("/lunchdata");
+    }
+
+    private string GetLanguageButtonClass(bool isDutch) // hiermee kijk je welke taal er geselecteerd is en of hij dus moet veranderen of niet.
+    {
+        if (isDutch == language.isDutchSelected)
+        {
+            return "language-button-clicked";
+        }
+        else
+        {
+            return "language-button-notclicked";
+        }
+    }
+
+    private void SelectLanguage(bool isDutch)
+    {
+        // kijken of nederlands geselecteerd is.
+        language.isDutchSelected = isDutch;
+
+        // refresh de webpage met de goede kleuren.
+        StateHasChanged();
+    }
+
+    private void CompaniesRouting()
+    {
+        NavigationManager.NavigateTo("/companies");
+    }
+}
