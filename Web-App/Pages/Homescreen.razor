@@ -396,10 +396,12 @@
     private async Task employeesWithLunches()
     {
         //userswithlunches = deze functie
+        userswithlunches = await User.usersWithLunches(User.CurrentUser.CompanyId, dayOfWeek);
     }
 
     private async Task employeesWithoutLunches()
     {
         //userswithoutlunches = deze functie
+        userswithoutlunches = await User.usersWithoutLunches(User.CurrentUser.CompanyId, dayOfWeek);
     }
 }

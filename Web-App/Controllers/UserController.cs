@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Web_App.Pages;
 using static Web_App.Pages.Employees;
 
 namespace Web_App
@@ -67,6 +68,18 @@ namespace Web_App
         public async Task addUser(User user)
         {
             await _userService.addUserDatabase(user);
+        }
+
+        public async Task<List<User>> usersWithLunches(Guid CompanyID, DayOfWeek dayOfWeek)
+        {
+            var EmployeesToReturn = await _userService.getUsersWithLunches(CompanyID, dayOfWeek);
+            return EmployeesToReturn;
+        }
+
+        public async Task<List<User>> usersWithoutLunches(Guid CompanyID, DayOfWeek dayOfWeek)
+        {
+            var EmployeesToReturn = await _userService.getUsersWithoutLunches(CompanyID, dayOfWeek);
+            return EmployeesToReturn;
         }
     }
 }
