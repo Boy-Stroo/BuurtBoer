@@ -19,7 +19,7 @@ namespace Server_Things.Helpers
         {
             new User("Admin", "Van de Admins", "admin", "admin@ad.min", Role.SuperAdmin, CompanyList[0]),
             new User("Admin", "van den Google", "wachtwoord", "admin@google.com", Role.Admin, CompanyList[1]),
-            new User("Admin", "van der Microsoft", "wachtwoord", "admin@dereelmicrosoft.com", Role.Admin, CompanyList[2]),
+            new User("Admin", "van der Microsoft", "wachtwoord", "admin@microsoft.com", Role.Admin, CompanyList[2]),
             new User("Admin", "'s Apple", "wachtwoord", "admin@apple.com", Role.Admin, CompanyList[3])
         };
 
