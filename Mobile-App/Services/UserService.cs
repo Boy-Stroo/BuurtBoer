@@ -36,20 +36,20 @@ public class UserService : HTTPService
         return null;
     }
     //Post
-     public async Task<User> GetLogin(UserCredentials credentials)
+    public async Task<User> GetLogin(UserCredentials credentials)
     {
 
-            // Call to the backend
-            var json = JsonSerializer.Serialize(credentials);
-            var data = new StringContent(json, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = await _client.PostAsync($"{_domain}/api/user/login", data);
-            // If the call is successful, read the response and deserialize it into a users
-            if (response.IsSuccessStatusCode)
-            {
-                string content = await response.Content.ReadAsStringAsync();
-                var user = JsonSerializer.Deserialize<List<User>>(content)[0];
-                return user;
-            }
+        // Call to the backend
+        var json = JsonSerializer.Serialize(credentials);
+        var data = new StringContent(json, Encoding.UTF8, "application/json");
+        HttpResponseMessage response = await _client.PostAsync($"{_domain}/api/user/login", data);
+        // If the call is successful, read the response and deserialize it into a users
+        if (response.IsSuccessStatusCode)
+        {
+            string content = await response.Content.ReadAsStringAsync();
+            var user = JsonSerializer.Deserialize<List<User>>(content)[0];
+            return user;
+        }
         return null;
     }
 }

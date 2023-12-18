@@ -151,20 +151,11 @@
                     Padding="8"
                     FontSize="17"
                     FontAttributes="Bold"/>
-
-            <!-- Change password -->
-            <Button Text="{local:Translator Name=changePassword}"
-                        Grid.Row="8"
-                        Margin="80,30,80,0"
-                        CornerRadius="10"
-                        Padding="8"
-                        BackgroundColor="{StaticResource Tertiary}"
-                        TextColor="{StaticResource Secondary}"
-                        FontAttributes="Bold"
-                        FontSize="17"/>
+ 
 
             <!-- Log out -->
             <Button Text="{local:Translator Name=logOut}"
+                    Clicked="OnLogoutClicked"
                     Grid.Row="9"
                     Margin="80,10,80,0"
                     CornerRadius="10"

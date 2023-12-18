@@ -5,10 +5,10 @@ namespace Mobile_App;
 public partial class SettingsPage : ContentPage
 {
     UserController UserController;
-	public SettingsPage()
-	{
-		InitializeComponent();
-	}
+    public SettingsPage()
+    {
+        InitializeComponent();
+    }
     public SettingsPage(UserController userController)
     {
         InitializeComponent();
@@ -50,10 +50,24 @@ public partial class SettingsPage : ContentPage
         {
             if (ENcheckbox.IsChecked == true)
             {
-                NLcheckbox.IsChecked = false;   
+                NLcheckbox.IsChecked = false;
                 LocalizationResourceManager.Instance.SetCulture(new CultureInfo("en"));
             }
         }
 
+    }
+
+    private async void OnLogoutClicked(object sender, EventArgs e)
+    {
+        var button = (Button)sender;
+        button.IsEnabled = false;
+
+        // Call the logout function from the UserController or related service
+        await UserController.Logout();
+
+        await Navigation.PopToRootAsync(); // Return to the root page after successful logout
+       
+        
+        button.IsEnabled = true;
     }
 }

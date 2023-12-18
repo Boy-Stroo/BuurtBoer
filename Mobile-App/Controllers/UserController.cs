@@ -38,5 +38,10 @@ namespace Mobile_App
             CurrentUser = await _userService.GetLogin(userCredentials);
             return CurrentUser != null;
         }
+
+        public async Task Logout()
+        {
+            CurrentUser = null;
+        }
     }
 }
