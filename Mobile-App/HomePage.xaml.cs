@@ -121,8 +121,10 @@ public partial class HomePage : ContentPage
 
             foreach (var dayToRemove in daysToRemove)
             {
-                await _officeDayService.DeleteOfficeDay(dayToRemove.Id);
-
+                if(await _officeDayService.DeleteOfficeDay(dayToRemove.Id))
+                {
+                    counter += 1;
+                }
             }
 
             foreach (var dayToAdd in daysToAdd)
