@@ -26,7 +26,6 @@ namespace Mobile_App
             var userCredentials = new UserCredentials(emailEntry.Text, passwordEntry.Text);
             var success = await _userController.LogIn(userCredentials);
 
-            await Navigation.PushAsync(new HomePage(_userController));
             if (success)
                 await Navigation.PushAsync(new HomePage(_userController));
 
