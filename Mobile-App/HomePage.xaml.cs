@@ -98,22 +98,24 @@ public partial class HomePage : ContentPage
         if (FridayCheckBox.IsChecked)
             selectedDates.Add(weekDates[4]);
 
-        // Fetch existing OfficeDays from the server
-        var existingDays = await _officeDayService.GetAllOfficeDays();
-        if (existingDays != null)
+        // Fetch all existing OfficeDays
+        var allExistingDays = await _officeDayService.GetAllOfficeDays();
+        if (allExistingDays != null)
         {
-            var newOfficeDays = selectedDates
+            var existingDaysForUser = allExistingDays
+                .Where(day => day.UserId == UserController.CurrentUser.Id)
+                .ToList();
+
+            var daysToAdd = selectedDates
+                .Where(newDay => !existingDaysForUser.Any(existingDay => existingDay.Date == newDay))
                 .Select(date => new OfficeDay { UserId = UserController.CurrentUser.Id, Date = date })
                 .ToList();
 
-            var daysToAdd = newOfficeDays.Where(newDay =>
-                !existingDays.Any(existingDay => existingDay.UserId == newDay.UserId && existingDay.Date == newDay.Date))
-                .ToList();
-
-            var daysToRemove = existingDays
-                .Where(existingDay =>
-                    !newOfficeDays.Any(newDay => existingDay.UserId == newDay.UserId && existingDay.Date == newDay.Date))
-                .ToList();
+            var daysToRemove = existingDaysForUser
+            .Where(existingDay =>
+                !selectedDates.Contains(existingDay.Date) &&
+                weekDates.Contains(existingDay.Date))
+            .ToList();
 
             int counter = 0;
 
