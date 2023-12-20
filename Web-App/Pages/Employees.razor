@@ -76,15 +76,27 @@
         margin-left: 325px;
     }
 
-    .trashcan-button {
+    .arrow {
         width: 40px;
         height: 40px;
         top: 40px;
-        left: 717px;
+        left: 720px;
         position: absolute;
     }
 
-    .text-containertrashcan {
+    .delete-container {
+        display: flex;
+        align-items: center;
+    }
+
+    .trashcan-button {
+        width: 40px;
+        height: 40px;
+        margin-top: 15px;
+        margin-left: 0px;
+    }
+
+    .text-containerarrow {
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -96,7 +108,7 @@
         margin-left: 710px;
     }
 
-    .savechanges-button {
+    .deleteemployees-button {
         background-color: #F9834C;
         color: white;
         border: none;
@@ -107,9 +119,10 @@
         cursor: pointer;
         margin-top: 20px;
         margin-left: 280px;
+        justify-content: center;
     }
 
-    .text-containersavechanges { /*tekst onder save changes knop*/
+    .text-containerdeleteemployees { /*tekst onder save changes knop*/
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -311,10 +324,10 @@
         <div class="text-containersquare">
             <p>Employees</p>
         </div>
-        <div class="text-containertrashcan">
+        <div class="text-containerarrow">
             <p>delete employee(s)</p>
         </div>
-        <img src="https://imgur.com/eOCpUcm.png" class="trashcan-button" />
+        <img src="https://imgur.com/Vx4OXVc.png" class="arrow" />
         <div class="table-container">
             <table class="table">
                 <thead>
@@ -335,9 +348,13 @@
                 </tbody>
             </table>
         </div>
-        <button class="savechanges-button" @onclick="SaveChanges">Save Changes</button>
-        <div class="text-containersavechanges">
-            <p>Click Save Changes to delete selected employees</p>
+        <div class="delete-container">
+            <button class="deleteemployees-button" @onclick="DeleteEmployees">Delete employees</button>
+        
+            <!-- <img src="https://imgur.com/eOCpUcm.png" class="trashcan-button" /> -->
+        </div>
+        <div class="text-containerdeleteemployees">
+            <p>Click Delete employees to delete selected employees</p>
         </div>
     </div>
 </div>
@@ -347,19 +364,23 @@
     List<UserModel> employeesToBeDeleted = new();
     private bool isDutchSelected = true;
 
-    private async void SaveChanges() // de knop om de geselecteerde medewerkers te verwijderen.
+    private async void DeleteEmployees() // de knop om de geselecteerde medewerkers te verwijderen.
     {
         if (employeesToBeDeleted.Count() > 0)
         {
-            await User.DeleteUsers(employeesToBeDeleted.Select(u => u.ID).ToArray()); // deleteusers callen met de ID's van de medewerkers in een array.
-            foreach( var employee in employeesToBeDeleted )
+            bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm", "Are you sure you want to delete the selected employee(s)?");
+            if (confirmed)
             {
-                employees.Remove(employee);
+                await User.DeleteUsers(employeesToBeDeleted.Select(u => u.ID).ToArray()); // deleteusers callen met de ID's van de medewerkers in een array.
+                foreach (var employee in employeesToBeDeleted)
+                {
+                    employees.Remove(employee);
+                }
+                string alert = employeesToBeDeleted.Count() > 1 ? "Users have been deleted!" : "User has been deleted!";
+                await JSRuntime.InvokeVoidAsync("alert", alert);
+                employeesToBeDeleted.Clear();
+                StateHasChanged();
             }
-            string alert = employeesToBeDeleted.Count() > 1 ? "Users have been deleted!" : "User has been deleted!";
-            await JSRuntime.InvokeVoidAsync("alert", alert);
-            employeesToBeDeleted.Clear();
-            StateHasChanged();
         }
     }
 

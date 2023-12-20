@@ -2,6 +2,7 @@
 @inject NavigationManager NavigationManager
 @inject UserController User
 @inject CurrentLanguage language
+@inject IJSRuntime JSRuntime
 
 <style>
     body { /*achtergrond*/
@@ -198,6 +199,10 @@
         if (await User.LogIn(credentials))
         {
             NavigationManager.NavigateTo("/home");
+        }
+        else
+        {
+            await JSRuntime.InvokeVoidAsync("alert", "Wrong email and/or password!"); // dit is de code voor de alert die in het beeld te zien is.
         }
         // gebruiker mag alleen inloggen als hij een admin of superadmin is.
     }
