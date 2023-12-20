@@ -69,5 +69,22 @@ namespace Server_Things.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        [HttpGet("bydate")]
+        public async Task<IActionResult> GetOfficeDaysByDate([FromQuery] DateOnly date)
+        {
+            try
+            {
+                var officeDaysForDate = await db.OfficeDays
+                  .Where(o => o.Date == date)
+                  .ToListAsync();
+
+                return Ok(officeDaysForDate);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

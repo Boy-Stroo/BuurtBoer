@@ -275,9 +275,9 @@
     <div class="squareinmainsquare">
         <div class=text-containersquaremiddle>
             <p>Employees who have already filled in their lunches:</p>
-            <p>@userswithlunches.Count()</p>
+            <p>@usersWithLunches.Count()</p>
             <p>Employees who still have to do it:</p>
-            <p>@userswithoutlunches.Count()</p>
+            <p>@usersWithoutLunches.Count()</p>
         </div>
         <button class="remind-button" @onclick="RemindButton">Remind</button>
         <div class=text-containerreminderline>
@@ -292,8 +292,8 @@
 
 @code {
     public int currentHour;
-    public List<User> userswithlunches = new();
-    public List<User> userswithoutlunches = new();
+    public List<User> usersWithLunches = new();
+    public List<User> usersWithoutLunches = new();
     public DayOfWeek dayOfWeek;
     private bool isDutchSelected = true;
 
@@ -396,12 +396,16 @@
     private async Task employeesWithLunches()
     {
         //userswithlunches = deze functie
-        userswithlunches = await User.usersWithLunches(User.CurrentUser.CompanyId, dayOfWeek);
+        var returnedUsers = await User.usersWithLunches(User.CurrentUser.CompanyId, dayOfWeek);
+
+        usersWithLunches = returnedUsers.Where(u => u.Id != User.CurrentUser.Id).ToList();
     }
 
     private async Task employeesWithoutLunches()
     {
         //userswithoutlunches = deze functie
-        userswithoutlunches = await User.usersWithoutLunches(User.CurrentUser.CompanyId, dayOfWeek);
+        var returnedUsers = await User.usersWithoutLunches(User.CurrentUser.CompanyId, dayOfWeek);
+
+        usersWithoutLunches = returnedUsers.Where(u => u.Id != User.CurrentUser.Id).ToList();
     }
 }

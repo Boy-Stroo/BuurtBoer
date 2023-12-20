@@ -115,85 +115,96 @@ public class UserService : HTTPService
     {
         var allEmployees = await GetUsersPerCompany(CompanyID);
         List<User> usersToReturn = new List<User>();
-        List<DateTime> daysToCheck = new List<DateTime>();
+        List<string> daysToCheck = new List<string>();
         DateTime Date = DateTime.Now.Date;
 
         if ((int)dayOfWeek <= 3)
         {
             if ((int)dayOfWeek == 1)
             {
-                daysToCheck.Add(Date.AddDays(7));
-                daysToCheck.Add(Date.AddDays(8));
-                daysToCheck.Add(Date.AddDays(9));
-                daysToCheck.Add(Date.AddDays(10));
-                daysToCheck.Add(Date.AddDays(11));
+                daysToCheck.Add(Date.AddDays(7).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(8).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(9).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(10).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(11).ToString("yyyy-MM-dd"));
             }
             else if ((int)dayOfWeek == 2)
             {
-                daysToCheck.Add(Date.AddDays(6));
-                daysToCheck.Add(Date.AddDays(7));
-                daysToCheck.Add(Date.AddDays(8));
-                daysToCheck.Add(Date.AddDays(9));
-                daysToCheck.Add(Date.AddDays(10));
+                daysToCheck.Add(Date.AddDays(6).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(7).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(8).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(9).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(10).ToString("yyyy-MM-dd"));
             }
             else if ((int)dayOfWeek == 3)
             {
-                daysToCheck.Add(Date.AddDays(5));
-                daysToCheck.Add(Date.AddDays(6));
-                daysToCheck.Add(Date.AddDays(7));
-                daysToCheck.Add(Date.AddDays(8));
-                daysToCheck.Add(Date.AddDays(9));
+                daysToCheck.Add(Date.AddDays(5).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(6).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(7).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(8).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(9).ToString("yyyy-MM-dd"));
             }
         }
         else if ((int)dayOfWeek > 3)
         {
             if ((int)dayOfWeek == 4)
             {
-                daysToCheck.Add(Date.AddDays(11));
-                daysToCheck.Add(Date.AddDays(12));
-                daysToCheck.Add(Date.AddDays(13));
-                daysToCheck.Add(Date.AddDays(14));
-                daysToCheck.Add(Date.AddDays(15));
+                daysToCheck.Add(Date.AddDays(11).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(12).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(13).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(14).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(15).ToString("yyyy-MM-dd"));
             }
             else if ((int)dayOfWeek == 5)
             {
-                daysToCheck.Add(Date.AddDays(10));
-                daysToCheck.Add(Date.AddDays(11));
-                daysToCheck.Add(Date.AddDays(12));
-                daysToCheck.Add(Date.AddDays(13));
-                daysToCheck.Add(Date.AddDays(14));
+                daysToCheck.Add(Date.AddDays(10).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(11).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(12).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(13).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(14).ToString("yyyy-MM-dd"));
             }
             else if ((int)dayOfWeek == 6)
             {
-                daysToCheck.Add(Date.AddDays(9));
-                daysToCheck.Add(Date.AddDays(10));
-                daysToCheck.Add(Date.AddDays(11));
-                daysToCheck.Add(Date.AddDays(12));
-                daysToCheck.Add(Date.AddDays(13));
+                daysToCheck.Add(Date.AddDays(9).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(10).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(11).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(12).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(13).ToString("yyyy-MM-dd"));
             }
             else if ((int)dayOfWeek == 7)
             {
-                daysToCheck.Add(Date.AddDays(8));
-                daysToCheck.Add(Date.AddDays(9));
-                daysToCheck.Add(Date.AddDays(10));
-                daysToCheck.Add(Date.AddDays(11));
-                daysToCheck.Add(Date.AddDays(12));
+                daysToCheck.Add(Date.AddDays(8).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(9).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(10).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(11).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(12).ToString("yyyy-MM-dd"));
             }
         }
-        foreach (var employee in allEmployees)
+        foreach (var date in daysToCheck)
         {
-            bool hasDate = false;
-            if (employee.DaysAtOffice != null)
+            var response = await _client.GetAsync($"{_domain}/api/officedays/bydate?date={date}");
+            var officeDays = await response.Content.ReadFromJsonAsync<List<OfficeDay>>();
+            foreach (var employee in allEmployees)
             {
-                foreach (var day in daysToCheck)
+                if (usersToReturn.Contains(employee))
                 {
-                    hasDate = employee.DaysAtOffice.Any(d => d.Date.Date == day.Date);
-                    if (hasDate == true)
-                        break;
+                    continue;
+                }
+                else
+                {
+                    try
+                    {
+                        if (officeDays.Any(d => d.UserId == employee.Id))
+                        {
+                            usersToReturn.Add(employee);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine($"ERROR {ex.Message}");
+                    }
                 }
             }
-            if (hasDate)
-                usersToReturn.Add(employee);
         }
         return usersToReturn;
     }
@@ -202,86 +213,92 @@ public class UserService : HTTPService
     {
         var allEmployees = await GetUsersPerCompany(CompanyID);
         List<User> usersToReturn = new List<User>();
-        List<DateTime> daysToCheck = new List<DateTime>();
+        List<string> daysToCheck = new List<string>();
         DateTime Date = DateTime.Now.Date;
 
         if ((int)dayOfWeek <= 3)
         {
             if ((int)dayOfWeek == 1)
             {
-                daysToCheck.Add(Date.AddDays(7));
-                daysToCheck.Add(Date.AddDays(8));
-                daysToCheck.Add(Date.AddDays(9));
-                daysToCheck.Add(Date.AddDays(10));
-                daysToCheck.Add(Date.AddDays(11));
+                daysToCheck.Add(Date.AddDays(7).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(8).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(9).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(10).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(11).ToString("yyyy-MM-dd"));
             }
             else if ((int)dayOfWeek == 2)
             {
-                daysToCheck.Add(Date.AddDays(6));
-                daysToCheck.Add(Date.AddDays(7));
-                daysToCheck.Add(Date.AddDays(8));
-                daysToCheck.Add(Date.AddDays(9));
-                daysToCheck.Add(Date.AddDays(10));
+                daysToCheck.Add(Date.AddDays(6).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(7).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(8).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(9).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(10).ToString("yyyy-MM-dd"));
             }
             else if ((int)dayOfWeek == 3)
             {
-                daysToCheck.Add(Date.AddDays(5));
-                daysToCheck.Add(Date.AddDays(6));
-                daysToCheck.Add(Date.AddDays(7));
-                daysToCheck.Add(Date.AddDays(8));
-                daysToCheck.Add(Date.AddDays(9));
+                daysToCheck.Add(Date.AddDays(5).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(6).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(7).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(8).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(9).ToString("yyyy-MM-dd"));
             }
         }
         else if ((int)dayOfWeek > 3)
         {
             if ((int)dayOfWeek == 4)
             {
-                daysToCheck.Add(Date.AddDays(11));
-                daysToCheck.Add(Date.AddDays(12));
-                daysToCheck.Add(Date.AddDays(13));
-                daysToCheck.Add(Date.AddDays(14));
-                daysToCheck.Add(Date.AddDays(15));
+                daysToCheck.Add(Date.AddDays(11).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(12).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(13).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(14).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(15).ToString("yyyy-MM-dd"));
             }
             else if ((int)dayOfWeek == 5)
             {
-                daysToCheck.Add(Date.AddDays(10));
-                daysToCheck.Add(Date.AddDays(11));
-                daysToCheck.Add(Date.AddDays(12));
-                daysToCheck.Add(Date.AddDays(13));
-                daysToCheck.Add(Date.AddDays(14));
+                daysToCheck.Add(Date.AddDays(10).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(11).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(12).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(13).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(14).ToString("yyyy-MM-dd"));
             }
             else if ((int)dayOfWeek == 6)
             {
-                daysToCheck.Add(Date.AddDays(9));
-                daysToCheck.Add(Date.AddDays(10));
-                daysToCheck.Add(Date.AddDays(11));
-                daysToCheck.Add(Date.AddDays(12));
-                daysToCheck.Add(Date.AddDays(13));
+                daysToCheck.Add(Date.AddDays(9).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(10).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(11).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(12).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(13).ToString("yyyy-MM-dd"));
             }
             else if ((int)dayOfWeek == 7)
             {
-                daysToCheck.Add(Date.AddDays(8));
-                daysToCheck.Add(Date.AddDays(9));
-                daysToCheck.Add(Date.AddDays(10));
-                daysToCheck.Add(Date.AddDays(11));
-                daysToCheck.Add(Date.AddDays(12));
+                daysToCheck.Add(Date.AddDays(8).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(9).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(10).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(11).ToString("yyyy-MM-dd"));
+                daysToCheck.Add(Date.AddDays(12).ToString("yyyy-MM-dd"));
             }
         }
         foreach (var employee in allEmployees)
         {
-            bool hasDate = false;
-            if (employee.DaysAtOffice != null)
+            bool hasLunch = false;
+
+            foreach (var date in daysToCheck)
             {
-                foreach (var day in daysToCheck)
+                var response = await _client.GetAsync($"{_domain}/api/officedays/bydate?date={date}");
+                var officeDays = await response.Content.ReadFromJsonAsync<List<OfficeDay>>();
+
+                if (officeDays.Any(d => d.UserId == employee.Id))
                 {
-                    hasDate = employee.DaysAtOffice.Any(d => d.Date.Date == day.Date);
-                    if (hasDate == true)
-                        break;
+                    hasLunch = true;
+                    break;
                 }
             }
-            if (!hasDate)
+
+            if (!hasLunch)
+            {
                 usersToReturn.Add(employee);
-        } // query maken om met de UserID de Daysatoffice te pakken en als de userid ertussenzit binnen bepaalde datums dan voeg je hem toe aan de lijst.
+            }
+        }
         return usersToReturn;
     }
 }
