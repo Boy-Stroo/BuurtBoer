@@ -395,7 +395,7 @@
 
     private async Task employeesWithLunches()
     {
-        //userswithlunches = deze functie
+        // functie om de employees op te vragen die hun lunches wel al hebben ingevuld.
         var returnedUsers = await User.usersWithLunches(User.CurrentUser.CompanyId, dayOfWeek);
 
         usersWithLunches = returnedUsers.Where(u => u.Id != User.CurrentUser.Id).ToList();
@@ -403,7 +403,7 @@
 
     private async Task employeesWithoutLunches()
     {
-        //userswithoutlunches = deze functie
+        // functie om de employees op te vragen die hun lunches nog niet hebben ingevuld.
         var returnedUsers = await User.usersWithoutLunches(User.CurrentUser.CompanyId, dayOfWeek);
 
         usersWithoutLunches = returnedUsers.Where(u => u.Id != User.CurrentUser.Id).ToList();

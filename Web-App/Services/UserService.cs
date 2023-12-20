@@ -118,7 +118,7 @@ public class UserService : HTTPService
         List<string> daysToCheck = new List<string>();
         DateTime Date = DateTime.Now.Date;
 
-        if ((int)dayOfWeek <= 3)
+        if ((int)dayOfWeek <= 3) // datums berekenen om te kijken of medewerkers lunches al hebben ongegeven.
         {
             if ((int)dayOfWeek == 1)
             {
@@ -182,6 +182,7 @@ public class UserService : HTTPService
         }
         foreach (var date in daysToCheck)
         {
+            // alle officedays opvragen met een specifieke datum.
             var response = await _client.GetAsync($"{_domain}/api/officedays/bydate?date={date}");
             var officeDays = await response.Content.ReadFromJsonAsync<List<OfficeDay>>();
             foreach (var employee in allEmployees)
@@ -192,16 +193,10 @@ public class UserService : HTTPService
                 }
                 else
                 {
-                    try
+                    // kijken of binnen deze officedays het employee id zit van die employee.
+                    if (officeDays.Any(d => d.UserId == employee.Id))
                     {
-                        if (officeDays.Any(d => d.UserId == employee.Id))
-                        {
-                            usersToReturn.Add(employee);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Debug.WriteLine($"ERROR {ex.Message}");
+                        usersToReturn.Add(employee);
                     }
                 }
             }
@@ -216,7 +211,7 @@ public class UserService : HTTPService
         List<string> daysToCheck = new List<string>();
         DateTime Date = DateTime.Now.Date;
 
-        if ((int)dayOfWeek <= 3)
+        if ((int)dayOfWeek <= 3) // datums berekenen om te kijken of medewerkers lunches al hebben ongegeven.
         {
             if ((int)dayOfWeek == 1)
             {
@@ -284,16 +279,18 @@ public class UserService : HTTPService
 
             foreach (var date in daysToCheck)
             {
+                // alle officedays opvragen met een specifieke datum.
                 var response = await _client.GetAsync($"{_domain}/api/officedays/bydate?date={date}");
                 var officeDays = await response.Content.ReadFromJsonAsync<List<OfficeDay>>();
 
+                // kijken of binnen deze officedays het employee id zit van die employee.
                 if (officeDays.Any(d => d.UserId == employee.Id))
                 {
                     hasLunch = true;
                     break;
                 }
             }
-
+            // Als hasLunch of false staat voeg je de employee toe aan de lijst.
             if (!hasLunch)
             {
                 usersToReturn.Add(employee);
