@@ -285,6 +285,26 @@
         margin-right: 10px;
         cursor: pointer;
     }
+
+    .logout-button {
+        position: absolute;
+        top: 730px;
+        left: 25px;
+        padding: 20px 0px;
+        height: 30px;
+        width: 25%;
+        background-color: #099F91;
+        border: 1px solid #099F91;
+        color: white;
+        font-size: 13px;
+        text-align: center;
+        border-radius: 10px;
+        line-height: 50%;
+    }
+
+        .logout-button:hover {
+            background-color: #F9834C;
+        }
 </style>
 
 <div class="mainsquare">
@@ -303,16 +323,20 @@
             </button>
         </div>
         <button class="homescreen-button" @onclick="HomeScreenRouting">Home</button>
-        @if (CheckUserRole() == Role.SuperAdmin)
+        @if (User.CurrentUser != null)
         {
-            <button class="companies-button" @onclick="CompaniesRouting">Companies</button>
-        }
-        else
-        {
-            <button class="grocerylist-button" @onclick="GroceryListRouting">Grocery List</button>
+            @if (CheckUserRole() == Role.SuperAdmin)
+            {
+                <button class="companies-button" @onclick="CompaniesRouting">Companies</button>
+            }
+            else
+            {
+                <button class="grocerylist-button" @onclick="GroceryListRouting">Grocery List</button>
+            }
         }
         <button class="employee-button" @onclick="EmployeeRouting">Employees</button>
         <button class="lunchdata-button" @onclick="LunchDataRouting">Lunchdata</button>
+        <button class="logout-button" @onclick="HandleLogout">Log out</button>
     </div>
     <div class="squareinmainsquare">
         <div @onclick="AddEmployeeRouting" class="orange-square-button">
@@ -363,6 +387,12 @@
     ObservableCollection<UserModel> employees = new();
     List<UserModel> employeesToBeDeleted = new();
     private bool isDutchSelected = true;
+
+    private void HandleLogout()
+    {
+        User.Logout();
+        NavigationManager.NavigateTo("/login");
+    }
 
     private async void DeleteEmployees() // de knop om de geselecteerde medewerkers te verwijderen.
     {
