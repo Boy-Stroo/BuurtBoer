@@ -401,7 +401,7 @@
         }
     }
 
-    private void temp() // alles omzetten naar een usermodel en de admin van dat moment niet toevoegen aan de lijst.
+    private void transformEmployees() // alles omzetten naar een usermodel en de admin van dat moment niet toevoegen aan de lijst.
     {
         foreach (var employee in User.Users)
         {
@@ -437,7 +437,7 @@
             NavigationManager.NavigateTo("/login");
         }
         await GetEmployees();
-        temp();
+        transformEmployees();
         StateHasChanged();
     }
 
