@@ -260,13 +260,16 @@
             </button>
         </div>
         <button class="homescreen-button" @onclick="HomeScreenRouting">Home</button>
-        @if ( CheckUserRole() == Role.SuperAdmin)
+        @if (User.CurrentUser != null)
         {
-            <button class="companies-button" @onclick="CompaniesRouting">Companies</button>
-        }
-        else
-        {
-            <button class="grocerylist-button" @onclick="GroceryListRouting">Grocery List</button>
+            @if ( CheckUserRole() == Role.SuperAdmin)
+            {
+                <button class="companies-button" @onclick="CompaniesRouting">Companies</button>
+            }
+            else
+            {
+                <button class="grocerylist-button" @onclick="GroceryListRouting">Grocery List</button>
+            }
         }
         <button class="employee-button" @onclick="EmployeeRouting">Employees</button>
         <button class="lunchdata-button" @onclick="LunchDataRouting">Lunchdata</button>
@@ -286,7 +289,10 @@
     </div>
     <div class="text-containersquare">
         <p>@greeting()</p>
-        <p>@(User.CurrentUser.FirstName) @(User.CurrentUser.LastName)</p>
+        @if (User.CurrentUser != null)
+        {
+            <p>@User.CurrentUser.FirstName @User.CurrentUser.LastName</p>
+        }
     </div>
 </div>
 
@@ -391,7 +397,7 @@
     {
         User.Logout();
         NavigationManager.NavigateTo("/login");
-    }
+    } 
 
     private async Task employeesWithLunches()
     {
