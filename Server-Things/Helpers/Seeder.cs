@@ -36,17 +36,19 @@ namespace Server_Things.Helpers
                     Random rand = new();
                     if (rand.Next(0, 8) != 7 && user.Role == Role.Employee)
                     {
-                        DateOnly today = DateOnly.FromDateTime(DateTime.Today);
+                        DateOnly today = DateOnly.FromDateTime(DateTime.Today.AddDays(7)); //voor donderdag deze gebruiken bij testing.
+                        //DateOnly today = DateOnly.FromDateTime(DateTime.Today); //na woensdag deze gebruiken bij testing.
+                        DateOnly lastMonth = DateOnly.FromDateTime(DateTime.Today.AddMonths(-1));
                         for (int x = 0; x < 7; x++)
                         {
                             if (rand.Next(2) == 1)
                             {
                                 Db.OfficeDays.Add(new(user.Id, today));
+                                Db.OfficeDays.Add(new(user.Id, lastMonth));
                             }
                             today = today.AddDays(1);
                         }
                     }
-
                 }
             }
         }

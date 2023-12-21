@@ -2,6 +2,9 @@
 @inject NavigationManager NavigationManager
 @inject UserController User
 @inject CurrentLanguage language
+@using Syncfusion.Blazor
+@using Syncfusion.Blazor.Lists
+@using System.Collections.ObjectModel;
 
 <style>
     body { /*achtergrond*/
@@ -27,6 +30,16 @@
         align-items: center;
     }
 
+    .squareinmainsquare { /*wit rechthoek in main rechthoek*/
+        width: 800px;
+        height: 700px;
+        background-color: #E9E9E9;
+        border-radius: 10px;
+        position: absolute;
+        top: 50px;
+        left: 350px;
+    }
+
     .smallersquare { /*grootte kleinere rechthoek in tweede rechthoek*/
         width: 300px;
         height: 800px;
@@ -46,14 +59,20 @@
         position: absolute;
     }
 
-    .text-containersquare { /*positie en grootte tekst*/
+    .text-containersquare { /*positie en grootte paginatitel*/
         display: flex;
         flex-direction: column;
         justify-content: center;
-        color: white;
+        color: black;
         font-family: monospace;
         font-size: 24px;
-        margin-top: 120px;
+        margin-top: 30px;
+        margin-left: 225px;
+    }
+
+    .table-container { /*scroll gedeelte als er veel employees zijn*/
+        height: 500px;
+        overflow-y: scroll;
     }
 
     .homescreen-button { /*knop om naar home page te gaan*/
@@ -195,6 +214,14 @@
         .logout-button:hover {
             background-color: #F9834C;
         }
+
+    td {
+        text-align: center;
+    }
+
+    th {
+        text-align: center;
+    }
 </style>
 
 <div class="mainsquare">
@@ -228,14 +255,45 @@
         <button class="lunchdata-button" @onclick="LunchDataRouting">Lunchdata</button>
         <button class="logout-button" @onclick="HandleLogout">Log out</button>
     </div>
-    <div class="text-containersquare">
-        <p>hier komt het lunchdataemployees gedeelte</p>
+    <div class="squareinmainsquare">
+        <div class="text-containersquare">
+            <p>Lunchdata employee specific</p>
+        </div>
+        <div class="table-container">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Lunches last month</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var employee in employeesWithLunches)
+                    {
+                        <tr>
+                            <td>@employee.Name</td>
+                            <td>@employee.LunchesAmount</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
 @code {
     public User currentUser = new();
+    ObservableCollection<UserModel> employees = new();
     private bool isDutchSelected = true;
+    ObservableCollection<EmployeeWithLunches> employeesWithLunches = new ObservableCollection<EmployeeWithLunches>();
+
+    public class UserModel
+    {
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public bool IsSelected { get; set; }
+        public Guid ID { get; set; }
+    }
 
     private void HandleLogout()
     {
@@ -243,11 +301,65 @@
         NavigationManager.NavigateTo("/login");
     }
 
+    private class EmployeeWithLunches
+    {
+        public string Name { get; set; }
+        public int LunchesAmount { get; set; }
+    }
+
+    private async Task<int> lunchesAmount(UserModel employee)
+    {
+        return await User.getLunchesAmount(employee.ID);
+    }
+
+    private async Task GetEmployeesWithLunches()
+    {
+        foreach (var employee in employees)
+        {
+            int lunches = await lunchesAmount(employee);
+            employeesWithLunches.Add(new EmployeeWithLunches
+                {
+                    Name = employee.Name,
+                    LunchesAmount = lunches
+                });
+        }
+    }
+
     protected async override Task OnInitializedAsync() // Make the method asynchronous
     {
         if (!IsUserLoggedIn())
         {
             NavigationManager.NavigateTo("/login");
+        }
+        await GetEmployees();
+        transformEmployees();
+        await GetEmployeesWithLunches();
+        StateHasChanged();
+    }
+
+    private async Task GetEmployees() // alle employees van een bedrijf pakken zodat je ze op het scherm kan laten zien.
+    {
+        await User.GetAllEmployeesPerCompany(User.CurrentUser.CompanyId);
+    }
+
+    private void transformEmployees() // alles omzetten naar een usermodel en de admin van dat moment niet toevoegen aan de lijst.
+    {
+        foreach (var employee in User.Users)
+        {
+            if (employee.Id == User.CurrentUser.Id)
+            {
+                continue;
+            }
+            else
+            {
+                employees.Add(new UserModel
+                    {
+                        Name = employee.FirstName + " " + employee.LastName,
+                        Email = employee.Email,
+                        IsSelected = false, // Set to false here
+                        ID = employee.Id
+                    });
+            }
         }
     }
 

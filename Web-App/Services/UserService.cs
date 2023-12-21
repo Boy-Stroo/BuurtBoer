@@ -6,6 +6,7 @@ using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualBasic;
 using Web_App;
+using Web_App.Pages;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using static Web_App.Pages.Employees;
 
@@ -297,5 +298,42 @@ public class UserService : HTTPService
             }
         }
         return usersToReturn;
+    }
+
+    public async Task<int> getLunchesCount(Guid EmployeeID)
+    {
+        var oneMonthAgo = DateTime.UtcNow.AddMonths(-1);
+        var daysInMonth = DateTime.DaysInMonth(oneMonthAgo.Year, oneMonthAgo.Month);
+        var firstDayMonth = new DateTime(oneMonthAgo.Year, oneMonthAgo.Month, 1);
+        var lastDayMonth = new DateTime(oneMonthAgo.Year, oneMonthAgo.Month, daysInMonth);
+
+        try
+        {
+            // Call to the backend
+            var response = await _client.GetAsync($"{_domain}/api/officedays");
+            var officeDays = await response.Content.ReadFromJsonAsync<List<OfficeDay>>();
+
+            int lunchCount = 0;
+            if (officeDays != null)
+            {
+                foreach (var day in officeDays)
+                {
+                    if (day.Date >= firstDayMonth && day.Date <= lastDayMonth)
+                    {
+                        if (day.UserId == EmployeeID)
+                        {
+                            lunchCount++;
+                        }
+                    }
+                }
+                return lunchCount;
+            }
+        }
+        // Too broad of an exception, but yeah
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"ERROR {ex.Message}");
+        }
+        return default;
     }
 }

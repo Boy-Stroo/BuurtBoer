@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -80,6 +81,12 @@ namespace Web_App
         {
             var EmployeesToReturn = await _userService.getUsersWithoutLunches(CompanyID, dayOfWeek);
             return EmployeesToReturn;
+        }
+
+        public async Task<int> getLunchesAmount(Guid employeeID)
+        {
+            var count = await _userService.getLunchesCount(employeeID);
+            return count;
         }
     }
 }
