@@ -1,4 +1,6 @@
 ﻿@page "/addemployee"
+@using SendGrid
+@using SendGrid.Helpers.Mail
 @inject NavigationManager NavigationManager
 @inject UserController User
 @inject IJSRuntime JSRuntime
@@ -307,6 +309,7 @@
     private string email = "";
     private bool isDutchSelected = true;
 
+
     private void HandleLogout()
     {
         User.Logout();
@@ -333,7 +336,7 @@
                     {
                         role = Role.Admin;
                     }
-                    
+
 
                     // Add placeholder password
                     var password = "wachtwoordvoornu";
@@ -352,10 +355,12 @@
                     if (CheckUserRole() == Role.Admin)
                     {
                         await JSRuntime.InvokeVoidAsync("alert", "Employee has been invited");
+                        SendInvitationEmail(email, "urltoinvitepeople");
                     }
                     else
                     {
                         await JSRuntime.InvokeVoidAsync("alert", "Admin has been invited");
+                        SendInvitationEmail(email, "urltoinvitepeople");
                     }
 
                     // employee moet nog op inactief staan en dus mag nog niet in lijst van employees komen te staan?
@@ -371,6 +376,27 @@
             {
                 await JSRuntime.InvokeVoidAsync("alert", "Email should contain '@'");
             }
+        }
+    }
+
+    private async void SendInvitationEmail(string email, string setPasswordUrl)
+    {
+        var client = new SendGridClient("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");
+
+        var msg = new SendGridMessage()
+            {
+                From = new EmailAddress("buurtboertest@hotmail.com", "Example Invites"),
+                Subject = "Invitation to set account password",
+                PlainTextContent = $"Please set your password here: {setPasswordUrl}"
+            };
+        msg.AddTo(new EmailAddress(email));
+
+        var response = await client.SendEmailAsync(msg);
+
+        if (response.StatusCode != System.Net.HttpStatusCode.Accepted)
+        {
+            // log error
+            Console.WriteLine(response.StatusCode);
         }
     }
 

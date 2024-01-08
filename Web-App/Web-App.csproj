@@ -10,6 +10,7 @@
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
   <ItemGroup>
+    <PackageReference Include="SendGrid" Version="9.28.1" />
     <PackageReference Include="Syncfusion.Blazor.Lists" Version="23.2.4" />
     <PackageReference Include="Syncfusion.Blazor.Themes" Version="23.2.4" />
   </ItemGroup>
