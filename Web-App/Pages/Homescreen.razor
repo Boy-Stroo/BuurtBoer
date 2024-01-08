@@ -275,18 +275,24 @@
         <button class="lunchdata-button" @onclick="LunchDataRouting">Lunchdata</button>
         <button class="logout-button" @onclick="HandleLogout">Log out</button>
     </div>
-    <div class="squareinmainsquare">
-        <div class=text-containersquaremiddle>
-            <p>Employees who have already filled in their lunches:</p>
-            <p>@usersWithLunches.Count()</p>
-            <p>Employees who still have to do it:</p>
-            <p>@usersWithoutLunches.Count()</p>
-        </div>
-        <button class="remind-button" @onclick="RemindButton">Remind</button>
-        <div class=text-containerreminderline>
-            <p>Click Remind for manual reminder</p>
-        </div>
-    </div>
+    @if (User.CurrentUser != null)
+    {
+        @if ( CheckUserRole() == Role.Admin)
+        {
+            <div class="squareinmainsquare">
+                <div class=text-containersquaremiddle>
+                    <p>Employees who have already filled in their lunches:</p>
+                    <p>@usersWithLunches.Count()</p>
+                    <p>Employees who still have to do it:</p>
+                    <p>@usersWithoutLunches.Count()</p>
+                </div>
+                <button class="remind-button" @onclick="RemindButton">Remind</button>
+                <div class=text-containerreminderline>
+                    <p>Click Remind for manual reminder</p>
+                </div>
+            </div>
+        }
+    }
     <div class="text-containersquare">
         <p>@greeting()</p>
         @if (User.CurrentUser != null)

@@ -358,6 +358,7 @@
                     <tr>
                         <th>Name</th>
                         <th>Email</th>
+                        <th>Role</th>
                     </tr>
                 </thead>    
                 <tbody>
@@ -366,6 +367,7 @@
                         <tr>
                             <td>@employee.Name</td>
                             <td>@employee.Email</td>
+                            <td>@employee.Role</td>
                             <td><input type="checkbox" @onclick="() => CheckboxClicked(employee)" @bind=@employee.IsSelected /></td>
                         </tr>
                     }
@@ -449,6 +451,7 @@
                 {
                     Name = employee.FirstName + " " + employee.LastName,
                     Email = employee.Email,
+                    Role = employee.Role,
                     IsSelected = false, // Set to false here
                     ID = employee.Id
                 });
@@ -461,6 +464,7 @@
         public string Name { get; set; }
         public string Email { get; set; }
         public bool IsSelected { get; set; }
+        public Role Role { get; set; }
         public Guid ID { get; set; }
     }
 
