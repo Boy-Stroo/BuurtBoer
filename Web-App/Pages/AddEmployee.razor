@@ -274,7 +274,17 @@
     </div>
     <div class="squareinmainsquare">
         <div class="text-containersquare">
-            <p>Add employee</p>
+            @if (User.CurrentUser != null)
+            {
+                @if (CheckUserRole() == Role.SuperAdmin)
+                {
+                    <p>Add admin</p>
+                }
+                else
+                {
+                    <p>Add employee</p>
+                }
+            }
         </div>
         <div class="text-containersquaretwo">
             <label for="first name">First name:</label>
@@ -313,8 +323,17 @@
 
                 if (atSymbolIndex > 0 && atSymbolIndex < email.Length - 1)
                 {
+                    Role role = new Role();
                     // Specify Role Enum value
-                    var role = Role.Employee;
+                    if (CheckUserRole() == Role.Admin)
+                    {
+                        role = Role.Employee;
+                    }
+                    else
+                    {
+                        role = Role.Admin;
+                    }
+                    
 
                     // Add placeholder password
                     var password = "wachtwoordvoornu";
@@ -330,7 +349,15 @@
                     );
 
                     await User.addUser(user);
-                    await JSRuntime.InvokeVoidAsync("alert", "Employee has been invited");
+                    if (CheckUserRole() == Role.Admin)
+                    {
+                        await JSRuntime.InvokeVoidAsync("alert", "Employee has been invited");
+                    }
+                    else
+                    {
+                        await JSRuntime.InvokeVoidAsync("alert", "Admin has been invited");
+                    }
+
                     // employee moet nog op inactief staan en dus mag nog niet in lijst van employees komen te staan?
                     // wachtwoord, hoe gaan we dat fixen staat nu op niks
                     // invite voor mobiele app sturen via mail naar gebruiker.

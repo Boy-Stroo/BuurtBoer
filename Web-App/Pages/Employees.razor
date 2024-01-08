@@ -439,6 +439,10 @@
             {
                 continue;
             }
+            if (employee.Role == Role.SuperAdmin && User.CurrentUser.Role == Role.Admin)
+            {
+                continue;
+            }
             else
             {
                 employees.Add(new UserModel

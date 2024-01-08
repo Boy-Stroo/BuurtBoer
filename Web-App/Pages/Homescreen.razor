@@ -405,6 +405,7 @@
         var returnedUsers = await User.usersWithLunches(User.CurrentUser.CompanyId, dayOfWeek);
 
         usersWithLunches = returnedUsers.Where(u => u.Id != User.CurrentUser.Id).ToList();
+        usersWithLunches = returnedUsers.Where(u => u.Role > User.CurrentUser.Role).ToList();
     }
 
     private async Task employeesWithoutLunches()
@@ -413,5 +414,6 @@
         var returnedUsers = await User.usersWithoutLunches(User.CurrentUser.CompanyId, dayOfWeek);
 
         usersWithoutLunches = returnedUsers.Where(u => u.Id != User.CurrentUser.Id).ToList();
+        usersWithoutLunches = returnedUsers.Where(u => u.Role > User.CurrentUser.Role).ToList();
     }
 }
