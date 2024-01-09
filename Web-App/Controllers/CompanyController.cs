@@ -37,5 +37,14 @@ namespace Web_App
         {
             Companies = await _companyService.GetAll();
         }
+
+        public async Task DeleteCompanies(Guid[] CompaniesToDelete)
+        {
+            foreach (var companyToDelete in CompaniesToDelete)
+            {
+                await _companyService.DeleteCompaniesDatabase(companyToDelete);
+            }
+
+        }
     }
 }

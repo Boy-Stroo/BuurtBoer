@@ -46,4 +46,16 @@ public class CompanyService : HTTPService
             Debug.WriteLine($"ERROR {ex.Message}");
         }
     }
+
+    public async Task DeleteCompaniesDatabase(Guid CompanyId)
+    {
+        try
+        {
+            HttpResponseMessage response = await _client.DeleteAsync($"{_domain}/api/company/delete/{CompanyId}");
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"ERROR {ex.Message}");
+        }
+    }
 }

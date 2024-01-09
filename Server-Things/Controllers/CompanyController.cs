@@ -29,5 +29,25 @@ namespace Server_Things.Controllers
                 return BadRequest(e.Message);
             }
         }
+        [HttpDelete("delete/{ID}")]
+        public async Task DeleteCompaniesDatabase(Guid ID)
+        {
+            try
+            {
+                var companytodelete = db.Companies.Where(c => c.Id == ID);
+
+                if (companytodelete != null)
+                {
+                    db.Companies.RemoveRange(companytodelete);
+                    await db.SaveChangesAsync();
+                    Ok();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                BadRequest();
+            }
+        }
     }
 }

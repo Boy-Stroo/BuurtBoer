@@ -3,6 +3,7 @@
 @inject UserController User
 @inject CompanyController CompanyController
 @inject CurrentLanguage language
+@inject IJSRuntime JSRuntime
 
 <style>
     body { /*achtergrond*/
@@ -81,7 +82,7 @@
         position: absolute;
     }
 
-    .savechanges-button {
+    .deletecompanies-button {
         background-color: #F9834C;
         color: white;
         border: none;
@@ -279,7 +280,7 @@
                     </tr>
                 </thead>    
                 <tbody>
-                    @foreach (var company in CompanyController.Companies)
+                    @foreach (var company in companies)
                     {
                         <tr>
                             <td>@company.Name</td>
@@ -291,12 +292,12 @@
             </table>
         </div>
         <img src="https://imgur.com/eOCpUcm.png" class="trashcan-button" />
-        <button class="savechanges-button" @onclick="SaveChanges">Save Changes</button>
+        <button class="deletecompanies-button" @onclick="DeleteCompanies">Delete Companies</button>
     </div>
 </div>
 
 @code {
-    public List<Company> CompanyDisplayList = new();
+    ObservableCollection<CompanyController> companies = new();
     public List<Company> CompaniesToBeDeleted = new();
     private bool isDutchSelected = true;
 
@@ -341,12 +342,25 @@
     private async Task GetCompanies()
     {
         await CompanyController.GetAllCompanies();
-    } 
-    private async void SaveChanges()
+    }
+
+    private async void DeleteCompanies()
     {
-        if (CompaniesToBeDeleted != null)
+        if (CompaniesToBeDeleted.Count() > 0)
         {
-            @* await Usercontroller.DeleteUsers(employeesToBeDeleted); *@
+            bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm", "Are you sure you want to delete the selected company/companies?");
+            if (confirmed)
+            {
+                await CompanyController.DeleteCompanies(CompaniesToBeDeleted.Select(c => c.Id).ToArray()); // delete companies callen met de ID's van de copmanies in een array.
+                foreach (var company in CompaniesToBeDeleted)
+                {
+                    companies.Remove(company);
+                }
+                string alert = CompaniesToBeDeleted.Count() > 1 ? "companies have been deleted!" : "copmany has been deleted!";
+                await JSRuntime.InvokeVoidAsync("alert", alert);
+                CompaniesToBeDeleted.Clear();
+                StateHasChanged();
+            }
         }
     }
 
