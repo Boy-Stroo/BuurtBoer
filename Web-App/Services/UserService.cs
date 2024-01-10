@@ -76,7 +76,10 @@ public class UserService : HTTPService
         {
             string content = await response.Content.ReadAsStringAsync();
             var user = JsonSerializer.Deserialize<List<User>>(content)![0];
-            return user;
+            if (user.Role != Role.Employee)
+            {
+                return user;
+            }
         }
         return null;
     }

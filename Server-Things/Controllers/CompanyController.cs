@@ -49,5 +49,20 @@ namespace Server_Things.Controllers
                 BadRequest();
             }
         }
+
+        [HttpPost("add")]
+        public async Task AddCompany(Company company)
+        {
+            try
+            {
+                db.Companies.Add(company);
+
+                var response = await db.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(BadRequest(ex.Message));
+            }
+        }
     }
 }

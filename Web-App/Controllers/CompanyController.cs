@@ -44,7 +44,11 @@ namespace Web_App
             {
                 await _companyService.DeleteCompaniesDatabase(companyToDelete);
             }
+        }
 
+        public async Task addCompany(Company company)
+        {
+            await _companyService.addCompanyDatabase(company);
         }
     }
 }

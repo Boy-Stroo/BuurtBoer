@@ -28,12 +28,12 @@ public class CompanyService : HTTPService
         return null;
     }
 
-    public async Task addCompanyDatabase(User user)
+    public async Task addCompanyDatabase(Company company)
     {
         try
         {
             // Serialize user to JSON
-            var json = JsonSerializer.Serialize(user);
+            var json = JsonSerializer.Serialize(company);
 
             // Create HTTP content from JSON 
             var content = new StringContent(json, Encoding.UTF8, "application/json");

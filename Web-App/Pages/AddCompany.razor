@@ -1,12 +1,9 @@
-﻿@page "/companies"
+﻿@page "/addcompany"
+@inject CompanyController CompanyController
 @inject NavigationManager NavigationManager
 @inject UserController User
-@inject CompanyController CompanyController
-@inject CurrentLanguage language
 @inject IJSRuntime JSRuntime
-@using Syncfusion.Blazor
-@using Syncfusion.Blazor.Lists
-@using System.Collections.ObjectModel;
+@inject CurrentLanguage language
 
 <style>
     body { /*achtergrond*/
@@ -32,16 +29,6 @@
         align-items: center;
     }
 
-    .squareinmainsquare { /*wit rechthoek in main rechthoek*/
-        width: 800px;
-        height: 700px;
-        background-color: #E9E9E9;
-        border-radius: 10px;
-        position: absolute;
-        top: 50px;
-        left: 350px;
-    }
-
     .smallersquare { /*grootte kleinere rechthoek in tweede rechthoek*/
         width: 300px;
         height: 800px;
@@ -53,17 +40,22 @@
         z-index: -1;
     }
 
+    .squareinmainsquare { /*wit rechthoek in main rechthoek*/
+        width: 800px;
+        height: 700px;
+        background-color: #E9E9E9;
+        border-radius: 10px;
+        position: absolute;
+        top: 50px;
+        left: 350px;
+    }
+
     .buurtboer-logo {
         width: 300px;
         height: 250px;
         top: 0px;
         left: 0%;
         position: absolute;
-    }
-
-    .table-container {
-        height: 500px;
-        overflow-y: scroll;
     }
 
     .text-containersquare { /*positie en grootte tekst*/
@@ -77,70 +69,36 @@
         margin-left: 325px;
     }
 
-    .text-containerarrow {
+    .text-containersquaretwo { /*positie en grootte tekst*/
         display: flex;
         flex-direction: column;
         justify-content: center;
-        position: absolute;
         color: black;
         font-family: monospace;
-        font-size: 12px;
-        top: 5px;
-        margin-left: 710px;
+        font-size: 24px;
+        margin-top: 50px;
+        margin-left: 150px;
     }
 
-    .arrow {
-        width: 40px;
-        height: 40px;
-        top: 40px;
-        left: 720px;
-        position: absolute;
-    }
-
-    .orange-square-button { /*add knop achtergrond*/
-        width: 40px;
-        height: 40px;
-        margin-top: 10px;
-        margin-left: 10px;
-        position: absolute;
-        cursor: pointer;
-        background-color: #F9834C;
+    input { /*grootte naam en email blok*/
+        margin-bottom: 30px;
+        border: 2px solid white;
         border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        padding: 8px;
+        width: 500px;
     }
 
-    .fa-plus { /*plus teken in add knop*/
-        font-size: 50px;
-        color: white;
-        margin-top: 3px;
-        margin-left: -3px;
-    }
-
-    .text-containeraddbutton {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        position: absolute;
-        color: black;
-        font-family: monospace;
-        font-size: 12px;
-        margin-top: 20px;
-        margin-left: 60px;
-    }
-
-    .deletecompanies-button {
+    .addcompany-button { /*kleur van "Add" button*/
         background-color: #F9834C;
         color: white;
         border: none;
         border-radius: 8px;
-        padding: 15px 0;
-        width: 30%;
-        font-size: 20px;
+        padding: 15px 30px;
+        font-size: 24px;
         cursor: pointer;
-        margin-top: 20px;
-        margin-left: 280px;
+        position: absolute;
+        margin-top: 525px;
+        margin-left: 200px;
     }
 
     .homescreen-button { /*knop om naar home page te gaan*/
@@ -316,47 +274,30 @@
         <button class="logout-button" @onclick="HandleLogout">Log out</button>
     </div>
     <div class="squareinmainsquare">
-        <div @onclick="AddCompanyRouting" class="orange-square-button">
-            <i class="fas fa-plus">+</i>
-        </div>
-        <div class="text-containeraddbutton">
-            <p>add company</p>
-        </div>
         <div class="text-containersquare">
-            <p>Companies</p>
+            <p>Add company</p>
         </div>
-        <div class="text-containerarrow">
-            <p>delete company</p>
+        <div class="text-containersquaretwo">
+            <label for="company name">Company name:</label>
+            <input type="text" @bind="companyname" />
+
+            <label for="company description">Company description:</label>
+            <input type="text" @bind="companydescription" />
+
+            <label for="company adress">Company adress:</label>
+            <input type="text" @bind="companyadress" />
+            <button class="addcompany-button" @onclick="addCompany">Add</button>
         </div>
-        <img src="https://imgur.com/Vx4OXVc.png" class="arrow" />
-        <div class="table-container">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>    
-                <tbody>
-                    @foreach (var company in companies)
-                    {
-                        <tr>
-                            <td>@company.Name</td>
-                            <td>@company.Description</td>
-                            <td><input type="checkbox" @onclick="() => CheckboxClicked(company)" @bind=@company.IsSelected /></td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-        <button class="deletecompanies-button" @onclick="DeleteCompanies">Delete Companies</button>
     </div>
 </div>
 
 @code {
-    ObservableCollection<CompanyModel> companies = new();
-    public List<CompanyModel> CompaniesToBeDeleted = new();
+    public User currentUser = new();
+    private string companyname = "";
+    private string companydescription = "";
+    private string companyadress = "";
     private bool isDutchSelected = true;
+
 
     private void HandleLogout()
     {
@@ -364,20 +305,17 @@
         NavigationManager.NavigateTo("/login");
     }
 
-    private void CheckboxClicked(CompanyModel company) // als knop geklikt wordt gebruiker toevoegen aan lijst om te verwijderen en anders er weer uit halen.
+    private async void addCompany() // er moet een check komen of de email al in gebruik is of niet.
     {
-        // geselecteerd van true naar false of andersom.
-        company.IsSelected = !company.IsSelected;
-
-        if (company.IsSelected)
+        if (companyname != "" && companydescription != "" && companyadress != "")
         {
-            // gebruiker toevoegen.
-            CompaniesToBeDeleted.Add(company);
-        }
-        else
-        {
-            // Gebruiker verwijderen.
-            CompaniesToBeDeleted.Remove(company);
+            var company = new Company(
+                companyname,
+                companydescription,
+                companyadress
+            );
+            await CompanyController.addCompany(company);
+            await JSRuntime.InvokeVoidAsync("alert", "Company has been added to the database");
         }
     }
 
@@ -385,64 +323,13 @@
     {
         if (!IsUserLoggedIn())
         {
-
             NavigationManager.NavigateTo("/login");
         }
-        await GetCompanies();
-        transformCompanies();
-        StateHasChanged();
     }
 
     private bool IsUserLoggedIn() // kijken of gebruiker ingelogd is.
     {
         return User.CurrentUser != null;// deze op false zetten zorgt ervoor dat gebruiker direct naar login scherm wordt gestuurd als hij niet ingelogd is.
-    }
-
-    private async Task GetCompanies()
-    {
-        await CompanyController.GetAllCompanies();
-    }
-
-    private void transformCompanies() // alles omzetten naar een usermodel en de admin van dat moment niet toevoegen aan de lijst.
-    {
-        foreach (var company in CompanyController.Companies)
-        {
-            companies.Add(new CompanyModel
-            {
-                Name = company.Name,
-                Description = company.Description,
-                IsSelected = false,
-                ID = company.Id
-            });
-        }
-    }
-
-    public class CompanyModel
-    {
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public bool IsSelected { get; set; }
-        public Guid ID { get; set; }
-    }
-
-    private async void DeleteCompanies()
-    {
-        if (CompaniesToBeDeleted.Count() > 0)
-        {
-            bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm", "Are you sure you want to delete the selected company/companies?");
-            if (confirmed)
-            {
-                await CompanyController.DeleteCompanies(CompaniesToBeDeleted.Select(c => c.ID).ToArray()); // delete companies callen met de ID's van de copmanies in een array.
-                foreach (var company in CompaniesToBeDeleted)
-                {
-                    companies.Remove(company);
-                }
-                string alert = CompaniesToBeDeleted.Count() > 1 ? "companies have been deleted!" : "company has been deleted!";
-                await JSRuntime.InvokeVoidAsync("alert", alert);
-                CompaniesToBeDeleted.Clear();
-                StateHasChanged();
-            }
-        }
     }
 
     private Role CheckUserRole()
@@ -473,11 +360,6 @@
     private void CompaniesRouting()
     {
         NavigationManager.NavigateTo("/companies");
-    }
-
-    private void AddCompanyRouting()
-    {
-        NavigationManager.NavigateTo("/addcompany");
     }
 
     private string GetLanguageButtonClass(bool isDutch) // hiermee kijk je welke taal er geselecteerd is en of hij dus moet veranderen of niet.
