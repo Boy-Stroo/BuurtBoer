@@ -4,6 +4,9 @@
 @inject CompanyController CompanyController
 @inject CurrentLanguage language
 @inject IJSRuntime JSRuntime
+@using Syncfusion.Blazor
+@using Syncfusion.Blazor.Lists
+@using System.Collections.ObjectModel;
 
 <style>
     body { /*achtergrond*/
@@ -297,8 +300,8 @@
 </div>
 
 @code {
-    ObservableCollection<CompanyController> companies = new();
-    public List<Company> CompaniesToBeDeleted = new();
+    ObservableCollection<CompanyModel> companies = new();
+    public List<CompanyModel> CompaniesToBeDeleted = new();
     private bool isDutchSelected = true;
 
     private void HandleLogout()
@@ -307,7 +310,7 @@
         NavigationManager.NavigateTo("/login");
     }
 
-    private void CheckboxClicked(Company company) // als knop geklikt wordt gebruiker toevoegen aan lijst om te verwijderen en anders er weer uit halen.
+    private void CheckboxClicked(CompanyModel company) // als knop geklikt wordt gebruiker toevoegen aan lijst om te verwijderen en anders er weer uit halen.
     {
         // geselecteerd van true naar false of andersom.
         company.IsSelected = !company.IsSelected;
@@ -332,8 +335,10 @@
             NavigationManager.NavigateTo("/login");
         }
         await GetCompanies();
+        transformCompanies();
         StateHasChanged();
     }
+
     private bool IsUserLoggedIn() // kijken of gebruiker ingelogd is.
     {
         return User.CurrentUser != null;// deze op false zetten zorgt ervoor dat gebruiker direct naar login scherm wordt gestuurd als hij niet ingelogd is.
@@ -344,6 +349,28 @@
         await CompanyController.GetAllCompanies();
     }
 
+    private void transformCompanies() // alles omzetten naar een usermodel en de admin van dat moment niet toevoegen aan de lijst.
+    {
+        foreach (var company in CompanyController.Companies)
+        {
+            companies.Add(new CompanyModel
+            {
+                Name = company.Name,
+                Description = company.Description,
+                IsSelected = false,
+                ID = company.Id
+            });
+        }
+    }
+
+    public class CompanyModel
+    {
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public bool IsSelected { get; set; }
+        public Guid ID { get; set; }
+    }
+
     private async void DeleteCompanies()
     {
         if (CompaniesToBeDeleted.Count() > 0)
@@ -351,7 +378,7 @@
             bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm", "Are you sure you want to delete the selected company/companies?");
             if (confirmed)
             {
-                await CompanyController.DeleteCompanies(CompaniesToBeDeleted.Select(c => c.Id).ToArray()); // delete companies callen met de ID's van de copmanies in een array.
+                await CompanyController.DeleteCompanies(CompaniesToBeDeleted.Select(c => c.ID).ToArray()); // delete companies callen met de ID's van de copmanies in een array.
                 foreach (var company in CompaniesToBeDeleted)
                 {
                     companies.Remove(company);
