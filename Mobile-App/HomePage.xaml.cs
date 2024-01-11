@@ -9,6 +9,7 @@ public partial class HomePage : ContentPage
     List<DateOnly> weekDates;
     UserController UserController;
     private readonly OfficeDayService _officeDayService = new OfficeDayService();
+    private int weekNumber;
 
     public HomePage(UserController controller)
     {
@@ -37,18 +38,18 @@ public partial class HomePage : ContentPage
             welcomeLabel.Text = "Welcome, " + name;
         }
 
-        // Get the current date
+        // huidige datum
         DateTime currentDate = DateTime.Today;
 
-        // Get the current week number
-        int currentWeek = CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(
+        // huidige weeknummer
+        int weekNumber = CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(
             currentDate,
             CalendarWeekRule.FirstFourDayWeek,
             DayOfWeek.Monday
         );
 
         // Set the week label text
-        WeekLabel.Text = $"Week {currentWeek}";
+        WeekLabel.Text = $"Week {weekNumber}";
 
         // Set the month label text
         MonthLabel.Text = currentDate.ToString("MMMM");
@@ -80,6 +81,7 @@ public partial class HomePage : ContentPage
         WednesdayDateLabel.Text = weekDates[2].ToString("MMMM dd");
         ThursdayDateLabel.Text = weekDates[3].ToString("MMMM dd");
         FridayDateLabel.Text = weekDates[4].ToString("MMMM dd");
+        WeekLabel.Text = $"Week {weekNumber}";
     }
 
     private async void SaveSelection(object sender, EventArgs e)
@@ -153,6 +155,7 @@ public partial class HomePage : ContentPage
 
     private void PreviousWeekButton_Clicked(object sender, EventArgs e)
     {
+        weekNumber--;
         DateOnly previousMonday = weekDates[0].AddDays(-7);
         DateOnly today = DateOnly.FromDateTime(DateTime.Today);
 
@@ -168,6 +171,7 @@ public partial class HomePage : ContentPage
 
     private void NextWeekButton_Clicked(object sender, EventArgs e)
     {
+        weekNumber++;
         DateOnly nextMonday = weekDates[0].AddDays(7);
         DateOnly today = DateOnly.FromDateTime(DateTime.Today);
 

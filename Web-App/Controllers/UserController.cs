@@ -36,28 +36,28 @@ namespace Web_App
             _userService = userService;
             _users = new ObservableCollection<User>();
         }
-        public async Task GetAllUsers()
+        public async Task GetAllUsers()// alle employees pakken.
         {
             Users = await _userService.GetAll();
         }
 
-        public async Task GetAllEmployeesPerCompany(Guid CompanyID)
+        public async Task GetAllEmployeesPerCompany(Guid CompanyID)// alle employees pakken van hetzelfde bedrijf.
         {
             Users = await _userService.GetUsersPerCompany(CompanyID);
         }
 
-        public async Task<bool> LogIn(UserCredentials userCredentials)
+        public async Task<bool> LogIn(UserCredentials userCredentials)// check voor login.
         {
             CurrentUser = await _userService.GetLogin(userCredentials);
             return CurrentUser != null;
         }
 
-        public void Logout()
+        public void Logout()// uitloggen.
         {
             CurrentUser = null;
         }
 
-        public async Task DeleteUsers(Guid[] UsersToDelete)
+        public async Task DeleteUsers(Guid[] UsersToDelete)// lijst met employees die verwijderd moeten worden.
         {
             foreach (var userToDelete in UsersToDelete) 
             {
@@ -65,24 +65,24 @@ namespace Web_App
             }
             
         }
-        public async Task addUser(User user)
+        public async Task addUser(User user)// employee toevoegen.
         {
             await _userService.addUserDatabase(user);
         }
 
-        public async Task<List<User>> usersWithLunches(Guid CompanyID, DayOfWeek dayOfWeek)
+        public async Task<List<User>> usersWithLunches(Guid CompanyID, DayOfWeek dayOfWeek)// lijst met employees die WEL hun lunches hebben opgegeven voor de volgende week.
         {
             var EmployeesToReturn = await _userService.getUsersWithLunches(CompanyID, dayOfWeek);
             return EmployeesToReturn;
         }
 
-        public async Task<List<User>> usersWithoutLunches(Guid CompanyID, DayOfWeek dayOfWeek)
+        public async Task<List<User>> usersWithoutLunches(Guid CompanyID, DayOfWeek dayOfWeek)// lijst met employees die NIET hun lunches hebben opgegeven voor de volgende week.
         {
             var EmployeesToReturn = await _userService.getUsersWithoutLunches(CompanyID, dayOfWeek);
             return EmployeesToReturn;
         }
 
-        public async Task<int> getLunchesAmount(Guid employeeID)
+        public async Task<int> getLunchesAmount(Guid employeeID)// Totaal aantal lunches voor één employee.
         {
             var count = await _userService.getLunchesCount(employeeID);
             return count;

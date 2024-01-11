@@ -33,12 +33,12 @@ namespace Web_App
             _companyService = userService;
             _companies = new ObservableCollection<Company>();
         }
-        public async Task GetAllCompanies()
+        public async Task GetAllCompanies()//lijst met alle companies.
         {
             Companies = await _companyService.GetAll();
         }
 
-        public async Task DeleteCompanies(Guid[] CompaniesToDelete)
+        public async Task DeleteCompanies(Guid[] CompaniesToDelete)//lijst met companies die verwijderd moeten worden.
         {
             foreach (var companyToDelete in CompaniesToDelete)
             {
@@ -46,7 +46,7 @@ namespace Web_App
             }
         }
 
-        public async Task addCompany(Company company)
+        public async Task addCompany(Company company)//company die toegevoegd moet worden.
         {
             await _companyService.addCompanyDatabase(company);
         }

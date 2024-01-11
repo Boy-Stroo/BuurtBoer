@@ -76,7 +76,7 @@
         margin-left: 325px;
     }
 
-    .arrow {
+    .arrow { /*pijl om employees te verwijderen*/
         width: 40px;
         height: 40px;
         top: 40px;
@@ -84,19 +84,19 @@
         position: absolute;
     }
 
-    .delete-container {
+    .delete-container { /*container om employees te verwijderen*/
         display: flex;
         align-items: center;
     }
 
-    .trashcan-button {
+    .trashcan-button { /*prullenbak icon die NIET GEBRUIKT WORDT*/
         width: 40px;
         height: 40px;
         margin-top: 15px;
         margin-left: 0px;
     }
 
-    .text-containerarrow {
+    .text-containerarrow { /*tekst boven pijltje om te verwijderen*/
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -108,7 +108,7 @@
         margin-left: 710px;
     }
 
-    .deleteemployees-button {
+    .deleteemployees-button { /*knopje op employees te verwijderen*/
         background-color: #F9834C;
         color: white;
         border: none;
@@ -154,7 +154,7 @@
         margin-left: -3px;
     }
 
-    .text-containeraddbutton {
+    .text-containeraddbutton { /*tekst om employees toe te voegen*/
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -390,7 +390,7 @@
     List<UserModel> employeesToBeDeleted = new();
     private bool isDutchSelected = true;
 
-    private void HandleLogout()
+    private void HandleLogout()// uitloggen.
     {
         User.Logout();
         NavigationManager.NavigateTo("/login");
@@ -481,7 +481,7 @@
 
     private bool IsUserLoggedIn() // kijken of gebruiker ingelogd is.
     {
-        return User.CurrentUser != null;// deze op false zetten zorgt ervoor dat gebruiker direct naar login scherm wordt gestuurd als hij niet ingelogd is.
+        return User.CurrentUser != null;
     }
 
     private async Task GetEmployees() // alle employees van een bedrijf pakken zodat je ze op het scherm kan laten zien.
