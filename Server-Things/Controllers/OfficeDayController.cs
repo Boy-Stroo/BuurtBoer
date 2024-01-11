@@ -12,10 +12,8 @@ namespace Server_Things.Controllers
 {
     [Route("api/officedays")]
     [ApiController]
-    public class OfficeDayController : ControllerBase
+    public class OfficeDayController : BaseController
     {
-        private readonly BuurtboerContext db = new BuurtboerContext();
-
         [HttpGet]
         public async Task<IActionResult> GetOfficeDays()
         {
