@@ -5,6 +5,8 @@ namespace Mobile_App;
 public partial class SettingsPage : ContentPage
 {
     UserController UserController;
+    private readonly string defaultLanguageKey = "DefaultLanguage";
+
     public SettingsPage()
     {
         InitializeComponent();
@@ -26,11 +28,33 @@ public partial class SettingsPage : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
+
+        // Set default language to English if not already set
+        if (!Preferences.ContainsKey(defaultLanguageKey))
+        {
+            Preferences.Set(defaultLanguageKey, "en");
+        }
+
+
         var user = UserController.CurrentUser;
         if (user != null)
         {
             var name = user.FirstName + " " + user.LastName;
             welcomeLabel.Text = "Welcome, " + name;
+        }
+
+        // Restore language selection
+        string selectedLanguage = Preferences.Get(defaultLanguageKey, "en");
+
+        if (selectedLanguage == "en")
+        {
+            ENcheckbox.IsChecked = true;
+            NLcheckbox.IsChecked = false;
+        }
+        else if (selectedLanguage == "nl")
+        {
+            ENcheckbox.IsChecked = false;
+            NLcheckbox.IsChecked = true;
         }
     }
 
@@ -44,6 +68,8 @@ public partial class SettingsPage : ContentPage
             {
                 ENcheckbox.IsChecked = false;
                 LocalizationResourceManager.Instance.SetCulture(new CultureInfo("nl"));
+                // Save language selection
+                Preferences.Set(defaultLanguageKey, "nl");
             }
         }
         else if (checkBox == ENcheckbox)
@@ -52,9 +78,10 @@ public partial class SettingsPage : ContentPage
             {
                 NLcheckbox.IsChecked = false;
                 LocalizationResourceManager.Instance.SetCulture(new CultureInfo("en"));
+                // Save language selection
+                Preferences.Set(defaultLanguageKey, "en");
             }
         }
-
     }
 
     private async void OnLogoutClicked(object sender, EventArgs e)

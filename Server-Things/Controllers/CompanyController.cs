@@ -9,8 +9,10 @@ namespace Server_Things.Controllers
 {
     [Route("api/company")]
     [ApiController]
-    public class CompanyController : BaseController
+    public class CompanyController : ControllerBase
     {
+        private readonly BuurtboerContext db = new BuurtboerContext();
+
 
         [HttpGet("all")]
         // [Produces(MediaTypeNames.Application.Json)]

@@ -9,9 +9,11 @@ namespace Server_Things.Controllers
 {
     [Route("api/user")]
     [ApiController]
-    public class UserController : BaseController
+    public class UserController : ControllerBase
     {
-        public record UserModel(string Email, string Password, bool IsSelected, Guid ID);
+
+        private readonly BuurtboerContext db = new BuurtboerContext();
+
 
         [HttpGet("all")]
         // [Produces(MediaTypeNames.Application.Json)]

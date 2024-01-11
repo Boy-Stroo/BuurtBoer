@@ -10,10 +10,15 @@ using Server_Things.Models;
 
 namespace Server_Things.Controllers
 {
+
     [Route("api/officedays")]
     [ApiController]
-    public class OfficeDayController : BaseController
+    public class OfficeDayController : ControllerBase
     {
+
+        private readonly BuurtboerContext db = new BuurtboerContext();
+
+
         [HttpGet]
         public async Task<IActionResult> GetOfficeDays()
         {
