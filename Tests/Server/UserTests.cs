@@ -1,4 +1,6 @@
 namespace Server;
+
+using Microsoft.AspNetCore.Mvc;
 using Server_Things;
 using Server_Things.Controllers;
 using Server_Things.Models;
@@ -14,13 +16,29 @@ public class UserTests : IClassFixture<DatabaseFixture>
     }
     
     [Fact]
-    public void Login()
+    public async void Login()
     {
         // Arrange
         User employee = fixture.Db.Users.Where(u => u.Role == Role.Employee).First();
-        var credentials = (employee.Email, employee.Password);
+        UserCredentials credentials = new(employee.Email, employee.Password);
 
         // Act
-        var result = UserController.GetLoggedInUser(new(employee.Email, employee.Password));
+        var result = await UserController.GetLoggedInUser(credentials);
+
+        // Assert
+        Assert.IsType<OkObjectResult>(result);
+    }
+
+    [Fact]
+    public async void BadLogin()
+    {
+        // Arrange
+        UserCredentials credentials = new("foobar@foo.bar", "foobar");
+
+        // Act
+        var result = await UserController.GetLoggedInUser(credentials);
+
+        // Assert
+        Assert.IsType<NotFoundObjectResult>(result);
     }
 }
