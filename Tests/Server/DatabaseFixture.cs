@@ -5,7 +5,7 @@ using Server_Things.Models;
 
 public class DatabaseFixture : IDisposable
 {
-    public TestDbContext Db;
+    public BuurtboerContext Db;
 
     private Company _company;
     private List<User> _users;
@@ -14,10 +14,8 @@ public class DatabaseFixture : IDisposable
 
     public DatabaseFixture()
     {
-        var options = new DbContextOptionsBuilder<TestDbContext>()
-            .UseNpgsql("Host=localhost;Port=5432;Database=buurtboer;Username=postgres;Include Error Detail=true");  
 
-        Db = new TestDbContext(options.Options);
+        Db = new BuurtboerContext("Host=localhost;Port=5432;Database=buurtboertest;Username=postgres;Include Error Detail=true");
         _company = new("test", "test", "test");
         
         User employee = new("Foo", "Bar", "FooBar", "emp@foo.bar", Role.Employee, _company);

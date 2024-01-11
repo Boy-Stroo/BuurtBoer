@@ -9,9 +9,8 @@ namespace Server_Things.Controllers
 {
     [Route("api/user")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UserController : BaseController
     {
-        private readonly BuurtboerContext db = new BuurtboerContext();
         public record UserModel(string Email, string Password, bool IsSelected, Guid ID);
 
         [HttpGet("all")]

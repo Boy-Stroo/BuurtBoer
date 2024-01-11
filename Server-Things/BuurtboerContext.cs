@@ -3,16 +3,28 @@ using Server_Things.Models;
 
 namespace Server_Things
 {
-    public class BuurtboerContext : DbContext
+    public class BuurtboerContext : DbContext, IBuurtboerContext
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Company> Companies { get; set; }
         public DbSet<OfficeDay> OfficeDays { get; set; }
 
+        private readonly string _options;
+
+        public BuurtboerContext(string options)
+        {
+            _options = options;
+        }
+
+        public BuurtboerContext()
+        {
+            _options = "Host=localhost;Port=5432;Database=buurtboer;Username=postgres;Include Error Detail=true";
+        }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
-            builder.UseNpgsql("Host=localhost;Port=5432;Database=buurtboer;Username=postgres;Include Error Detail=true");
+            builder.UseNpgsql(_options);
             builder.LogTo(Console.WriteLine, Microsoft.Extensions.Logging.LogLevel.Error);
         }
 
