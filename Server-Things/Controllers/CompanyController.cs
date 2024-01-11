@@ -12,6 +12,11 @@ namespace Server_Things.Controllers
     public class CompanyController : BaseController
     {
 
+        public CompanyController(BuurtboerContext db) : base(db)
+        {
+            
+        }
+
         [HttpGet("all")]
         // [Produces(MediaTypeNames.Application.Json)]
         [Consumes("application/json")]
