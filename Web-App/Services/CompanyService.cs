@@ -20,7 +20,6 @@ public class CompanyService : HTTPService
                 return JsonSerializer.Deserialize<ObservableCollection<Company>>(content);
             }
         }
-        // Too broad of an exception, but yeah
         catch (Exception ex)
         {
             Debug.WriteLine($"ERROR {ex.Message}");
@@ -51,6 +50,7 @@ public class CompanyService : HTTPService
     {
         try
         {
+            // delete company from database.
             HttpResponseMessage response = await _client.DeleteAsync($"{_domain}/api/company/delete/{CompanyId}");
         }
         catch (Exception ex)

@@ -34,7 +34,6 @@ public class UserService : HTTPService
                 return JsonSerializer.Deserialize<ObservableCollection<User>>(content);
             }
         }
-        // Too broad of an exception, but yeah
         catch (Exception ex)
         {
             Debug.WriteLine($"ERROR {ex.Message}");
@@ -56,7 +55,6 @@ public class UserService : HTTPService
                 return JsonSerializer.Deserialize<ObservableCollection<User>>(content);
             }
         }
-        // Too broad of an exception, but yeah
         catch (Exception ex)
         {
             Debug.WriteLine($"ERROR {ex.Message}");
@@ -88,6 +86,7 @@ public class UserService : HTTPService
     {
         try
         {
+            //call to backend to delete user from database.
             HttpResponseMessage response = await _client.DeleteAsync($"{_domain}/api/user/delete/{UserId}");
         }
         catch (Exception ex)
@@ -115,14 +114,14 @@ public class UserService : HTTPService
         }
     }
 
-    public async Task<List<User>> getUsersWithLunches(Guid CompanyID, DayOfWeek dayOfWeek)
+    public async Task<List<User>> getUsersWithLunches(Guid CompanyID, DayOfWeek dayOfWeek)// functie om alle users die WEL hun lunches hebben ingevuld te pakken.
     {
         var allEmployees = await GetUsersPerCompany(CompanyID);
         List<User> usersToReturn = new List<User>();
         List<string> daysToCheck = new List<string>();
         DateTime Date = DateTime.Now.Date;
 
-        if ((int)dayOfWeek <= 3) // datums berekenen om te kijken of medewerkers lunches al hebben ongegeven.
+        if ((int)dayOfWeek <= 3) // datums berekenen om te kijken of medewerkers lunches al hebben opgegeven.
         {
             if ((int)dayOfWeek == 1)
             {
@@ -208,7 +207,7 @@ public class UserService : HTTPService
         return usersToReturn;
     }
 
-    public async Task<List<User>> getUsersWithoutLunches(Guid CompanyID, DayOfWeek dayOfWeek)
+    public async Task<List<User>> getUsersWithoutLunches(Guid CompanyID, DayOfWeek dayOfWeek)// functie om alle users die NIET hun lunches hebben ingevuld te pakken.
     {
         var allEmployees = await GetUsersPerCompany(CompanyID);
         List<User> usersToReturn = new List<User>();
@@ -303,7 +302,7 @@ public class UserService : HTTPService
         return usersToReturn;
     }
 
-    public async Task<int> getLunchesCount(Guid EmployeeID)
+    public async Task<int> getLunchesCount(Guid EmployeeID)// functie om het aantal lunches van afgelopen maand te pakken voor één employee.
     {
         var oneMonthAgo = DateTime.UtcNow.AddMonths(-1);
         var daysInMonth = DateTime.DaysInMonth(oneMonthAgo.Year, oneMonthAgo.Month);
@@ -314,14 +313,14 @@ public class UserService : HTTPService
         {
             // Call to the backend
             var response = await _client.GetAsync($"{_domain}/api/officedays");
-            var officeDays = await response.Content.ReadFromJsonAsync<List<OfficeDay>>();
+            var officeDays = await response.Content.ReadFromJsonAsync<List<OfficeDay>>();// alle officedays ophalen.
 
             int lunchCount = 0;
             if (officeDays != null)
             {
                 foreach (var day in officeDays)
                 {
-                    if (day.Date >= firstDayMonth && day.Date <= lastDayMonth)
+                    if (day.Date >= firstDayMonth && day.Date <= lastDayMonth)// als de office(day) binnen de afgelopen maand zit dan lunchCount+1;
                     {
                         if (day.UserId == EmployeeID)
                         {
@@ -332,7 +331,6 @@ public class UserService : HTTPService
                 return lunchCount;
             }
         }
-        // Too broad of an exception, but yeah
         catch (Exception ex)
         {
             Debug.WriteLine($"ERROR {ex.Message}");
