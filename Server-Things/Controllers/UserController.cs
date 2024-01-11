@@ -12,8 +12,6 @@ namespace Server_Things.Controllers
     public class UserController : ControllerBase
     {
         private readonly BuurtboerContext db = new BuurtboerContext();
-        public record UserCredentials(string Email, string Password);
-
         public record UserModel(string Email, string Password, bool IsSelected, Guid ID);
 
         [HttpGet("all")]

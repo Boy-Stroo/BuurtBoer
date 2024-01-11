@@ -10,6 +10,8 @@ namespace Server_Things.Models
         Admin,
         Employee
     }
+    public record UserCredentials(string Email, string Password);
+
     public class User
     {
         private string _email;
