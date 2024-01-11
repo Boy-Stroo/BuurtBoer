@@ -1,10 +1,22 @@
 namespace Server;
 using Server_Things;
-public class UnitTest1
+using Server_Things.Controllers;
+using Server_Things.Models;
+
+public class UserTests : IClassFixture<DatabaseFixture>
 {
-    [Fact]
-    public void Test1()
+    DatabaseFixture fixture;
+
+    public UserTests(DatabaseFixture fixture)
     {
+        this.fixture = fixture;
+    }
+    
+    [Fact]
+    public void Login()
+    {
+        //Arrange
+        User user = new(Guid.Empty, "Foo", "Bar", "FooBar", "Foo@b.ar", Role.Employee, null);
         
     }
 }
