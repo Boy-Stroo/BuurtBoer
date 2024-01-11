@@ -414,6 +414,10 @@
                 StateHasChanged();
             }
         }
+        else
+        {
+            await JSRuntime.InvokeVoidAsync("alert", "No employee(s) selected");
+        }
     }
 
     private void CheckboxClicked(UserModel employee) // als knop geklikt wordt gebruiker toevoegen aan lijst om te verwijderen en anders er weer uit halen.
