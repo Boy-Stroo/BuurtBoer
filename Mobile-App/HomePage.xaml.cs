@@ -9,7 +9,6 @@ public partial class HomePage : ContentPage
     List<DateOnly> weekDates;
     UserController UserController;
     private readonly OfficeDayService _officeDayService = new OfficeDayService();
-    private int weekNumber;
 
     public HomePage(UserController controller)
     {
@@ -81,7 +80,6 @@ public partial class HomePage : ContentPage
         WednesdayDateLabel.Text = weekDates[2].ToString("MMMM dd");
         ThursdayDateLabel.Text = weekDates[3].ToString("MMMM dd");
         FridayDateLabel.Text = weekDates[4].ToString("MMMM dd");
-        WeekLabel.Text = $"Week {weekNumber}";
     }
 
     private async void SaveSelection(object sender, EventArgs e)
@@ -153,9 +151,21 @@ public partial class HomePage : ContentPage
         }
     }
 
+    private void UpdateWeekNumber()
+    {
+        // Calculate the week number based on the first date in weekDates
+        int updatedWeekNumber = CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(
+            new DateTime(weekDates[0].Year, weekDates[0].Month, weekDates[0].Day),
+            CalendarWeekRule.FirstFourDayWeek,
+            DayOfWeek.Monday
+        );
+
+        // Update the displayed week number
+        WeekLabel.Text = $"Week {updatedWeekNumber}";
+    }
+
     private void PreviousWeekButton_Clicked(object sender, EventArgs e)
     {
-        weekNumber--;
         DateOnly previousMonday = weekDates[0].AddDays(-7);
         DateOnly today = DateOnly.FromDateTime(DateTime.Today);
 
@@ -164,14 +174,13 @@ public partial class HomePage : ContentPage
         {
             weekDates = GetCurrentWeekDates(previousMonday);
             UpdateDateLabels();
+            UpdateWeekNumber();
         }
     }
 
 
-
     private void NextWeekButton_Clicked(object sender, EventArgs e)
     {
-        weekNumber++;
         DateOnly nextMonday = weekDates[0].AddDays(7);
         DateOnly today = DateOnly.FromDateTime(DateTime.Today);
 
@@ -179,6 +188,7 @@ public partial class HomePage : ContentPage
         {
             weekDates = GetCurrentWeekDates(nextMonday);
             UpdateDateLabels();
+            UpdateWeekNumber();
         }
     }
     private async void OnSettingsClicked(object sender, EventArgs e)
