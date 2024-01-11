@@ -11,7 +11,10 @@ namespace Server_Things.Controllers
     [ApiController]
     public class UserController : BaseController
     {
-        public record UserModel(string Email, string Password, bool IsSelected, Guid ID);
+
+        public UserController(BuurtboerContext db) : base(db)
+        {
+        }
 
         [HttpGet("all")]
         // [Produces(MediaTypeNames.Application.Json)]
