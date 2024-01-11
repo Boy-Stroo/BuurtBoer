@@ -317,6 +317,10 @@
             await CompanyController.addCompany(company);
             await JSRuntime.InvokeVoidAsync("alert", "Company has been added to the database");
         }
+        else
+        {
+            await JSRuntime.InvokeVoidAsync("alert", "Required fields are not filled in");
+        }
     }
 
     protected async override Task OnInitializedAsync() // Gelijk wanneer pagina opent kijken of de persoon is ingelogd anders naar login scherm.

@@ -317,11 +317,14 @@
         foreach (var employee in employees)
         {
             int lunches = await lunchesAmount(employee);
-            employeesWithLunches.Add(new EmployeeWithLunches
-                {
-                    Name = employee.Name,
-                    LunchesAmount = lunches
-                });
+            if (lunches > 0)
+            {
+                employeesWithLunches.Add(new EmployeeWithLunches
+                    {
+                        Name = employee.Name,
+                        LunchesAmount = lunches
+                    });
+            }
         }
     }
 
@@ -339,7 +342,14 @@
 
     private async Task GetEmployees() // alle employees van een bedrijf pakken zodat je ze op het scherm kan laten zien.
     {
-        await User.GetAllEmployeesPerCompany(User.CurrentUser.CompanyId);
+        if (User.CurrentUser.Role == Role.Admin)//als het een admin is alleen van dat bedrijf printen.
+        {
+            await User.GetAllEmployeesPerCompany(User.CurrentUser.CompanyId);
+        }
+        else// als het een superadmin is alle employees printen.
+        {
+            await User.GetAllUsers();
+        }
     }
 
     private void transformEmployees() // alles omzetten naar een usermodel en de admin van dat moment niet toevoegen aan de lijst.

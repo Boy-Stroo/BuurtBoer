@@ -143,6 +143,17 @@
         margin-left: 280px;
     }
 
+    .text-containerdeletecompanies { /*tekst onder save changes knop*/
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        color: black;
+        font-family: monospace;
+        font-size: 12px;
+        margin-top: 10px;
+        margin-left: 250px;
+    }
+
     .homescreen-button { /*knop om naar home page te gaan*/
         position: absolute;
         top: 350px;
@@ -350,6 +361,9 @@
             </table>
         </div>
         <button class="deletecompanies-button" @onclick="DeleteCompanies">Delete Companies</button>
+        <div class="text-containerdeletecompanies">
+            <p>Click Delete companies to delete selected companies</p>
+        </div>
     </div>
 </div>
 
@@ -442,6 +456,10 @@
                 CompaniesToBeDeleted.Clear();
                 StateHasChanged();
             }
+        }
+        else
+        {
+            await JSRuntime.InvokeVoidAsync("alert", "No companies selected");
         }
     }
 
