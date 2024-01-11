@@ -50,6 +50,7 @@ public class OfficeDayService : HTTPService
     {
         try
         {
+            // probeert een officeday te deleten gebaseerd op ID
             HttpResponseMessage response = await _client.DeleteAsync($"{_domain}/api/officedays/{officeDayId}");
             return response.IsSuccessStatusCode;
         }

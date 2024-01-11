@@ -24,6 +24,7 @@ namespace Server_Things.Controllers
         {
             try
             {
+                // zoekt op all officedays in de database en maakt er een list van
                 var officeDays = await db.OfficeDays.Select(o => o).ToListAsync();
                 var serializedOfficeDays = JsonSerializer.Serialize(officeDays);
                 return Ok(serializedOfficeDays);
@@ -41,6 +42,7 @@ namespace Server_Things.Controllers
         {
             try
             {
+                // voegt een officeday toe met userid en datum
                 db.OfficeDays.Add(new(officeDay.userID, officeDay.date));
                 await db.SaveChangesAsync();
                 return Ok("OfficeDay created successfully");
@@ -56,6 +58,7 @@ namespace Server_Things.Controllers
         {
             try
             {
+                // zoekt voor een office day met gegeven ID
                 var officeDay = await db.OfficeDays.FindAsync(officeDayId);
                 if (officeDay == null)
                 {
@@ -78,6 +81,7 @@ namespace Server_Things.Controllers
         {
             try
             {
+                // zoekt voor office days met gegeven datum en maakt er een list van
                 var officeDaysForDate = await db.OfficeDays
                   .Where(o => o.Date == date)
                   .ToListAsync();
