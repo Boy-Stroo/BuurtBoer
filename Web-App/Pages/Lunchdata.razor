@@ -278,13 +278,13 @@
     public User currentUser = new();
     private bool isDutchSelected = true;
 
-    private void HandleLogout()
+    private void HandleLogout()// uitloggen.
     {
         User.Logout();
         NavigationManager.NavigateTo("/login");
     }
 
-    protected async override Task OnInitializedAsync() // Make the method asynchronous
+    protected async override Task OnInitializedAsync() // Gelijk wanneer pagina opent kijken of de persoon is ingelogd anders naar login scherm.
     {
         if (!IsUserLoggedIn())
         {
@@ -294,7 +294,7 @@
 
     private bool IsUserLoggedIn() // kijken of gebruiker ingelogd is.
     {
-        return User.CurrentUser != null;// deze op false zetten zorgt ervoor dat gebruiker direct naar login scherm wordt gestuurd als hij niet ingelogd is.
+        return User.CurrentUser != null;
     }
 
     private Role CheckUserRole()

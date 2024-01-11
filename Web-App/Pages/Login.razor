@@ -193,8 +193,6 @@
 
     private async void HandleLogin() // code voor wanneer een gebruiker op "Continue"/ "Ga door" klikt.
     {
-        // logic om te testen of de persoon een account heeft en of het wachtwoord klopt.
-        // als de gegevens goed zijn zet je isLoggedIn op true en roep je OnInitialized().
         var credentials = new UserCredentials(email, password);
         if (await User.LogIn(credentials))
         {
@@ -217,10 +215,8 @@
 
     private bool IsUserLoggedIn() // kijken of gebruiker ingelogd is.
     {
-        return User.CurrentUser != null;// deze op false zetten zorgt ervoor dat gebruiker direct naar login scherm wordt gestuurd als hij niet ingelogd is.
+        return User.CurrentUser != null;
     }
-
-    private bool isDutchSelected = true;
 
     private string GetLanguageButtonClass(bool isDutch) // hiermee kijk je welke taal er geselecteerd is en of hij dus moet veranderen of niet.
     {

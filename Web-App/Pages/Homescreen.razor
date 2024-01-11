@@ -309,7 +309,7 @@
     public DayOfWeek dayOfWeek;
     private bool isDutchSelected = true;
 
-    protected async override Task OnInitializedAsync()
+    protected async override Task OnInitializedAsync() // Gelijk wanneer pagina opent kijken of de persoon is ingelogd anders naar login scherm en employees ophalen met en zonder lunches.
     {
         currentHour = DateTime.Now.Hour;
         dayOfWeek = DateTime.Today.DayOfWeek;
@@ -324,7 +324,7 @@
 
     private bool IsUserLoggedIn() // kijken of gebruiker ingelogd is.
     {
-        return User.CurrentUser != null;// deze op false zetten zorgt ervoor dat gebruiker direct naar login scherm wordt gestuurd als hij niet ingelogd is.
+        return User.CurrentUser != null;
     }
 
     private string greeting() // kijken hoe laat het is en daarop baseren welke message er komt.
@@ -405,18 +405,16 @@
         NavigationManager.NavigateTo("/login");
     } 
 
-    private async Task employeesWithLunches()
+    private async Task employeesWithLunches()// functie om de employees op te vragen die hun lunches WEL al hebben ingevuld.
     {
-        // functie om de employees op te vragen die hun lunches wel al hebben ingevuld.
         var returnedUsers = await User.usersWithLunches(User.CurrentUser.CompanyId, dayOfWeek);
 
         usersWithLunches = returnedUsers.Where(u => u.Id != User.CurrentUser.Id).ToList();
         usersWithLunches = returnedUsers.Where(u => u.Role > User.CurrentUser.Role).ToList();
     }
 
-    private async Task employeesWithoutLunches()
+    private async Task employeesWithoutLunches()// functie om de employees op te vragen die hun lunches nog NIET hebben ingevuld.
     {
-        // functie om de employees op te vragen die hun lunches nog niet hebben ingevuld.
         var returnedUsers = await User.usersWithoutLunches(User.CurrentUser.CompanyId, dayOfWeek);
 
         usersWithoutLunches = returnedUsers.Where(u => u.Id != User.CurrentUser.Id).ToList();

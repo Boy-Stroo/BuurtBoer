@@ -61,7 +61,7 @@
         position: absolute;
     }
 
-    .table-container {
+    .table-container { /*table met companies (met scroll)*/
         height: 500px;
         overflow-y: scroll;
     }
@@ -77,7 +77,7 @@
         margin-left: 325px;
     }
 
-    .text-containerarrow {
+    .text-containerarrow { /*delete companies boven pijl*/
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -89,7 +89,7 @@
         margin-left: 710px;
     }
 
-    .arrow {
+    .arrow { /*pijl om companies te verwijderen*/
         width: 40px;
         height: 40px;
         top: 40px;
@@ -118,7 +118,7 @@
         margin-left: -3px;
     }
 
-    .text-containeraddbutton {
+    .text-containeraddbutton { /*company toevoegen knop*/
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -130,7 +130,7 @@
         margin-left: 60px;
     }
 
-    .deletecompanies-button {
+    .deletecompanies-button { /*company verwijderen knop*/
         background-color: #F9834C;
         color: white;
         border: none;
@@ -263,7 +263,7 @@
         cursor: pointer;
     }
 
-    .logout-button {
+    .logout-button { 
         position: absolute;
         top: 730px;
         left: 25px;
@@ -358,7 +358,7 @@
     public List<CompanyModel> CompaniesToBeDeleted = new();
     private bool isDutchSelected = true;
 
-    private void HandleLogout()
+    private void HandleLogout()// uitloggen.
     {
         User.Logout();
         NavigationManager.NavigateTo("/login");
@@ -381,7 +381,7 @@
         }
     }
 
-    protected async override Task OnInitializedAsync() // Make the method asynchronous
+    protected async override Task OnInitializedAsync() // Gelijk wanneer pagina opent kijken of de persoon is ingelogd anders naar login scherm en companies ophalen.
     {
         if (!IsUserLoggedIn())
         {
@@ -395,10 +395,10 @@
 
     private bool IsUserLoggedIn() // kijken of gebruiker ingelogd is.
     {
-        return User.CurrentUser != null;// deze op false zetten zorgt ervoor dat gebruiker direct naar login scherm wordt gestuurd als hij niet ingelogd is.
+        return User.CurrentUser != null;
     }
 
-    private async Task GetCompanies()
+    private async Task GetCompanies()// alle companies ophalen.
     {
         await CompanyController.GetAllCompanies();
     }
@@ -425,7 +425,7 @@
         public Guid ID { get; set; }
     }
 
-    private async void DeleteCompanies()
+    private async void DeleteCompanies() // functie om companies te verwijderen.
     {
         if (CompaniesToBeDeleted.Count() > 0)
         {

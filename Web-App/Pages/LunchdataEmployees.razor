@@ -295,7 +295,7 @@
         public Guid ID { get; set; }
     }
 
-    private void HandleLogout()
+    private void HandleLogout()// uitloggen.
     {
         User.Logout();
         NavigationManager.NavigateTo("/login");
@@ -307,12 +307,12 @@
         public int LunchesAmount { get; set; }
     }
 
-    private async Task<int> lunchesAmount(UserModel employee)
+    private async Task<int> lunchesAmount(UserModel employee)// totaal aantal lunches per employee.
     {
         return await User.getLunchesAmount(employee.ID);
     }
 
-    private async Task GetEmployeesWithLunches()
+    private async Task GetEmployeesWithLunches()// alle employees die minimaal een lunch hebben gehad in de laatste maand.
     {
         foreach (var employee in employees)
         {
@@ -325,7 +325,7 @@
         }
     }
 
-    protected async override Task OnInitializedAsync() // Make the method asynchronous
+    protected async override Task OnInitializedAsync() // Gelijk wanneer pagina opent kijken of de persoon is ingelogd anders naar login scherm en employees ophalen.
     {
         if (!IsUserLoggedIn())
         {
@@ -369,7 +369,7 @@
 
     private bool IsUserLoggedIn() // kijken of gebruiker ingelogd is.
     {
-        return User.CurrentUser != null;// deze op false zetten zorgt ervoor dat gebruiker direct naar login scherm wordt gestuurd als hij niet ingelogd is.
+        return User.CurrentUser != null;
     }
 
     private Role CheckUserRole()

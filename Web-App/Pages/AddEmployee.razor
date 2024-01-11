@@ -310,7 +310,7 @@
     private bool isDutchSelected = true;
 
 
-    private void HandleLogout()
+    private void HandleLogout()// uitloggen.
     {
         User.Logout();
         NavigationManager.NavigateTo("/login");
@@ -320,16 +320,16 @@
     {
         if (firstname != "" && lastname != "" && email != "")
         {
-            if (email.Contains("@"))
+            if (email.Contains("@"))// kijken of er een '@' in zit.
             {
                 int atSymbolIndex = email.IndexOf("@");
 
-                if (atSymbolIndex > 0 && atSymbolIndex < email.Length - 1)
+                if (atSymbolIndex > 0 && atSymbolIndex < email.Length - 1)// kijken of er minimaal één teken voor en na de '@' staat.
                 {
-                    if (email.Contains(".com"))
+                    if (email.Contains(".com"))// kijken of er '.com' in zit.
                     {
                         Role role = new Role();
-                        // Specify Role Enum value
+                        // rol bepalen van nieuwe employee.
                         if (CheckUserRole() == Role.Admin)
                         {
                             role = Role.Employee;
@@ -340,7 +340,7 @@
                         }
 
 
-                        // Add placeholder password
+                        // tijdelijk wachtwoord.
                         var password = "wachtwoordvoornu";
 
                         var user = new User(
@@ -352,7 +352,7 @@
                           null,
                           User.CurrentUser.CompanyId
                         );
-
+                        // nieuwe employee toevoegen en pop-up laten zien.
                         await User.addUser(user);
                         if (CheckUserRole() == Role.Admin)
                         {
@@ -364,10 +364,6 @@
                             await JSRuntime.InvokeVoidAsync("alert", "Admin has been invited");
                             SendInvitationEmail(email, "urltoinvitepeople");
                         }
-
-                        // employee moet nog op inactief staan en dus mag nog niet in lijst van employees komen te staan?
-                        // wachtwoord, hoe gaan we dat fixen staat nu op niks
-                        // invite voor mobiele app sturen via mail naar gebruiker.
                     }
                     else
                     {
@@ -386,7 +382,7 @@
         }
     }
 
-    private async void SendInvitationEmail(string email, string setPasswordUrl)
+    private async void SendInvitationEmail(string email, string setPasswordUrl)// Email sturen naar employee wanneer uitgenodigd (WERKT NIET!!!)
     {
         var client = new SendGridClient("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");
 
@@ -407,7 +403,7 @@
         }
     }
 
-    protected async override Task OnInitializedAsync() // Make the method asynchronous
+    protected async override Task OnInitializedAsync() // Gelijk wanneer pagina opent kijken of de persoon is ingelogd anders naar login scherm.
     {
         if (!IsUserLoggedIn())
         {
@@ -417,7 +413,7 @@
 
     private bool IsUserLoggedIn() // kijken of gebruiker ingelogd is.
     {
-        return User.CurrentUser != null;// deze op false zetten zorgt ervoor dat gebruiker direct naar login scherm wordt gestuurd als hij niet ingelogd is.
+        return User.CurrentUser != null;
     }
 
     private Role CheckUserRole()
