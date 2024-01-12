@@ -3,6 +3,7 @@ using System.Text.Json;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Server_Things.Interfaces;
 using Server_Things.Models;
 
 namespace Server_Things.Controllers
@@ -12,7 +13,12 @@ namespace Server_Things.Controllers
     public class UserController : ControllerBase
     {
 
-        private readonly BuurtboerContext db = new BuurtboerContext();
+        private readonly IBuurtboerContext db;
+
+        public UserController(IBuurtboerContext db)
+        {
+            this.db = db;
+        }
 
 
         [HttpGet("all")]
@@ -34,7 +40,6 @@ namespace Server_Things.Controllers
 
         [HttpPost("login")]
         [Consumes("application/json")]
-
         public async Task<IActionResult> GetLoggedInUser([FromBody] UserCredentials credentials)
         {
 

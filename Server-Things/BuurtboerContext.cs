@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Server_Things.Interfaces;
 using Server_Things.Models;
 
 namespace Server_Things
 {
-    public class BuurtboerContext : DbContext
+    public class BuurtboerContext : DbContext, IBuurtboerContext
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Company> Companies { get; set; }
@@ -70,5 +71,7 @@ namespace Server_Things
                 .WithMany(_ => _.DaysAtOffice)
                 .HasForeignKey(_ => _.UserId);
         }
+
+        public Task<int> SaveChangesAsync() => base.SaveChangesAsync();
     }
 }

@@ -1,5 +1,6 @@
 using Server_Things;
 using Server_Things.Helpers;
+using Server_Things.Interfaces;
 using Server_Things.Models;
 using Swashbuckle.AspNetCore;
 
@@ -16,6 +17,7 @@ builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddSingleton<IBuurtboerContext, BuurtboerContext>();
 
 // Go TO http://localhost:<portnumber>/swagger/index.html 
 
