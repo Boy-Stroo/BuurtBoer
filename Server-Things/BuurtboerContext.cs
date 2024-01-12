@@ -10,22 +10,20 @@ namespace Server_Things
         public DbSet<Company> Companies { get; set; }
         public DbSet<OfficeDay> OfficeDays { get; set; }
 
-        private readonly string _options;
-
-        public BuurtboerContext(string options)
-        {
-            _options = options;
-        }
-
         public BuurtboerContext()
         {
-            _options = "Host=localhost;Port=5432;Database=buurtboer;Username=postgres;Include Error Detail=true";
+            
+        }
+
+        public BuurtboerContext(DbContextOptions<BuurtboerContext> options) : base(options)
+        {
+
         }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
-            builder.UseNpgsql(_options);
+            builder.UseNpgsql("Host=localhost;Port=5432;Database=buurtboer;Username=postgres;Include Error Detail=true");
             builder.LogTo(Console.WriteLine, Microsoft.Extensions.Logging.LogLevel.Error);
         }
 

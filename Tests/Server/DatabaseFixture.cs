@@ -15,7 +15,7 @@ public class DatabaseFixture : IDisposable
     public DatabaseFixture()
     {
 
-        Db = new BuurtboerContext("Host=localhost;Port=5432;Database=buurtboertest;Username=postgres;Include Error Detail=true");
+        Db = DbContextFactory.Create("Host=localhost;Port=5432;Database=buurtboertest;Username=postgres;Include Error Detail=true");
         _company = new("test", "test", "test");
         
         User employee = new("Foo", "Bar", "FooBar", "emp@foo.bar", Role.Employee, _company);

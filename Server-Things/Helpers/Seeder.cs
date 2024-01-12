@@ -5,7 +5,7 @@ namespace Server_Things.Helpers
 {
     public static class Seeder
     {
-        private static readonly BuurtboerContext Db = new BuurtboerContext();
+        private static readonly BuurtboerContext Db = DbContextFactory.Create("Host=localhost;Port=5432;Database=buurtboer;Username=postgres;Include Error Detail=true");
 
         private static readonly List<Company> CompanyList = new List<Company>()
         {

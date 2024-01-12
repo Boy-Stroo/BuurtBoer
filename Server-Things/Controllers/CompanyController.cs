@@ -11,7 +11,7 @@ namespace Server_Things.Controllers
     [ApiController]
     public class CompanyController : ControllerBase
     {
-        private readonly BuurtboerContext db = new BuurtboerContext();
+        private readonly BuurtboerContext db = DbContextFactory.Create("Host=localhost;Port=5432;Database=buurtboer;Username=postgres;Include Error Detail=true");
 
 
         [HttpGet("all")]
