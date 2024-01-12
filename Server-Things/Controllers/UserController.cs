@@ -28,6 +28,7 @@ namespace Server_Things.Controllers
         {
             try
             {
+                // zoekt alle users en maakt er een list van
                 var query = await db.Users.Select(u => u).ToListAsync();
                 var Users = JsonSerializer.Serialize(query);
                 return Ok(Users);
@@ -68,6 +69,7 @@ namespace Server_Things.Controllers
         {
             try
             {
+                // zoekt all users met gegeven companyID
                 var query = db.Users.Where(u => u.CompanyId == companyId);
 
                 var Users = JsonSerializer.Serialize(query);
@@ -86,6 +88,7 @@ namespace Server_Things.Controllers
         {
             try
             {
+                //delete user met gegeven ID
                 var usertodelete = db.Users.Where(u => u.Id == ID);
 
                 if (usertodelete != null)

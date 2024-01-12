@@ -35,7 +35,7 @@
 
             <!-- Grid for "settings" text within orange rectangle -->
             <Grid VerticalOptions="Center">
-                <Label Text="{local:Translator Name=settings}" HorizontalOptions="Center" VerticalOptions="Center" TextColor="White" Grid.Row="0" FontSize="Large"/>
+                <Label Text="{local:Translator Name=settings}" HorizontalOptions="Center" VerticalOptions="Center" TextColor="White" Grid.Row="0" FontSize="Medium"/>
             </Grid>
         </Grid>
 

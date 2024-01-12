@@ -47,24 +47,21 @@ public partial class HomePage : ContentPage
             DayOfWeek.Monday
         );
 
-        // Set the week label text
         WeekLabel.Text = $"Week {weekNumber}";
-
-        // Set the month label text
         MonthLabel.Text = currentDate.ToString("MMMM");
     }
     private List<DateOnly> GetCurrentWeekDates(DateOnly startDate)
     {
         int delta = DayOfWeek.Monday - startDate.DayOfWeek;
 
-        // Adjust the date to Monday of the current week
+        // datum wordt maandag van deze week
         DateOnly monday = startDate.AddDays(delta);
 
-        // Create a list to store the dates for the current week
+        // list voor dagen van deze week
         List<DateOnly> weekDates = new List<DateOnly>();
 
-        // Populate the list with the dates for the current week
-        for (int i = 0; i < 5; i++) // Assuming 5 working days (Monday to Friday)
+        // vul de lijst met maandag - vrijdag
+        for (int i = 0; i < 5; i++)
         {
             weekDates.Add(monday.AddDays(i));
         }
@@ -74,7 +71,6 @@ public partial class HomePage : ContentPage
 
     private void UpdateDateLabels()
     {
-
         MondayDateLabel.Text = weekDates[0].ToString("MMMM dd");
         TuesdayDateLabel.Text = weekDates[1].ToString("MMMM dd");
         WednesdayDateLabel.Text = weekDates[2].ToString("MMMM dd");
@@ -86,7 +82,7 @@ public partial class HomePage : ContentPage
     {
         List<DateOnly> selectedDates = new List<DateOnly>();
 
-        // Check each checkbox to determine selected dates
+        // check welke dagen zijn aangekruist
         if (MondayCheckBox.IsChecked)
             selectedDates.Add(weekDates[0]);
         if (TuesdayCheckBox.IsChecked)
@@ -98,19 +94,22 @@ public partial class HomePage : ContentPage
         if (FridayCheckBox.IsChecked)
             selectedDates.Add(weekDates[4]);
 
-        // Fetch all existing OfficeDays
+        // verkrijgen van alle officedays
         var allExistingDays = await _officeDayService.GetAllOfficeDays();
         if (allExistingDays != null)
         {
+            // filter op current user
             var existingDaysForUser = allExistingDays
                 .Where(day => day.UserId == UserController.CurrentUser.Id)
                 .ToList();
 
+            // filter op dagen die geselecteerd zijn en niet in de database zitten
             var daysToAdd = selectedDates
                 .Where(newDay => !existingDaysForUser.Any(existingDay => existingDay.Date == newDay))
                 .Select(date => new OfficeDay { UserId = UserController.CurrentUser.Id, Date = date })
                 .ToList();
 
+            // filter op dagen die niet geselecteerd zijn in deze week om te verwijderen
             var daysToRemove = existingDaysForUser
             .Where(existingDay =>
                 !selectedDates.Contains(existingDay.Date) &&
@@ -140,6 +139,7 @@ public partial class HomePage : ContentPage
                 }
             }
 
+            // als er een wijziging is, wordt counter > 0, en komt er een popup op het scherm
             if (counter > 0)
             {
                 await DisplayAlert("Changes", "Selection saved!", "OK");
@@ -153,14 +153,13 @@ public partial class HomePage : ContentPage
 
     private void UpdateWeekNumber()
     {
-        // Calculate the week number based on the first date in weekDates
+        // bereken weeknummer met datum van eerste dag van de week
         int updatedWeekNumber = CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(
             new DateTime(weekDates[0].Year, weekDates[0].Month, weekDates[0].Day),
             CalendarWeekRule.FirstFourDayWeek,
             DayOfWeek.Monday
         );
 
-        // Update the displayed week number
         WeekLabel.Text = $"Week {updatedWeekNumber}";
     }
 
@@ -169,7 +168,7 @@ public partial class HomePage : ContentPage
         DateOnly previousMonday = weekDates[0].AddDays(-7);
         DateOnly today = DateOnly.FromDateTime(DateTime.Today);
 
-
+        // Controleert of de vorige maandag gelijk is aan of na de start van de vorige week
         if (previousMonday >= today.AddDays(-7))
         {
             weekDates = GetCurrentWeekDates(previousMonday);
@@ -184,6 +183,7 @@ public partial class HomePage : ContentPage
         DateOnly nextMonday = weekDates[0].AddDays(7);
         DateOnly today = DateOnly.FromDateTime(DateTime.Today);
 
+        // Controleert of de volgende maandag gelijk is aan of voor de datum die 7 dagen na vandaag ligt
         if (nextMonday <= today.AddDays(7))
         {
             weekDates = GetCurrentWeekDates(nextMonday);

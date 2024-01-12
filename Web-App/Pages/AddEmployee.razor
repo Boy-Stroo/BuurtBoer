@@ -380,6 +380,10 @@
                 await JSRuntime.InvokeVoidAsync("alert", "Email should contain '@'");
             }
         }
+        else
+        {
+            await JSRuntime.InvokeVoidAsync("alert", "Required fields are not filled in");
+        }
     }
 
     private async void SendInvitationEmail(string email, string setPasswordUrl)// Email sturen naar employee wanneer uitgenodigd (WERKT NIET!!!)
