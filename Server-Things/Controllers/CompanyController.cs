@@ -3,6 +3,7 @@ using System.Text.Json;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Server_Things.Interfaces;
 using Server_Things.Models;
 
 namespace Server_Things.Controllers
@@ -11,7 +12,12 @@ namespace Server_Things.Controllers
     [ApiController]
     public class CompanyController : ControllerBase
     {
-        private readonly BuurtboerContext db = DbContextFactory.Create("Host=localhost;Port=5432;Database=buurtboer;Username=postgres;Include Error Detail=true");
+        private readonly IBuurtboerContext db;
+
+        public CompanyController(IBuurtboerContext db)
+        {
+            this.db = db;
+        }
 
 
         [HttpGet("all")]

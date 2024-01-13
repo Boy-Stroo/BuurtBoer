@@ -10,11 +10,13 @@ public class UserTests : IClassFixture<DatabaseFixture>
 {
     DatabaseFixture fixture;
     UserController UserController;
+    CompanyController CompanyController;
 
     public UserTests(DatabaseFixture fixture)
     {
         this.fixture = fixture;
         UserController = new UserController(fixture.Db);
+        CompanyController = new CompanyController(fixture.Db);
     }
     
     [Fact]
@@ -58,4 +60,57 @@ public class UserTests : IClassFixture<DatabaseFixture>
         // Assert
         Assert.IsType<NotFoundObjectResult>(result);
     }
+
+    [Fact]
+    public async void AddUser()
+    {
+        // Arrange
+        User user = new("firstName", "lastName", "password", "email@gmail.com", Role.Employee, null);
+
+        // Act
+        await UserController.AddUser(user);
+
+        // Assert
+        var addedUser = fixture.Db.Users.FirstOrDefault(u => u.Email == user.Email);
+        Assert.NotNull(addedUser);
+        await UserController.DeleteUsersDatabase(addedUser.Id);
+    }
+
+    [Fact]
+    public async void DeleteUsersDatabase()
+    {
+        User usertodelete = new("firstName2", "lastName2", "password2", "email2@gmail.com", Role.Employee, null);
+
+        await UserController.AddUser(usertodelete);
+        await UserController.DeleteUsersDatabase(usertodelete.Id);
+        var deletedUser = fixture.Db.Users.FirstOrDefault(u => u.Id == usertodelete.Id);
+
+        Assert.Null(deletedUser);
+    }
+
+    [Fact]
+    public async void AddCompany()
+    {
+        // Arrange
+        Company company = new Company("companynameR", "Everything for you", "1234AB, abcstraat 1, Rotterdam");
+
+        // Act
+        await CompanyController.AddCompany(company);
+        // Assert
+        var addedCompany = fixture.Db.Companies.FirstOrDefault(c => c.Description == company.Description);
+        Assert.NotNull(addedCompany);
+        await CompanyController.DeleteCompaniesDatabase(addedCompany.Id);
+    }
+
+    [Fact]
+    public async void DeleteCompaniesDatabase()
+    {
+        Company company = new Company("companyname2", "Everything for you2", "1234AB, abcstraat 2, Rotterdam");
+
+        await CompanyController.AddCompany(company);
+        await CompanyController.DeleteCompaniesDatabase(company.Id);
+        var deletedCompany = fixture.Db.Companies.FirstOrDefault(c => c.Id == company.Id);
+
+        Assert.Null(deletedCompany);
+    }  
 }
