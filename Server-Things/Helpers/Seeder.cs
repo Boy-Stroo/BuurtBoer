@@ -82,9 +82,10 @@ namespace Server_Things.Helpers
                 {
                     string firstName = firstNames[random.Next(firstNames.Length)];
                     string lastName = lastNames[random.Next(lastNames.Length)];
+                    string email = $"{firstName.ToLower()}.{lastName.ToLower()}@{CompanyList[i].Name.ToLower()}.com".Replace(" ", "");
                     string password = Encrypter.Encrypt($"wachtwoord");
                     var user = new User(firstName, lastName,
-                        password , $"emp{j}@{CompanyList[i].Name}.com", Role.Employee, CompanyList[i]);
+                        password , email, Role.Employee, CompanyList[i]);
                     Db.Users.Add(user);
 
                     Random rand = new();
