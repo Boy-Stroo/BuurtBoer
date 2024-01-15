@@ -66,14 +66,6 @@ namespace Mobile_App
             label.IsEnabled = true;
         }
 
-        private void OnGoogleClicked(object sender, EventArgs e)
-        {
-            Navigation.PushAsync(new TestPageApiCalls(_userController));
-        }
-
-        private void OnMicrosoftClicked(object sender, EventArgs e)
-        {
-            Navigation.PushAsync(new TestPageApiCalls(_userController));
-        }
+        
     }
 }

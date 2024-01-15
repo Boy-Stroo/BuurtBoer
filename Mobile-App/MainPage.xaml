@@ -147,14 +147,12 @@
                 <ImageButton Source="googlebutton.svg"
                          VerticalOptions="Start"
                          Margin="0,0,0,0"
-                         HeightRequest="50"
-                         Clicked="OnGoogleClicked"/>
+                         HeightRequest="50"/>
 
                 <ImageButton Source="microsoftbuttona.svg"
                          VerticalOptions="Start"
                          HeightRequest="50"
-                         Margin="0,0,0,10"
-                         Clicked="OnMicrosoftClicked"/>
+                         Margin="0,0,0,10"/>
 
             </VerticalStackLayout>
 
