@@ -59,10 +59,11 @@ public partial class HomePage : ContentPage
         var allExistingDays = await _officeDayService.GetAllOfficeDays();
         if (allExistingDays != null)
         {
+            // alle dagen voor de user
             var existingDaysForUser = allExistingDays
                 .Where(day => day.UserId == UserController.CurrentUser.Id)
                 .ToList();
-            // Filter existing days for the current week
+            // dagen in de de huidige week van de user
             var existingDays = existingDaysForUser
                 .Where(day => weekDates.Contains(day.Date))
                 .ToList();
