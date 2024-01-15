@@ -39,12 +39,13 @@ namespace Server_Things.Controllers
         [Consumes("application/json")]
         public async Task<IActionResult> GetLoggedInUser([FromBody] UserCredentials credentials)
         {
-
+            string email = credentials.Email;
+            string password = Encrypter.Encrypt(credentials.Password);
             try
             {
                 var query = await db.Users.Select(user => user)
-                    .Where(u => u.Email.ToLower() == credentials.Email.ToLower() &&
-                                u.Password == credentials.Password).ToListAsync();
+                    .Where(u => u.Email.ToLower() == email.ToLower() &&
+                                u.Password == password).ToListAsync();
 
                 if (!query.Any())
                     return NotFound("User Not found");
