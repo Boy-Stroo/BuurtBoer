@@ -1,5 +1,6 @@
 @page "/getgrocerylist"
 @inject NavigationManager NavigationManager
+@inject GroceryListController groceryController
 @inject UserController User
 @inject CurrentLanguage language
 @using Syncfusion.Blazor
@@ -70,7 +71,7 @@
         margin-left: 325px;
     }
 
-    .table-container { /*scroll gedeelte als er veel employees zijn*/
+    .table-container { /*scroll gedeelte als er veel boodschappen zijn*/
         height: 500px;
         overflow-y: scroll;
     }
@@ -276,7 +277,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var product in groceriesNeeded)
+                    @foreach (var product in groceries)
                     {
                         <tr>
                             <td>@product.Amount @product.Name</td>
@@ -296,13 +297,25 @@
     public User currentUser = new();
     private bool isDutchSelected = true;
     ObservableCollection<UserModel> employees = new();
+    ObservableCollection<Grocery> groceries = new();
     private int numberOfLunches;
-    private List<Grocery> groceriesNeeded = new();
 
     public class Grocery
     {
         public string Name { get; set; }
         public int Amount { get; set; }
+    }
+
+    private void transformGroceries() // alles omzetten naar een usermodel en de admin van dat moment niet toevoegen aan de lijst.
+    {
+        foreach (var grocery in groceryController.Groceries)
+        {
+            groceries.Add(new Grocery
+                {
+                    Name = grocery.Name,
+                    Amount = grocery.Amount
+                });
+        }
     }
 
     private async Task GetEmployees() // alle employees van een bedrijf pakken zodat je ze op het scherm kan laten zien.
@@ -360,29 +373,17 @@
         }
     }
 
+    private async Task GetGroceries()
+    {
+        await groceryController.GetAllGroceries(User.CurrentUser.CompanyId);
+    }
+
     public void AmountOfProducts()
     {
-        List<Grocery> products = new List<Grocery>
-        {
-            new Grocery { Name = "loaf(s) of bread", Amount = 6},
-            new Grocery { Name = "package(s) of cheese slices", Amount = 3 },
-            new Grocery { Name = "jar(s) of peanut butter", Amount = 1 },
-            new Grocery { Name = "jar(s) of hagelsag", Amount = 1 },
-            new Grocery { Name = "jar(s) of nutella", Amount = 1 },
-            new Grocery { Name = "jar(s) of speculoos", Amount = 1 },
-            new Grocery { Name = "liter(s) of milk", Amount = 2 },
-            new Grocery { Name = "package(s) of ham", Amount = 2 },
-            new Grocery { Name = "package(s) of salami", Amount = 2 },
-            new Grocery { Name = "liter(s) of juice", Amount = 2 },
-            new Grocery { Name = "package(s) of butter", Amount = 2 },
-            new Grocery { Name = "banana(s)", Amount = 4 },
-            new Grocery { Name = "apple(s)", Amount = 3 }
-        };
         var multiplier = numberOfLunches / 10.0;
-        foreach ( var product in products)
+        foreach ( var product in groceryController.Groceries)
         {
             product.Amount = (int)Math.Ceiling((double)product.Amount * (double)multiplier);
-            groceriesNeeded.Add(product);
         }
     }
 
@@ -400,6 +401,8 @@
         }
         await GetEmployees();
         transformEmployees();
+        await GetGroceries();
+        transformGroceries();
         await LunchesNeeded();
         AmountOfProducts();
     }

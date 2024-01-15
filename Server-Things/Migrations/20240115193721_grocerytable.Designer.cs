@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Server_Things;
@@ -11,9 +12,11 @@ using Server_Things;
 namespace Server_Things.Migrations
 {
     [DbContext(typeof(BuurtboerContext))]
-    partial class BuurtboerContextModelSnapshot : ModelSnapshot
+    [Migration("20240115193721_grocerytable")]
+    partial class grocerytable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,25 +53,12 @@ namespace Server_Things.Migrations
 
             modelBuilder.Entity("Server_Things.Models.Grocery", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("Amount")
-                        .HasColumnType("integer");
-
-                    b.Property<Guid?>("CompanyID")
-                        .HasColumnType("uuid");
-
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("Id");
+                    b.HasKey("Name");
 
-                    b.HasIndex("CompanyID");
-
-                    b.ToTable("GroceryList");
+                    b.ToTable("Groceries");
                 });
 
             modelBuilder.Entity("Server_Things.Models.OfficeDay", b =>
@@ -128,16 +118,6 @@ namespace Server_Things.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Server_Things.Models.Grocery", b =>
-                {
-                    b.HasOne("Server_Things.Models.Company", "Company")
-                        .WithMany("ListOfGroceries")
-                        .HasForeignKey("CompanyID")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.Navigation("Company");
-                });
-
             modelBuilder.Entity("Server_Things.Models.OfficeDay", b =>
                 {
                     b.HasOne("Server_Things.Models.User", "User")
@@ -161,8 +141,6 @@ namespace Server_Things.Migrations
 
             modelBuilder.Entity("Server_Things.Models.Company", b =>
                 {
-                    b.Navigation("ListOfGroceries");
-
                     b.Navigation("Users");
                 });
 

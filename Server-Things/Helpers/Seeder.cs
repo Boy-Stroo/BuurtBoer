@@ -1,6 +1,8 @@
 ﻿
 using Server_Things.Models;
 using Server_Things.Factories;
+using System.Collections.Generic;
+using System.Xml.Linq;
 
 
 namespace Server_Things.Helpers
@@ -56,11 +58,36 @@ namespace Server_Things.Helpers
             }
         }
 
+        private static void PopulateGroceryList()
+        {
+            for (int i = 1; i < CompanyList.Count; i++)
+            {
+                List<Grocery> products = new List<Grocery>
+                {
+                    new Grocery ("loaf(s) of bread", 6, CompanyList[i].Id),
+                    new Grocery ("package(s) of cheese slices", 3, CompanyList[i].Id ),
+                    new Grocery ("jar(s) of peanut butter", 1, CompanyList[i].Id ),
+                    new Grocery ("jar(s) of hagelsag", 1, CompanyList[i].Id ),
+                    new Grocery ("jar(s) of nutella", 1, CompanyList[i].Id ),
+                    new Grocery ("jar(s) of speculoos", 1, CompanyList[i].Id ),
+                    new Grocery ("liter(s) of milk", 2, CompanyList[i].Id ),
+                    new Grocery ("package(s) of ham", 2, CompanyList[i].Id ),
+                    new Grocery ("package(s) of salami", 2, CompanyList[i].Id ),
+                    new Grocery ("liter(s) of juice", 2, CompanyList[i].Id ),
+                    new Grocery ("package(s) of butter", 2, CompanyList[i].Id ),
+                    new Grocery ("banana(s)", 4, CompanyList[i].Id ),
+                    new Grocery ("apple(s)", 3, CompanyList[i].Id )
+                };
+                Db.AddRange(products);
+            }
+        }
+
         public static void Clear()
         {
             //Db.OfficeDays.RemoveRange(Db.OfficeDays);
             Db.Users.RemoveRange(Db.Users);
             Db.Companies.RemoveRange(Db.Companies);
+            Db.GroceryList.RemoveRange(Db.GroceryList);
             //Db.SaveChanges();
         }
 
@@ -69,6 +96,7 @@ namespace Server_Things.Helpers
             Clear();
             Db.Companies.AddRange(CompanyList);
             Db.Users.AddRange(AdminList);
+            PopulateGroceryList();
             PopulateEmployeeList();
             Db.SaveChanges();
         }

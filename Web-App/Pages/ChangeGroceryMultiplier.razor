@@ -1,7 +1,11 @@
 @page "/changegrocerymultiplier"
 @inject NavigationManager NavigationManager
+@inject GroceryListController groceryController
 @inject UserController User
 @inject CurrentLanguage language
+@using Syncfusion.Blazor
+@using Syncfusion.Blazor.Lists
+@using System.Collections.ObjectModel;
 
 <style>
     body { /*achtergrond*/
@@ -46,14 +50,48 @@
         position: absolute;
     }
 
-    .text-containersquare { /*positie en grootte tekst*/
+    .squareinmainsquare { /*wit rechthoek in main rechthoek*/
+        width: 800px;
+        height: 700px;
+        background-color: #E9E9E9;
+        border-radius: 10px;
+        position: absolute;
+        top: 50px;
+        left: 350px;
+    }
+
+    .text-containersquare { /*positie en grootte tekst bovenin scherm*/
         display: flex;
         flex-direction: column;
         justify-content: center;
-        color: white;
+        color: black;
         font-family: monospace;
         font-size: 24px;
-        margin-top: 120px;
+        margin-top: 30px;
+        margin-left: 325px;
+    }
+
+    .text-containermultiplierdescription { /*positie en grootte beschrijving onder titel*/
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        color: black;
+        font-family: monospace;
+        font-size: 16px;
+        margin-left: 250px;
+    }
+
+    .table-container { /*scroll gedeelte als er veel boodschappen zijn*/
+        height: 500px;
+        overflow-y: scroll;
+    }
+
+    .fa-plus { /*plus teken in add knop*/
+        font-size: 40px;
+        color: #F9834C;
+        border: none;
+        background: #E9E9E9;
+        margin-left: 3px;
     }
 
     .homescreen-button { /*knop om naar home page te gaan*/
@@ -228,14 +266,106 @@
         <button class="lunchdata-button" @onclick="LunchDataRouting">Lunchdata</button>
         <button class="logout-button" @onclick="HandleLogout">Log out</button>
     </div>
-    <div class="text-containersquare">
-        <p>hier komt het multiplier verander gedeelte</p>
+    <div class="squareinmainsquare">
+        <div class="text-containersquare">
+            <p>Change multiplier</p>
+        </div>
+        <div class="text-containermultiplierdescription">
+            <p>The products are calculated for 10 people!</p>
+        </div>
+        <div class="table-container">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Products:</th>
+                        <th>More?</th>
+                        <th>Less?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var product in groceries)
+                    {
+                        <tr>
+                            <td>@product.Amount @product.Name</td>
+                            <td><input type="button" value="+" class="fa-plus" onclick="@(() => increaseMultiplier(product))" /></td>
+                            <td><input type="button" value="-" class="fa-plus" onclick="@(() => decreaseMultiplier(product))" /></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
 @code {
     public User currentUser = new();
     private bool isDutchSelected = true;
+    ObservableCollection<UserModel> employees = new();
+    private int numberOfLunches;
+    ObservableCollection<Grocery> groceries = new();
+
+    public async Task increaseMultiplier(Grocery grocery)
+    {
+        grocery.Amount++;
+        await groceryController.deleteGrocery(grocery.Id);
+        await groceryController.addGrocery(grocery);
+        StateHasChanged();
+    }
+
+    public async Task decreaseMultiplier(Grocery grocery)
+    {
+        grocery.Amount--;
+        await groceryController.deleteGrocery(grocery.Id);
+        await groceryController.addGrocery(grocery);
+        StateHasChanged();
+    }
+
+    private async Task GetEmployees() // alle employees van een bedrijf pakken zodat je ze op het scherm kan laten zien.
+    {
+        if (User.CurrentUser.Role == Role.Admin)//als het een admin is alleen van dat bedrijf printen.
+        {
+            await User.GetAllEmployeesPerCompany(User.CurrentUser.CompanyId);
+        }
+        else// als het een superadmin is alle employees printen.
+        {
+            await User.GetAllUsers();
+        }
+    }
+
+    private void transformEmployees() // alles omzetten naar een usermodel en de admin van dat moment niet toevoegen aan de lijst.
+    {
+        foreach (var employee in User.Users)
+        {
+            if (employee.Id == User.CurrentUser.Id)
+            {
+                continue;
+            }
+            if (employee.Role == Role.SuperAdmin && User.CurrentUser.Role == Role.Admin)
+            {
+                continue;
+            }
+            else
+            {
+                employees.Add(new UserModel
+                    {
+                        Name = employee.FirstName + " " + employee.LastName,
+                        Email = employee.Email,
+                        Role = employee.Role,
+                        IsSelected = false, // Set to false here
+                        ID = employee.Id
+                    });
+            }
+        }
+    }
+
+    public class UserModel
+    {
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public bool IsSelected { get; set; }
+        public Role Role { get; set; }
+        public Guid ID { get; set; }
+    }
 
     private void HandleLogout()// uitloggen.
     {
@@ -248,6 +378,23 @@
         if (!IsUserLoggedIn())
         {
             NavigationManager.NavigateTo("/login");
+        }
+        await GetEmployees();
+        transformEmployees();
+        await GetGroceries();
+        transformGroceries();
+    }
+
+    private async Task GetGroceries()
+    {
+        await groceryController.GetAllGroceries(User.CurrentUser.CompanyId);
+    }
+
+    private void transformGroceries() // alles omzetten naar een usermodel en de admin van dat moment niet toevoegen aan de lijst.
+    {
+        foreach (var grocery in groceryController.Groceries)
+        {
+            groceries.Add(grocery);
         }
     }
 
@@ -281,11 +428,6 @@
         NavigationManager.NavigateTo("/lunchdata");
     }
 
-    private void CompaniesRouting()
-    {
-        NavigationManager.NavigateTo("/companies");
-    }
-
     private string GetLanguageButtonClass(bool isDutch) // hiermee kijk je welke taal er geselecteerd is en of hij dus moet veranderen of niet.
     {
         if (isDutch == language.isDutchSelected)
@@ -305,5 +447,10 @@
 
         // refresh de webpage met de goede kleuren.
         StateHasChanged();
+    }
+
+    private void CompaniesRouting()
+    {
+        NavigationManager.NavigateTo("/companies");
     }
 }

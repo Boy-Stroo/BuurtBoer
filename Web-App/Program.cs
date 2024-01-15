@@ -6,7 +6,6 @@ using Web_App;
 using Syncfusion.Blazor;
 using Microsoft.Extensions.Configuration;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -15,6 +14,7 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<UserController>();
 builder.Services.AddSingleton<CompanyController>();
 builder.Services.AddSingleton<CurrentLanguage>();
+builder.Services.AddSingleton<GroceryListController>();
 builder.Services.AddSyncfusionBlazor();
 
 var app = builder.Build();

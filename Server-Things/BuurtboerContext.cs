@@ -8,6 +8,7 @@ namespace Server_Things
         public DbSet<User> Users { get; set; }
         public DbSet<Company> Companies { get; set; }
         public DbSet<OfficeDay> OfficeDays { get; set; }
+        public DbSet<Grocery> GroceryList { get; set; }
 
         public BuurtboerContext()
         {
@@ -67,6 +68,20 @@ namespace Server_Things
                 .HasOne(_ => _.User)
                 .WithMany(_ => _.DaysAtOffice)
                 .HasForeignKey(_ => _.UserId);
+
+            modelBuilder.Entity<Grocery>()
+                .HasKey(_ => _.Id);
+
+            modelBuilder.Entity<Grocery>()
+                .HasOne(_ => _.Company)
+                .WithMany(_ => _.ListOfGroceries)
+                .HasForeignKey(_ => _.CompanyID);
+
+            modelBuilder.Entity<Company>()
+                .HasMany(_ => _.ListOfGroceries)
+                .WithOne(_ => _.Company)
+                .OnDelete(DeleteBehavior.Cascade);
+
         }
 
         public Task<int> SaveChangesAsync() => base.SaveChangesAsync();

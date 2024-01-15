@@ -24,6 +24,7 @@ namespace Server_Things.Models
         public string Description { get; set; }
         public string Address { get; set;}
         public ICollection<User> Users { get; set; }
+        public List<Grocery> ListOfGroceries { get; set; }
 
         public Company(string name, string description, string address)
         {
@@ -32,12 +33,14 @@ namespace Server_Things.Models
             Description = description;
             Address = address;
             Users = new List<User>();
+            ListOfGroceries = new List<Grocery>();
         }
 
         public Company(string name, string description, string address, ICollection<User> users) : this(name,
             description, address)
         {
             Users = users;
+            ListOfGroceries = new List<Grocery>();
         }
 
         public Company()
