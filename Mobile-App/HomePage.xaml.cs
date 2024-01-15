@@ -27,7 +27,7 @@ public partial class HomePage : ContentPage
         UserController = new UserController(new UserService());
     }
 
-    protected override void OnAppearing()
+    protected async override void OnAppearing()
     {
         base.OnAppearing();
         var user = UserController.CurrentUser;
@@ -49,7 +49,32 @@ public partial class HomePage : ContentPage
 
         WeekLabel.Text = $"Week {weekNumber}";
         MonthLabel.Text = currentDate.ToString("MMMM");
+
+        UpdateCheckboxes();
+       
     }
+
+    private async void UpdateCheckboxes()
+    {
+        var allExistingDays = await _officeDayService.GetAllOfficeDays();
+        if (allExistingDays != null)
+        {
+            var existingDaysForUser = allExistingDays
+                .Where(day => day.UserId == UserController.CurrentUser.Id)
+                .ToList();
+            // Filter existing days for the current week
+            var existingDays = existingDaysForUser
+                .Where(day => weekDates.Contains(day.Date))
+                .ToList();
+
+        MondayCheckBox.IsChecked = existingDays.Any(day => day.Date == weekDates[0]);
+        TuesdayCheckBox.IsChecked = existingDays.Any(day => day.Date == weekDates[1]);
+        WednesdayCheckBox.IsChecked = existingDays.Any(day => day.Date == weekDates[2]);
+        ThursdayCheckBox.IsChecked = existingDays.Any(day => day.Date == weekDates[3]);
+        FridayCheckBox.IsChecked = existingDays.Any(day => day.Date == weekDates[4]);
+    }
+    }
+
     private List<DateOnly> GetCurrentWeekDates(DateOnly startDate)
     {
         int delta = DayOfWeek.Monday - startDate.DayOfWeek;
@@ -76,6 +101,8 @@ public partial class HomePage : ContentPage
         WednesdayDateLabel.Text = weekDates[2].ToString("MMMM dd");
         ThursdayDateLabel.Text = weekDates[3].ToString("MMMM dd");
         FridayDateLabel.Text = weekDates[4].ToString("MMMM dd");
+
+        UpdateCheckboxes();
     }
 
     private async void SaveSelection(object sender, EventArgs e)
