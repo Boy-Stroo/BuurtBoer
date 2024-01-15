@@ -64,11 +64,14 @@ namespace Server_Things.Helpers
         private static void PopulateEmployeeList()
         {
             string[] firstNames = new string[] {
-                "Jimmy", "Jasper", "Jamie", "Jesper", "Jappie", "Jaap", "Albert", "Heijn", "Adriaan", "Bassie", "Anna", "Kim", "Sophia", "Patricia"
+                "Jimmy", "Jasper", "Casper", "Jurrian", "Dirk", "Kanye", "Emma", "Mia", "Bas", "Jan", "Frankie", "Francis", "Tommy", "Zlatan", "Mohammed", "Emilia", "Nikita", "Megan", "Anita", "Lisa", "Riley", "Jamie", "Jesper", "Jappie", "Jaap", "Albert", "Heijn", "Adriaan", "Bassie", "Anna", "Kim", "Sophia", "Patricia", "Linda", "Sanne", "Samantha", "Sara", "Suzanne", "Suzanna", "Suzan", "Suzie",
+                "Michael", "Peter", "Anton", "Alexander", "Maya", "Adrianus", "Bastiaan", "Benjamin", "Cornelis", "Daan", "Diederik", "Dirk", "Erik", "Floris", "Gerrit", "Hendrik", "Jacobus", "Jan", "Johannes", "Lucas", "Maarten", "Martijn", "Matthijs", "Maurits", "Nick", "Noah", "Pieter", "Richard", "Rob", "Samuel", "Simon", "Steven", "Thomas", "Tim", "Tom", "Victor", "Willem", "William", "Noura",
+                "Sophie", "Emma", "Julia", "Anna", "Sarah", "Laura", "Lisa", "Claire", "Hannah", "Sophia", "Chloe", "Ava", "Madison", "Ella", "Charlotte", "Mila", "Lily", "Gianna", "Abigail", "Emily", "Layla", "Amelia", "Isla", "Zoe", "Camila", "Valerie", "Felicity", "Anne", "Nicole", "Michelle"
             };
 
             string[] lastNames = new string[] {
-                "Kardashian", "Ramsey", "Ronaldo", "Verpaal", "Verstappen", "Van der Valk", "Van de Kaart", "Van 't Padje", "Paulusma", "Vergeer", "Duits"
+                "Kardashian", "Jenner", "West", "East", "Nayes", "North", "Ramsey", "Ronaldo", "Khalifa", "Verpaal", "Verstappen", "Van der Valk", "Van de Kaart", "Van 't Padje", "Paulusma", "Vergeer", "Duits", "Van der Veen", "Van der Wal", "Van der Woude", "Van der Weide", "Van der Wijk", "Van der Zee", "Van der Zwaag", "Van der Zwaan",
+                "Jones", "Smith", "Williams", "Burger", "Van den Berg", "Van der Meer", "Baker", "Rodriguez", "Van Leeuwen", "Cooper", "Van Dijk", "Wilson", "De Vries", "Moore", "Bos", "Taylor", "Van den Broek", "Anderson", "De Jong", "Thomas", "Visser", "White", "De Boer", "Wright", "De Groot", "De Wit", "De Bruin", "De Witte", "De Graaf", "De Witte", "De Bruin", "De Wit", "De Graaf",
             };
 
             Random random = new();
@@ -79,7 +82,7 @@ namespace Server_Things.Helpers
                 {
                     string firstName = firstNames[random.Next(firstNames.Length)];
                     string lastName = lastNames[random.Next(lastNames.Length)];
-                    string password = Encrypter.Encrypt($"pass{j}");
+                    string password = Encrypter.Encrypt($"password");
                     var user = new User(firstName, lastName,
                         password , $"emp{j}@{CompanyList[i].Name}.com", Role.Employee, CompanyList[i]);
                     Db.Users.Add(user);

@@ -8,7 +8,6 @@ using Microsoft.VisualBasic;
 using Web_App;
 using Web_App.Pages;
 using static System.Runtime.InteropServices.JavaScript.JSType;
-using static Web_App.Pages.Employees;
 
 // This is the service that will be used to make calls to the backend
 public record UserCredentials(string Email, string Password);
@@ -302,7 +301,7 @@ public class UserService : HTTPService
         return usersToReturn;
     }
 
-    public async Task<int> getLunchesCountlastMonth(Guid EmployeeID)// functie om het aantal lunches van afgelopen maand te pakken voor één employee.
+    public async Task<int> getLunchesCountlastMonth(Guid EmployeeID)// functie om het aantal lunches van afgelopen maand te pakken voor ï¿½ï¿½n employee.
     {
         var oneMonthAgo = DateTime.UtcNow.AddMonths(-1);
         var daysInMonth = DateTime.DaysInMonth(oneMonthAgo.Year, oneMonthAgo.Month);
@@ -338,7 +337,7 @@ public class UserService : HTTPService
         return default;
     }
 
-    public async Task<int> getLunchesCountNextWeek(Guid EmployeeID)// functie om het aantal lunches voor de komende week te pakken voor één employee.
+    public async Task<int> getLunchesCountNextWeek(Guid EmployeeID)// functie om het aantal lunches voor de komende week te pakken voor ï¿½ï¿½n employee.
     {
         var dateNow = DateTime.Now.DayOfWeek;
         // Bereken datum tot eerstvolgende maandag

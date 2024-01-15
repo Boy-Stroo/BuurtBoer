@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Web_App.Pages;
-using static Web_App.Pages.Employees;
 
 namespace Web_App
 {
@@ -82,13 +81,13 @@ namespace Web_App
             return EmployeesToReturn;
         }
 
-        public async Task<int> getLunchesAmountLastMonth(Guid employeeID)// Totaal aantal lunches voor één employee in de afgelopen maand.
+        public async Task<int> getLunchesAmountLastMonth(Guid employeeID)// Totaal aantal lunches voor ï¿½ï¿½n employee in de afgelopen maand.
         {
             var count = await _userService.getLunchesCountlastMonth(employeeID);
             return count;
         }
 
-        public async Task<int> getLunchesAmountNextWeek(Guid employeeID)// Totaal aantal lunches voor één employee in de aankomende week.
+        public async Task<int> getLunchesAmountNextWeek(Guid employeeID)// Totaal aantal lunches voor ï¿½ï¿½n employee in de aankomende week.
         {
             var count = await _userService.getLunchesCountNextWeek(employeeID);
             return count;
