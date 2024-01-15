@@ -82,7 +82,7 @@ namespace Server_Things.Helpers
                 {
                     string firstName = firstNames[random.Next(firstNames.Length)];
                     string lastName = lastNames[random.Next(lastNames.Length)];
-                    string password = Encrypter.Encrypt($"password");
+                    string password = Encrypter.Encrypt($"wachtwoord");
                     var user = new User(firstName, lastName,
                         password , $"emp{j}@{CompanyList[i].Name}.com", Role.Employee, CompanyList[i]);
                     Db.Users.Add(user);
