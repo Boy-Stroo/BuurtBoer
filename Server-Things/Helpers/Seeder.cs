@@ -73,7 +73,7 @@ namespace Server_Things.Helpers
 
             for (int i = 1; i < CompanyList.Count; i++)
             {
-                for (int j = 0; j < 5; j++)
+                for (int j = 0; j < 6; j++)
                 {
                     string firstName = firstNames[random.Next(firstNames.Length)];
                     string lastName = lastNames[random.Next(lastNames.Length)];

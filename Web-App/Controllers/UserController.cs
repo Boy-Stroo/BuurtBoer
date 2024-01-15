@@ -82,9 +82,15 @@ namespace Web_App
             return EmployeesToReturn;
         }
 
-        public async Task<int> getLunchesAmount(Guid employeeID)// Totaal aantal lunches voor één employee.
+        public async Task<int> getLunchesAmountLastMonth(Guid employeeID)// Totaal aantal lunches voor één employee in de afgelopen maand.
         {
-            var count = await _userService.getLunchesCount(employeeID);
+            var count = await _userService.getLunchesCountlastMonth(employeeID);
+            return count;
+        }
+
+        public async Task<int> getLunchesAmountNextWeek(Guid employeeID)// Totaal aantal lunches voor één employee in de aankomende week.
+        {
+            var count = await _userService.getLunchesCountNextWeek(employeeID);
             return count;
         }
     }
