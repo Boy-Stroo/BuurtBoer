@@ -1,10 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Server_Things.Interfaces;
 using Server_Things.Models;
 
 namespace Server_Things
 {
-    public class BuurtboerContext : DbContext, IBuurtboerContext
+    public class BuurtboerContext : DbContext
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Company> Companies { get; set; }

@@ -36,7 +36,7 @@ namespace Server_Things.Models
             Id = id;
             FirstName = firstName;
             LastName = lastName;
-            Password = password;
+            Password = Encrypter.Encrypt(password);
             Email = email;
             Company = company ?? null;
             Role = role;
@@ -47,7 +47,7 @@ namespace Server_Things.Models
             Id = Guid.NewGuid();
             FirstName = firstName;
             LastName = lastName;
-            Password = password;
+            Password = Encrypter.Encrypt(password);
             Email = email;
             Company = company ?? null;
             Role = role;
