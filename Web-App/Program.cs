@@ -12,7 +12,6 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddHttpClient("https://localhost:5077");
 builder.Services.AddSingleton<UserController>();
 builder.Services.AddSingleton<CompanyController>();
 builder.Services.AddSingleton<CurrentLanguage>();

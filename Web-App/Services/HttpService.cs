@@ -12,7 +12,7 @@ namespace Web_App
     {
         protected HttpClient _client;
         protected JsonSerializerOptions _serializerOptions;
-        protected string _domain = "http://localhost:5077";
+        protected string _domain = "http://localhost:5050";
 
         public HTTPService()
         {
