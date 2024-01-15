@@ -105,23 +105,6 @@
         margin-left: 325px;
     }
 
-    .instellingen-logo {
-        width: 40px;
-        height: 40px;
-        top: 640px;
-        left: 20px;
-        position: absolute;
-        cursor: pointer;
-    }
-
-    .change-multiplierbutton { /*knop om multiplier aan te passen*/
-        all: unset;
-        position: absolute;
-        cursor: pointer;
-        top: 645px;
-        left: 65px
-    }
-
     .homescreen-button { /*knop om naar home page te gaan*/
         position: absolute;
         top: 350px;
@@ -303,10 +286,6 @@
             <p>or</p>
         </div>
         <button class="getgrocerylist-button" @onclick="GroceryListbutton">Get Grocery List</button>
-        <img src="https://i.imgur.com/lVGmhhZ.png" class="instellingen-logo" @onclick="ChangeMultiplier" />
-        <button class="change-multiplierbutton" @onclick="ChangeMultiplier">
-            <span>Change multiplier</span>
-        </button>
     </div>
 </div>
 
@@ -366,11 +345,6 @@
     private void GroceryListbutton()
     {
         NavigationManager.NavigateTo("/getgrocerylist");
-    }
-
-    private void ChangeMultiplier()
-    {
-        NavigationManager.NavigateTo("/changegrocerymultiplier");
     }
 
     private string GetLanguageButtonClass(bool isDutch) // hiermee kijk je welke taal er geselecteerd is en of hij dus moet veranderen of niet.

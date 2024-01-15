@@ -2,6 +2,9 @@
 @inject NavigationManager NavigationManager
 @inject UserController User
 @inject CurrentLanguage language
+@using Syncfusion.Blazor
+@using Syncfusion.Blazor.Lists
+@using System.Collections.ObjectModel;
 
 <style>
     body { /*achtergrond*/
@@ -46,14 +49,47 @@
         position: absolute;
     }
 
-    .text-containersquare { /*positie en grootte tekst*/
+    .squareinmainsquare { /*wit rechthoek in main rechthoek*/
+        width: 800px;
+        height: 700px;
+        background-color: #E9E9E9;
+        border-radius: 10px;
+        position: absolute;
+        top: 50px;
+        left: 350px;
+    }
+
+    .text-containersquare { /*positie en grootte tekst bovenin scherm*/
         display: flex;
         flex-direction: column;
         justify-content: center;
-        color: white;
+        color: black;
         font-family: monospace;
         font-size: 24px;
-        margin-top: 120px;
+        margin-top: 30px;
+        margin-left: 325px;
+    }
+
+    .table-container { /*scroll gedeelte als er veel employees zijn*/
+        height: 500px;
+        overflow-y: scroll;
+    }
+
+    .instellingen-logo {
+        width: 40px;
+        height: 40px;
+        top: 640px;
+        left: 20px;
+        position: absolute;
+        cursor: pointer;
+    }
+
+    .change-multiplierbutton { /*knop om multiplier aan te passen*/
+        all: unset;
+        position: absolute;
+        cursor: pointer;
+        top: 645px;
+        left: 65px
     }
 
     .homescreen-button { /*knop om naar home page te gaan*/
@@ -228,14 +264,127 @@
         <button class="lunchdata-button" @onclick="LunchDataRouting">Lunchdata</button>
         <button class="logout-button" @onclick="HandleLogout">Log out</button>
     </div>
-    <div class="text-containersquare">
-        <p>Hier komt het boodschappenlijstje te staan</p>
+    <div class="squareinmainsquare">
+        <div class="text-containersquare">
+            <p>Grocery List</p>
+        </div>
+        <div class="table-container">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>@numberOfLunches lunches needed next week:</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var product in groceriesNeeded)
+                    {
+                        <tr>
+                            <td>@product.Amount @product.Name</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <img src="https://i.imgur.com/lVGmhhZ.png" class="instellingen-logo" @onclick="ChangeMultiplier" />
+        <button class="change-multiplierbutton" @onclick="ChangeMultiplier">
+            <span>Change multiplier</span>
+        </button>
     </div>
 </div>
 
 @code {
     public User currentUser = new();
     private bool isDutchSelected = true;
+    ObservableCollection<UserModel> employees = new();
+    private int numberOfLunches;
+    private List<Grocery> groceriesNeeded = new();
+
+    public class Grocery
+    {
+        public string Name { get; set; }
+        public int Amount { get; set; }
+    }
+
+    private async Task GetEmployees() // alle employees van een bedrijf pakken zodat je ze op het scherm kan laten zien.
+    {
+        if (User.CurrentUser.Role == Role.Admin)//als het een admin is alleen van dat bedrijf printen.
+        {
+            await User.GetAllEmployeesPerCompany(User.CurrentUser.CompanyId);
+        }
+        else// als het een superadmin is alle employees printen.
+        {
+            await User.GetAllUsers();
+        }
+    }
+
+    private void transformEmployees() // alles omzetten naar een usermodel en de admin van dat moment niet toevoegen aan de lijst.
+    {
+        foreach (var employee in User.Users)
+        {
+            if (employee.Id == User.CurrentUser.Id)
+            {
+                continue;
+            }
+            if (employee.Role == Role.SuperAdmin && User.CurrentUser.Role == Role.Admin)
+            {
+                continue;
+            }
+            else
+            {
+                employees.Add(new UserModel
+                    {
+                        Name = employee.FirstName + " " + employee.LastName,
+                        Email = employee.Email,
+                        Role = employee.Role,
+                        IsSelected = false, // Set to false here
+                        ID = employee.Id
+                    });
+            }
+        }
+    }
+
+    public class UserModel
+    {
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public bool IsSelected { get; set; }
+        public Role Role { get; set; }
+        public Guid ID { get; set; }
+    }
+
+    private async Task LunchesNeeded()
+    {
+        foreach (var employee in employees)
+        {
+            numberOfLunches += await User.getLunchesAmountNextWeek(employee.ID);
+        }
+    }
+
+    public void AmountOfProducts()
+    {
+        List<Grocery> products = new List<Grocery>
+        {
+            new Grocery { Name = "loaf(s) of bread", Amount = 6},
+            new Grocery { Name = "package(s) of cheese slices", Amount = 3 },
+            new Grocery { Name = "jar(s) of peanut butter", Amount = 1 },
+            new Grocery { Name = "jar(s) of hagelsag", Amount = 1 },
+            new Grocery { Name = "jar(s) of nutella", Amount = 1 },
+            new Grocery { Name = "jar(s) of speculoos", Amount = 1 },
+            new Grocery { Name = "liter(s) of milk", Amount = 2 },
+            new Grocery { Name = "package(s) of ham", Amount = 2 },
+            new Grocery { Name = "package(s) of salami", Amount = 2 },
+            new Grocery { Name = "liter(s) of juice", Amount = 2 },
+            new Grocery { Name = "package(s) of butter", Amount = 2 },
+            new Grocery { Name = "banana(s)", Amount = 4 },
+            new Grocery { Name = "apple(s)", Amount = 3 }
+        };
+        var multiplier = numberOfLunches / 10.0;
+        foreach ( var product in products)
+        {
+            product.Amount = (int)Math.Ceiling((double)product.Amount * (double)multiplier);
+            groceriesNeeded.Add(product);
+        }
+    }
 
     private void HandleLogout()// uitloggen.
     {
@@ -249,6 +398,10 @@
         {
             NavigationManager.NavigateTo("/login");
         }
+        await GetEmployees();
+        transformEmployees();
+        await LunchesNeeded();
+        AmountOfProducts();
     }
 
     private bool IsUserLoggedIn() // kijken of gebruiker ingelogd is.
@@ -279,6 +432,11 @@
     private void LunchDataRouting()
     {
         NavigationManager.NavigateTo("/lunchdata");
+    }
+
+    private void ChangeMultiplier()
+    {
+        NavigationManager.NavigateTo("/changegrocerymultiplier");
     }
 
     private string GetLanguageButtonClass(bool isDutch) // hiermee kijk je welke taal er geselecteerd is en of hij dus moet veranderen of niet.

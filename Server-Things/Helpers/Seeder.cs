@@ -29,7 +29,7 @@ namespace Server_Things.Helpers
         {
             for (int i = 1; i < CompanyList.Count; i++)
             {
-                for (int j = 0; j < 5; j++)
+                for (int j = 0; j < 6; j++)
                 {
                     var user = new User($"Employee{j}", $"of {CompanyList[i].Name}",
                         $"pass{j}", $"emp{j}@{CompanyList[i].Name}.com", Role.Employee, CompanyList[i]);

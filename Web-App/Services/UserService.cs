@@ -302,7 +302,7 @@ public class UserService : HTTPService
         return usersToReturn;
     }
 
-    public async Task<int> getLunchesCount(Guid EmployeeID)// functie om het aantal lunches van afgelopen maand te pakken voor één employee.
+    public async Task<int> getLunchesCountlastMonth(Guid EmployeeID)// functie om het aantal lunches van afgelopen maand te pakken voor één employee.
     {
         var oneMonthAgo = DateTime.UtcNow.AddMonths(-1);
         var daysInMonth = DateTime.DaysInMonth(oneMonthAgo.Year, oneMonthAgo.Month);
@@ -321,6 +321,52 @@ public class UserService : HTTPService
                 foreach (var day in officeDays)
                 {
                     if (day.Date >= firstDayMonth && day.Date <= lastDayMonth)// als de office(day) binnen de afgelopen maand zit dan lunchCount+1;
+                    {
+                        if (day.UserId == EmployeeID)
+                        {
+                            lunchCount++;
+                        }
+                    }
+                }
+                return lunchCount;
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"ERROR {ex.Message}");
+        }
+        return default;
+    }
+
+    public async Task<int> getLunchesCountNextWeek(Guid EmployeeID)// functie om het aantal lunches voor de komende week te pakken voor één employee.
+    {
+        var dateNow = DateTime.Now.DayOfWeek;
+        // Bereken datum tot eerstvolgende maandag
+        int daysUntilMonday = ((int)DayOfWeek.Monday - (int)dateNow + 7) % 7;
+        var nextMonday = DateTime.Now.AddDays(daysUntilMonday);
+
+        // Calculate days until the Friday after next Monday
+        int daysUntilFriday = ((int)DayOfWeek.Friday - (int)dateNow + 14) % 7;
+        var nextFriday = nextMonday.AddDays(daysUntilFriday);
+
+        if (dateNow == nextMonday.DayOfWeek)
+        {
+            nextMonday = nextMonday.AddDays(7);
+            nextFriday = nextFriday.AddDays(7);
+        }
+
+        try
+        {
+            // Call to the backend
+            var response = await _client.GetAsync($"{_domain}/api/officedays");
+            var officeDays = await response.Content.ReadFromJsonAsync<List<OfficeDay>>();// alle officedays ophalen.
+
+            int lunchCount = 0;
+            if (officeDays != null)
+            {
+                foreach (var day in officeDays)
+                {
+                    if (day.Date >= nextMonday && day.Date <= nextFriday)// als de office(day) binnen de aankomende week zit dan lunchCount+1;
                     {
                         if (day.UserId == EmployeeID)
                         {
