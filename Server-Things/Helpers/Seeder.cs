@@ -110,23 +110,32 @@ namespace Server_Things.Helpers
 
         private static void PopulateGroceryList()
         {
+            Random random = new();
+            int max = 5;
+            
             for (int i = 1; i < CompanyList.Count; i++)
             {
                 List<Grocery> products = new List<Grocery>
                 {
-                    new Grocery ("loaf(s) of bread", 6, CompanyList[i].Id),
-                    new Grocery ("package(s) of cheese slices", 3, CompanyList[i].Id ),
-                    new Grocery ("jar(s) of peanut butter", 1, CompanyList[i].Id ),
-                    new Grocery ("jar(s) of hagelsag", 1, CompanyList[i].Id ),
-                    new Grocery ("jar(s) of nutella", 1, CompanyList[i].Id ),
-                    new Grocery ("jar(s) of speculoos", 1, CompanyList[i].Id ),
-                    new Grocery ("liter(s) of milk", 2, CompanyList[i].Id ),
-                    new Grocery ("package(s) of ham", 2, CompanyList[i].Id ),
-                    new Grocery ("package(s) of salami", 2, CompanyList[i].Id ),
-                    new Grocery ("liter(s) of juice", 2, CompanyList[i].Id ),
-                    new Grocery ("package(s) of butter", 2, CompanyList[i].Id ),
-                    new Grocery ("banana(s)", 4, CompanyList[i].Id ),
-                    new Grocery ("apple(s)", 3, CompanyList[i].Id )
+                    new Grocery ("bread", "loaf", random.Next(max), CompanyList[i].Id),
+                    new Grocery ("milk", "liter", random.Next(max), CompanyList[i].Id ),
+                    new Grocery ("coffee", "pack", random.Next(max), CompanyList[i].Id ),
+                    new Grocery ("egg", "dozen", random.Next(max), CompanyList[i].Id ),
+                    new Grocery ("tea", "pack", random.Next(max), CompanyList[i].Id ),
+                    new Grocery ("sugar", "pack", random.Next(max), CompanyList[i].Id ),
+                    new Grocery ("cheese", "pack", random.Next(max), CompanyList[i].Id ),
+                    new Grocery ("peanut butter", "jar", random.Next(max), CompanyList[i].Id ),
+                    new Grocery ("hagelslag", "pack", random.Next(max), CompanyList[i].Id ),
+                    new Grocery ("nutella", "jar", random.Next(max), CompanyList[i].Id ),
+                    new Grocery ("chocolate", "bar", random.Next(max), CompanyList[i].Id ),
+                    new Grocery ("speculoos", "jar", random.Next(max), CompanyList[i].Id ),
+                    new Grocery ("ham", "pack", random.Next(max), CompanyList[i].Id ),
+                    new Grocery ("salami", "pack", random.Next(max), CompanyList[i].Id ),
+                    new Grocery ("juice", "liter", random.Next(max), CompanyList[i].Id ),
+                    new Grocery ("butter", "pack", random.Next(max), CompanyList[i].Id ),
+                    new Grocery ("banana", null, random.Next(max), CompanyList[i].Id ),
+                    new Grocery ("apple", null, random.Next(max), CompanyList[i].Id ),
+                    new Grocery ("orange", null, random.Next(max), CompanyList[i].Id )
                 };
                 Db.AddRange(products);
             }
