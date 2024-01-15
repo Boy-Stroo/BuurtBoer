@@ -40,7 +40,7 @@ namespace Server_Things.Controllers
         public async Task<IActionResult> GetLoggedInUser([FromBody] UserCredentials credentials)
         {
             string email = credentials.Email;
-            string password = Encrypter.Encrypt(credentials.Password);
+            string password = credentials.Password;
             try
             {
                 var query = await db.Users.Select(user => user)
