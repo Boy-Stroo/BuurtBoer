@@ -309,7 +309,7 @@
 
     private async Task<int> lunchesAmount(UserModel employee)// totaal aantal lunches per employee.
     {
-        return await User.getLunchesAmount(employee.ID);
+        return await User.getLunchesAmountLastMonth(employee.ID);
     }
 
     private async Task GetEmployeesWithLunches()// alle employees die minimaal een lunch hebben gehad in de laatste maand.
