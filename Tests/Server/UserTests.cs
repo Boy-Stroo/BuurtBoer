@@ -5,18 +5,20 @@ using Microsoft.AspNetCore.Mvc;
 using Server_Things;
 using Server_Things.Controllers;
 using Server_Things.Models;
+using Server_Things.Factories;
 
 public class UserTests : IClassFixture<DatabaseFixture>
 {
     DatabaseFixture fixture;
-    UserController UserController;
-    CompanyController CompanyController;
+    readonly CompanyController CompanyController = new();
+    readonly UserController UserController = new();
+
+
 
     public UserTests(DatabaseFixture fixture)
     {
         this.fixture = fixture;
-        UserController = new UserController(fixture.Db);
-        CompanyController = new CompanyController(fixture.Db);
+        //CompanyController = new CompanyController(fixture.Db);
     }
     
     [Fact]

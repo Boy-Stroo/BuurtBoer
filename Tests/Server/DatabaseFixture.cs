@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using Server_Things;
 using Server_Things.Models;
-
+using Server_Things.Factories;
 public class DatabaseFixture : IDisposable
 {
     public BuurtboerContext Db;

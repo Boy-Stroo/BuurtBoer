@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Server_Things.Models;
+using Server_Things.Factories;
 
 namespace Server_Things.Controllers
 {
@@ -16,8 +17,7 @@ namespace Server_Things.Controllers
     public class OfficeDayController : ControllerBase
     {
 
-        private readonly BuurtboerContext db = DbContextFactory.Create("Host=localhost;Port=5432;Database=buurtboer;Username=postgres;Include Error Detail=true");  
-
+        private readonly BuurtboerContext db = DbContextFactory.Create();
 
         [HttpGet]
         public async Task<IActionResult> GetOfficeDays()

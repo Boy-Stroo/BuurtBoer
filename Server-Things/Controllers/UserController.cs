@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Server_Things.Interfaces;
 using Server_Things.Models;
+using Server_Things.Factories;
 
 namespace Server_Things.Controllers
 {
@@ -13,12 +14,8 @@ namespace Server_Things.Controllers
     public class UserController : ControllerBase
     {
 
-        private readonly IBuurtboerContext db;
-
-        public UserController(IBuurtboerContext db)
-        {
-            this.db = db;
-        }
+        private readonly BuurtboerContext db = DbContextFactory.Create();
+        
 
 
         [HttpGet("all")]

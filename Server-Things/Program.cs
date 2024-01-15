@@ -49,6 +49,6 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 // Clears and seeds the database, Remove this when database runs on a server
-//Seeder.Seed();
+Seeder.Seed();
 
 app.Run();

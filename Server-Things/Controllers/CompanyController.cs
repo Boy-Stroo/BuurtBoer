@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Server_Things.Interfaces;
 using Server_Things.Models;
+using Server_Things.Factories;
 
 namespace Server_Things.Controllers
 {
@@ -12,12 +13,13 @@ namespace Server_Things.Controllers
     [ApiController]
     public class CompanyController : ControllerBase
     {
-        private readonly IBuurtboerContext db;
+        //private readonly IBuurtboerContext db;
+        private readonly BuurtboerContext db = DbContextFactory.Create();
 
-        public CompanyController(IBuurtboerContext db)
-        {
-            this.db = db;
-        }
+        //public CompanyController(IBuurtboerContext db)
+        //{
+        //    this.db = db;
+        //}
 
 
         [HttpGet("all")]
