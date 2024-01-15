@@ -9,3 +9,11 @@ Content-Type: application/json
 
 GET http://irritantventje.nl/api/user/all
 ###
+POST http://localhost:5050/api/user/login
+Content-Type: application/json
+
+{
+    "Email": "admin@microsoft.com",
+    "password": "wachtwoord"
+}
+###
