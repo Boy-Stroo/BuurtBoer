@@ -280,7 +280,7 @@
                     @foreach (var product in groceries)
                     {
                         <tr>
-                            <td>@product.Amount @product.Name</td>
+                            <td>@product.toString</td>
                         </tr>
                     }
                 </tbody>
@@ -300,12 +300,6 @@
     ObservableCollection<Grocery> groceries = new();
     private int numberOfLunches;
 
-    public class Grocery
-    {
-        public string Name { get; set; }
-        public int Amount { get; set; }
-    }
-
     private void transformGroceries() // alles omzetten naar een usermodel en de admin van dat moment niet toevoegen aan de lijst.
     {
         foreach (var grocery in groceryController.Groceries)
@@ -313,7 +307,8 @@
             groceries.Add(new Grocery
                 {
                     Name = grocery.Name,
-                    Amount = grocery.Amount
+                    Amount = grocery.Amount,
+                    Container = grocery.Container,
                 });
         }
     }

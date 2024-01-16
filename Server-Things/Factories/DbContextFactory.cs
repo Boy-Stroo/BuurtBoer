@@ -6,7 +6,7 @@ namespace Server_Things.Factories
 { 
     public class DbContextFactory : IDesignTimeDbContextFactory<BuurtboerContext>
     {
-        public static BuurtboerContext Create() => Create("Host=localhost;Port=5432;Database=BuurtBoer;Username=postgres;Include Error Detail=true");   
+        public static BuurtboerContext Create() => Create("Host=localhost;Port=5432;Database=buurtboer;Username=postgres;Include Error Detail=true");   
 
         public static BuurtboerContext Create(string connectionString)
         {
