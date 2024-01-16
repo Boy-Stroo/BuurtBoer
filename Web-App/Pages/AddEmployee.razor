@@ -359,12 +359,12 @@
                         if (CheckUserRole() == Role.Admin)
                         {
                             await JSRuntime.InvokeVoidAsync("alert", "Employee has been invited");
-                            SendInvitationEmail();
+                            //SendInvitationEmail();
                         }
                         else
                         {
                             await JSRuntime.InvokeVoidAsync("alert", "Admin has been invited");
-                            SendInvitationEmail();
+                            //SendInvitationEmail();
                         }
                     }
                     else
